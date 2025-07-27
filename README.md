@@ -54,17 +54,26 @@ API available at: `http://localhost:5000`
 - `POST /api/auth/login/reader` - Reader login
 - `POST /api/auth/login/staff` - Staff login
 
+### Profile Management
+
+- `GET /api/readers/getMe` - Get my profile (reader)
+- `PATCH /api/readers/updateMe` - Update my profile (reader)
+- `PATCH /api/readers/updateMyPassword` - Update my password (reader)
+- `GET /api/staff/getMe` - Get my profile (staff)
+- `PATCH /api/staff/updateMe` - Update my profile (staff)
+- `PATCH /api/staff/updateMyPassword` - Update my password (staff)
+
 ### Core Resources
 
-| Resource          | GET      | POST     | PATCH     | DELETE   | Access |
-| ----------------- | -------- | -------- | --------- | -------- | ------ |
+| Resource          | GET      | POST     | PATCH     | DELETE   | 
+| ----------------- | -------- | -------- | --------- | -------- | 
 | `/api/authors`    | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
 | `/api/publishers` | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
 | `/api/books`      | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
-| `/api/readers`    | 🔒 Staff | 🔒 Admin | -         | 🔒 Admin |
-| `/api/staff`      | 🔒 Admin | 🔒 Admin | -         | 🔒 Admin |
-| `/api/loans`      | 🔒 Staff | 🔒 Staff | 🔒 Staff (`/return`) | -        |
-| `/api/fines`      | 🔒 Staff | 🔒 Staff | ✅ (`/pay`)  | -        |
+| `/api/readers`    | 🔒 Staff | 🔒 Admin | ✅ (`/updateMe`) | 🔒 Admin |
+| `/api/staff`      | 🔒 Admin | 🔒 Admin | ✅ (`/updateMe`) | 🔒 Admin |
+| `/api/loans`      | 🔒 Staff | 🔒 Staff | 🔒 Staff (`/return`) | 
+| `/api/fines`      | 🔒 Staff | 🔒 Staff | ✅ (`/pay`)  | 
 
 **Legend:** ✅ Public, 🔒 Authentication required
 

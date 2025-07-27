@@ -767,6 +767,92 @@
               "path": ["readers", "getMe"]
             }
           }
+        },
+        {
+          "name": "✅ Update My Profile (Reader)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Reader profile updated successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('updated successfully');",
+                  "    pm.expect(response.data).to.exist;",
+                  "    pm.expect(response.data.reader_fname).to.equal('John Updated');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{readerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reader_fname\": \"John Updated\",\n  \"reader_lname\": \"Doe Updated\",\n  \"reader_phone_no\": \"+1234567899\",\n  \"reader_address\": \"456 Updated St, New City, Country\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/readers/updateMe",
+              "host": ["{{baseUrl}}"],
+              "path": ["readers", "updateMe"]
+            }
+          }
+        },
+        {
+          "name": "✅ Update My Password (Reader)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Password updated successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('Password updated successfully');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{readerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passwordCurrent\": \"Reader@123\",\n  \"password\": \"NewReaderPassword@123\",\n  \"passwordConfirm\": \"NewReaderPassword@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/readers/updateMyPassword",
+              "host": ["{{baseUrl}}"],
+              "path": ["readers", "updateMyPassword"]
+            }
+          }
         }
       ]
     },
@@ -1203,6 +1289,126 @@
               "path": ["staff"]
             }
           }
+        },
+        {
+          "name": "✅ Get My Profile (Staff)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Staff profile returned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.staff || response.data).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/staff/getMe",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "getMe"]
+            }
+          }
+        },
+        {
+          "name": "✅ Update My Profile (Staff)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Staff profile updated successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('updated successfully');",
+                  "    pm.expect(response.data).to.exist;",
+                  "    pm.expect(response.data.staff_fname).to.equal('Admin Updated');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"staff_fname\": \"Admin Updated\",\n  \"staff_lname\": \"User Updated\",\n  \"staff_email\": \"admin.updated@library.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/updateMe",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "updateMe"]
+            }
+          }
+        },
+        {
+          "name": "✅ Update My Password (Staff)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Password updated successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('Password updated successfully');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passwordCurrent\": \"Admin@1234\",\n  \"password\": \"NewAdminPassword@1234\",\n  \"passwordConfirm\": \"NewAdminPassword@1234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/updateMyPassword",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "updateMyPassword"]
+            }
+          }
         }
       ]
     },
@@ -1421,6 +1627,132 @@
               "raw": "{{baseUrl}}/loans/507f1f77bcf86cd799439013/return",
               "host": ["{{baseUrl}}"],
               "path": ["loans", "507f1f77bcf86cd799439013", "return"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Password Update Via Profile Route",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Password update blocked', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('not for password updates');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"staff_fname\": \"Test\",\n  \"password\": \"NewPassword@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/updateMe",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "updateMe"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Wrong Current Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Wrong password rejected', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('current password is incorrect');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passwordCurrent\": \"WrongPassword123\",\n  \"password\": \"NewPassword@123\",\n  \"passwordConfirm\": \"NewPassword@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/updateMyPassword",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "updateMyPassword"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Password Confirmation Mismatch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Password mismatch rejected', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message).to.include('do not match');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passwordCurrent\": \"NewAdminPassword@1234\",\n  \"password\": \"TESTING\",\n  \"passwordConfirm\": \"DIFFERENT_TESTING\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff/updateMyPassword",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff", "updateMyPassword"]
             }
           }
         }

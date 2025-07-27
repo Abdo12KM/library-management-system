@@ -272,6 +272,41 @@ Authorization: Bearer YOUR_TOKEN_HERE
 **GET** `{{baseUrl}}/readers/getMe`
 **Headers:** `Authorization: Bearer YOUR_READER_TOKEN`
 
+### 5.4 ✅ Update My Profile (Reader)
+
+**PATCH** `{{baseUrl}}/readers/updateMe`
+**Headers:** `Authorization: Bearer YOUR_READER_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "reader_fname": "John Updated",
+  "reader_lname": "Doe Updated", 
+  "reader_phone_no": "+1234567899",
+  "reader_address": "456 Updated St, New City, Country"
+}
+```
+
+**Note:** Only readers can update their own profile. Password updates are not allowed through this endpoint.
+
+### 5.5 ✅ Update My Password (Reader)
+
+**PATCH** `{{baseUrl}}/readers/updateMyPassword`
+**Headers:** `Authorization: Bearer YOUR_READER_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "passwordCurrent": "Reader@123",
+  "password": "NewReaderPassword@123",
+  "passwordConfirm": "NewReaderPassword@123"
+}
+```
+
+**Note:** Requires current password verification. New password must match confirmation.
+
 ---
 
 ## 6. 📋 LOANS MANAGEMENT
@@ -384,6 +419,45 @@ This test verifies that the system properly prevents a book from being loaned tw
 }
 ```
 
+### 8.3 ✅ Get My Profile (Staff)
+
+**GET** `{{baseUrl}}/staff/getMe`
+**Headers:** `Authorization: Bearer YOUR_STAFF_TOKEN`
+
+### 8.4 ✅ Update My Profile (Staff)
+
+**PATCH** `{{baseUrl}}/staff/updateMe`
+**Headers:** `Authorization: Bearer YOUR_STAFF_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "staff_fname": "Admin Updated",
+  "staff_lname": "User Updated",
+  "staff_email": "admin.updated@library.com"
+}
+```
+
+**Note:** Only staff can update their own profile. Password updates are not allowed through this endpoint.
+
+### 8.5 ✅ Update My Password (Staff)
+
+**PATCH** `{{baseUrl}}/staff/updateMyPassword`
+**Headers:** `Authorization: Bearer YOUR_STAFF_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "passwordCurrent": "Admin@1234",
+  "password": "NewAdminPassword@123", 
+  "passwordConfirm": "NewAdminPassword@123"
+}
+```
+
+**Note:** Requires current password verification. New password must match confirmation.
+
 ---
 
 ## 9. 🚫 COMPREHENSIVE SECURITY & VALIDATION TESTS
@@ -447,6 +521,56 @@ This test verifies that the system properly prevents a book from being loaned tw
 **PATCH** `{{baseUrl}}/loans/507f1f77bcf86cd799439013/return`
 **Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
 **Expected Response:** `400/404` Error about invalid loan
+
+#### Test Password Update Prevention
+
+**PATCH** `{{baseUrl}}/staff/updateMe`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "staff_fname": "Test",
+  "password": "NewPassword@123"
+}
+```
+
+**Expected Response:** `400 Bad Request` with message about password updates not allowed
+
+#### Test Wrong Current Password
+
+**PATCH** `{{baseUrl}}/staff/updateMyPassword`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "passwordCurrent": "WrongPassword123",
+  "password": "NewPassword@123",
+  "passwordConfirm": "NewPassword@123"
+}
+```
+
+**Expected Response:** `401 Unauthorized` with message about incorrect current password
+
+#### Test Password Confirmation Mismatch
+
+**PATCH** `{{baseUrl}}/staff/updateMyPassword`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "passwordCurrent": "Admin@1234",
+  "password": "NewPassword@123",
+  "passwordConfirm": "DifferentPassword@123"
+}
+```
+
+**Expected Response:** `400 Bad Request` with message about passwords not matching
 
 ### 9.3 🚫 Data Validation Tests
 
@@ -587,13 +711,13 @@ This guide now covers:
 - **📚 Authors Management:** 4 tests
 - **🏢 Publishers Management:** 3 tests
 - **📖 Books Management:** 4 tests
-- **👥 Readers Management:** 3 tests
+- **👥 Readers Management:** 5 tests (includes password update)
 - **📋 Loans Management:** 4 tests
 - **💰 Fines Management:** 4 tests
-- **👨‍💼 Staff Management:** 2 tests
-- **🚫 Security & Validation:** 8+ tests
+- **👨‍💼 Staff Management:** 5 tests (includes password update)
+- **🚫 Security & Validation:** 12+ tests (includes password security)
 
-**Total: 35+ comprehensive test scenarios**
+**Total: 45+ comprehensive test scenarios**
 
 ---
 

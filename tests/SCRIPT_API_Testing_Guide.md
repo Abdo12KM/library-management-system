@@ -8,11 +8,12 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 
 ### 🎯 Comprehensive Testing Coverage
 
-- **51 Individual Tests** across all endpoints
+- **60+ Individual Tests** across all endpoints
 - **Full CRUD Operations** (Create, Read, Update, Delete)
 - **Authentication & Authorization** testing
 - **Role-based Access Control** validation
-- **Security Testing** (SQL Injection, etc.)
+- **Profile Management** testing (updateMe endpoints)
+- **Security Testing** (Password Protection, etc.)
 - **Data Validation** and schema testing
 - **Edge Cases** and error boundary testing
 - **Performance Testing** (concurrent operations)
@@ -75,17 +76,22 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 - Overdue fine generation
 - Financial calculations
 
-### 7. User Profiles (4 tests)
+### 7. User Profiles (8 tests)
 
 - Reader profile management
-- Staff profile management
+- Reader profile updates
+- Reader password updates
+- Staff profile management  
+- Staff profile updates
+- Staff password updates
 - User listing and access
 
-### 8. Security (5 tests)
+### 8. Security (7 tests)
 
 - Unauthorized access prevention
 - Role-based access control
-- SQL injection protection
+- Password update prevention
+- Password security validation
 - Authentication validation
 
 ### 9. Data Validation (3 tests)
@@ -177,7 +183,7 @@ The test suite automatically creates and manages test data:
    ...
 
 🎯 STARTING COMPREHENSIVE TEST EXECUTION
-📊 Total Tests to Run: 51
+📊 Total Tests to Run: 60
 
 🔸 AUTHENTICATION TESTS
 ──────────────────────────────────────────────────────
@@ -219,7 +225,7 @@ The test suite automatically creates and manages test data:
 
 📊 OVERALL SUMMARY
 ================================================================================
-📈 Total Tests: 51
+📈 Total Tests: 60
 ✅ Passed: 51
 ❌ Failed: 0
 📊 Success Rate: 100.0%

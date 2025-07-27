@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const authorSchema = new mongoose.Schema(
   {
@@ -12,13 +13,8 @@ const authorSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      sparse: true, // allows multiple null values
-      validate: {
-        validator: function (v) {
-          return !v || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
-        },
-        message: "Invalid email format",
-      },
+      required: [true, "Author must have an email"],
+      validate: [validator.isEmail, "Invalid email format"],
     },
     biography: {
       type: String,
