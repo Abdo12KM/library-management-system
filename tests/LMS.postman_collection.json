@@ -1,0 +1,1430 @@
+{
+  "info": {
+    "name": "Library Management System",
+    "description": "Complete API testing collection for Library Management System with security tests and validation scenarios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "readerToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "staffId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "authorId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "publisherId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bookId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "readerId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "loanId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "fineId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "secondReaderId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "staffMemberId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentication",
+      "item": [
+        {
+          "name": "✅ Login Admin Staff",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has token', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.token).to.exist;",
+                  "    pm.collectionVariables.set('adminToken', response.token);",
+                  "    ",
+                  "    if (response.data && response.data._id) {",
+                  "        pm.collectionVariables.set('staffId', response.data._id);",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test('Response structure is correct', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response).to.have.property('data');",
+                  "    pm.expect(response).to.have.property('token');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin1@hotmail.com\",\n  \"password\": \"Admin@1234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login", "staff"]
+            }
+          }
+        },
+        {
+          "name": "✅ Sign Up Reader",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Response has token and reader data', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.token).to.exist;",
+                  "    pm.expect(response.data).to.exist;",
+                  "    pm.collectionVariables.set('readerToken', response.token);",
+                  "    pm.collectionVariables.set('readerId', response.data._id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reader_fname\": \"John\",\n  \"reader_lname\": \"Doe\",\n  \"reader_email\": \"john.doe@example.com\",\n  \"reader_phone_no\": \"+1234567890\",\n  \"reader_address\": \"123 Main St, City, Country\",\n  \"password\": \"Reader@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup/reader",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "signup", "reader"]
+            }
+          }
+        },
+        {
+          "name": "✅ Login Reader",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has token', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.token).to.exist;",
+                  "    pm.collectionVariables.set('readerToken', response.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Reader@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login/reader",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login", "reader"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Invalid Login Credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401 or 400', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([401, 400]);",
+                  "});",
+                  "",
+                  "pm.test('Error message exists', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});",
+                  "",
+                  "pm.test('No token in response', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.token).to.not.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"invalid@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login", "staff"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Duplicate Reader Registration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code indicates conflict', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 500]);",
+                  "});",
+                  "",
+                  "pm.test('Error message about duplicate email', function () {",
+                  "    const response = pm.response.json();",
+                  "    const errorMsg = JSON.stringify(response).toLowerCase();",
+                  "    pm.expect(errorMsg).to.include('email');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reader_fname\": \"John\",\n  \"reader_lname\": \"Doe\",\n  \"reader_email\": \"john.doe@example.com\",\n  \"reader_phone_no\": \"+9876543210987\",\n  \"reader_address\": \"456 Different St, City, Country\",\n  \"password\": \"Reader@456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup/reader",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "signup", "reader"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📚 Authors",
+      "item": [
+        {
+          "name": "✅ Create Author",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Author created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.author).to.exist;",
+                  "    pm.expect(response.data.author._id).to.exist;",
+                  "    pm.collectionVariables.set('authorId', response.data.author._id);",
+                  "});",
+                  "",
+                  "pm.test('Author has correct data', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.author.author_name).to.eql('J.K. Rowling');",
+                  "    pm.expect(response.data.author.email).to.eql('jk.rowling@example.com');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"author_name\": \"J.K. Rowling\",\n  \"email\": \"jk.rowling@example.com\",\n  \"biography\": \"British author, best known for the Harry Potter series.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/authors",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get All Authors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains authors', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get Author by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Author data is returned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.author).to.exist;",
+                  "    pm.expect(response.data.author.author_name).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}"]
+            }
+          }
+        },
+        {
+          "name": "✅ Update Author",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Author updated successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.author).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"biography\": \"Updated biography: British author, best known for the Harry Potter series and other works.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Publishers",
+      "item": [
+        {
+          "name": "✅ Create Publisher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Publisher created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.publisher).to.exist;",
+                  "    pm.expect(response.data.publisher._id).to.exist;",
+                  "    pm.collectionVariables.set('publisherId', response.data.publisher._id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publisher_name\": \"Bloomsbury Publishing\",\n  \"publisher_website\": \"https://www.bloomsbury.com\",\n  \"year_of_publication\": 1986,\n  \"no_published_books\": 100\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/publishers",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get All Publishers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains publishers', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get Publisher by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Publisher data is returned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.publisher).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📖 Books",
+      "item": [
+        {
+          "name": "✅ Create Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Book created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.book).to.exist;",
+                  "    pm.expect(response.data.book._id).to.exist;",
+                  "    pm.collectionVariables.set('bookId', response.data.book._id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"book_title\": \"Harry Potter and the Philosopher's Stone\",\n  \"book_description\": \"The first book in the Harry Potter series\",\n  \"book_pages\": 223,\n  \"release_date\": \"1997-06-26\",\n  \"book_tags\": [\"fantasy\", \"young adult\", \"magic\"],\n  \"authorId\": \"{{authorId}}\",\n  \"publisherId\": \"{{publisherId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get All Books",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains books', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.results || response.data).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get Book by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Book data is returned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.book).to.exist;",
+                  "    pm.expect(response.data.book.book_title).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "{{bookId}}"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Invalid Book Creation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Error message about missing fields', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"book_title\": \"\",\n  \"book_description\": \"A book with missing required fields\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Readers",
+      "item": [
+        {
+          "name": "✅ Get All Readers (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains readers', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/readers",
+              "host": ["{{baseUrl}}"],
+              "path": ["readers"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get My Profile (Reader)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Reader profile returned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.reader || response.data).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{readerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/readers/getMe",
+              "host": ["{{baseUrl}}"],
+              "path": ["readers", "getMe"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 Loans",
+      "item": [
+        {
+          "name": "✅ Create Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Loan created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.loan).to.exist;",
+                  "    pm.expect(response.data.loan._id).to.exist;",
+                  "    pm.collectionVariables.set('loanId', response.data.loan._id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": \"{{bookId}}\",\n  \"readerId\": \"{{readerId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get All Loans",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains loans', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "✅ Get Overdue Loans",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains overdue loans data', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans/overdue",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans", "overdue"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Test Book Unavailability After Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 or 409', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 409]);",
+                  "});",
+                  "",
+                  "pm.test('Error message about book already loaned', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "    const errorMsg = JSON.stringify(response).toLowerCase();",
+                  "    pm.expect(errorMsg).to.include('book');",
+                  "    pm.expect(errorMsg).to.satisfy(function(msg) {",
+                  "        return msg.includes('loan') || msg.includes('unavailable') || msg.includes('available');",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": \"{{bookId}}\",\n  \"readerId\": \"{{readerId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "✅ Return Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Book returned successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.message).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans/{{loanId}}/return",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans", "{{loanId}}", "return"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 Fines",
+      "item": [
+        {
+          "name": "✅ Get All Fines",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains fines', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fines",
+              "host": ["{{baseUrl}}"],
+              "path": ["fines"]
+            }
+          }
+        },
+        {
+          "name": "✅ Create Fines for Overdue",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 201', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "",
+                  "pm.test('Overdue fines processed', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.message).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fines/create-overdue",
+              "host": ["{{baseUrl}}"],
+              "path": ["fines", "create-overdue"]
+            }
+          }
+        },
+        {
+          "name": "✅ Create Manual Fine",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Fine created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.fine || response.data).to.exist;",
+                  "    const fineId = response.data.fine?._id || response.data._id;",
+                  "    if (fineId) {",
+                  "        pm.collectionVariables.set('fineId', fineId);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanId\": \"{{loanId}}\",\n  \"accumulated_amount\": 5.0,\n  \"penalty_rate\": 1.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/fines",
+              "host": ["{{baseUrl}}"],
+              "path": ["fines"]
+            }
+          }
+        },
+        {
+          "name": "✅ Pay Fine",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Fine payment processed', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.message).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fines/{{fineId}}/pay",
+              "host": ["{{baseUrl}}"],
+              "path": ["fines", "{{fineId}}", "pay"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👨‍💼 Staff Management",
+      "item": [
+        {
+          "name": "✅ Get All Staff (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains staff', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data || response.results).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff"]
+            }
+          }
+        },
+        {
+          "name": "✅ Create New Staff (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Staff member created successfully', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.data.staff || response.data).to.exist;",
+                  "    const staffId = response.data.staff?._id || response.data._id;",
+                  "    if (staffId) {",
+                  "        pm.collectionVariables.set('staffMemberId', staffId);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"staff_fname\": \"Alice\",\n  \"staff_lname\": \"Johnson\",\n  \"staff_email\": \"alice.johnson@library.com\",\n  \"password\": \"Staff@789\",\n  \"role\": \"librarian\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚫 Security & Validation Tests",
+      "item": [
+        {
+          "name": "🚫 Unauthorized Access to Loans",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Unauthorized access properly blocked', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Reader Token on Admin Route",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code indicates forbidden or unauthorized', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+                  "});",
+                  "",
+                  "pm.test('Reader access to admin route blocked', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{readerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/staff",
+              "host": ["{{baseUrl}}"],
+              "path": ["staff"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Invalid Token Test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Invalid token properly rejected', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid_token_here"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Create Loan with Non-existent Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code indicates error', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404, 500]);",
+                  "});",
+                  "",
+                  "pm.test('Error message about invalid book', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": \"507f1f77bcf86cd799439011\",\n  \"readerId\": \"{{readerId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Create Loan with Non-existent Reader",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code indicates error', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404, 500]);",
+                  "});",
+                  "",
+                  "pm.test('Error message about invalid reader', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": \"{{bookId}}\",\n  \"readerId\": \"507f1f77bcf86cd799439012\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"]
+            }
+          }
+        },
+        {
+          "name": "🚫 Return Non-existent Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code indicates error', function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([400, 404, 500]);",
+                  "});",
+                  "",
+                  "pm.test('Error message about invalid loan', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.message || response.error).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans/507f1f77bcf86cd799439013/return",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans", "507f1f77bcf86cd799439013", "return"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

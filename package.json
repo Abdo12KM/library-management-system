@@ -1,0 +1,31 @@
+{
+  "name": "library-management-system",
+  "version": "1.0.0",
+  "main": "app.js",
+  "description": "Library management system built with Node.js, Express, and MongoDB",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "node tests/test-api.js",
+    "test:verbose": "node tests/test-api.js --verbose",
+    "test:reset": "node tests/test-api.js --reset",
+    "test:full": "node tests/test-api.js --reset --verbose",
+    "db:reset": "node scripts/resetDatabase.js",
+    "db:resetAll": "node scripts/resetDatabase.js --all",
+    "db:seedAdmin": "node scripts/createAdmin.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.5",
+    "morgan": "^1.10.1",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "axios": "^1.11.0",
+    "nodemon": "^3.1.10"
+  }
+}
