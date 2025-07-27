@@ -1,0 +1,26 @@
+[
+    {
+        "reader_fname": "Johnny",
+        "reader_lname": "Doe",
+        "reader_email": "johnyn.doe@example.com",
+        "reader_phone_no": "+1234567880",
+        "reader_address": "123 Main St, City, Country",
+        "password": "Reader@123"
+    },
+    {
+        "reader_fname": "Jane",
+        "reader_lname": "Smith",
+        "reader_email": "jane.smith@example.com",
+        "reader_phone_no": "+1987654321",
+        "reader_address": "456 Elm St, Town, Country",
+        "password": "SecurePass!456"
+    },
+    {
+        "reader_fname": "Jaden",
+        "reader_lname": "Parker",
+        "reader_email": "jaden.parker@example.com",
+        "reader_phone_no": "+1987653421",
+        "reader_address": "573 Ez St, Town, Country",
+        "password": "Password!456"
+    }
+]
