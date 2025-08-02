@@ -1,9 +1,16 @@
 const Publisher = require("../models/publisherModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllPublishers = catchAsync(async (req, res, next) => {
-  const publishers = await Publisher.find();
+  const features = new ApiFilters(Publisher.find(), req.query)
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const publishers = await features.query;
 
   res.status(200).json({
     status: "success",

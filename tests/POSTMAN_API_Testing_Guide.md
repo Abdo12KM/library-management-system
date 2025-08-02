@@ -26,7 +26,8 @@ Test in this order to maintain data dependencies:
 6. **📋 Loans** - Create loans (needs books & readers) + business logic
 7. **💰 Fines** - Test fine management + payment processing
 8. **👨‍💼 Staff Management** - Admin operations
-9. **🚫 Security Tests** - Comprehensive security validation
+9. **� API Filtering & Pagination** - Test filtering, sorting, pagination features
+10. **�🚫 Security Tests** - Comprehensive security validation
 
 ---
 
@@ -460,9 +461,238 @@ This test verifies that the system properly prevents a book from being loaned tw
 
 ---
 
-## 9. 🚫 COMPREHENSIVE SECURITY & VALIDATION TESTS
+## 9. � API FILTERING, SORTING & PAGINATION TESTS
 
-### 9.1 🚫 Unauthorized Access Tests
+### 9.1 ✅ Basic Filtering Tests
+
+#### 9.1.1 Author Name Filtering
+
+**GET** `{{baseUrl}}/authors?author_name=J.K. Rowling`
+
+**Expected Response:** Only authors with the name "J.K. Rowling"
+
+#### 9.1.2 Book Pages Filtering (MongoDB Operator)
+
+**GET** `{{baseUrl}}/books?book_pages[gte]=200`
+
+**Expected Response:** Only books with 200 or more pages
+
+#### 9.1.3 Loan Status Filtering
+
+**GET** `{{baseUrl}}/loans?status=active`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Expected Response:** Only active loans
+
+#### 9.1.4 Reader Filtering by First Name
+
+**GET** `{{baseUrl}}/readers?reader_fname=John`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Expected Response:** Only readers with first name "John"
+
+### 9.2 ✅ Sorting Tests
+
+#### 9.2.1 Sort Authors by Name (Ascending)
+
+**GET** `{{baseUrl}}/authors?sort=author_name`
+
+**Expected Response:** Authors sorted alphabetically by name
+
+#### 9.2.2 Sort Books by Pages (Descending)
+
+**GET** `{{baseUrl}}/books?sort=-book_pages`
+
+**Expected Response:** Books sorted by page count, highest first
+
+#### 9.2.3 Sort Publishers by Name
+
+**GET** `{{baseUrl}}/publishers?sort=publisher_name`
+
+**Expected Response:** Publishers sorted alphabetically
+
+### 9.3 ✅ Pagination Tests
+
+#### 9.3.1 Basic Pagination
+
+**GET** `{{baseUrl}}/books?page=1&limit=2`
+
+**Expected Response:** Maximum 2 books, first page
+
+#### 9.3.2 Second Page
+
+**GET** `{{baseUrl}}/authors?page=2&limit=1`
+
+**Expected Response:** Second page of authors, 1 per page
+
+### 9.4 ✅ Field Selection Tests
+
+#### 9.4.1 Select Specific Book Fields
+
+**GET** `{{baseUrl}}/books?fields=book_title,book_pages`
+
+**Expected Response:** Books with only title and pages fields (plus _id)
+
+#### 9.4.2 Select Author Name Only
+
+**GET** `{{baseUrl}}/authors?fields=author_name`
+
+**Expected Response:** Authors with only name field (plus _id)
+
+### 9.5 ✅ Combined Filtering Tests
+
+#### 9.5.1 Multiple Filters + Sorting + Pagination
+
+**GET** `{{baseUrl}}/books?book_pages[gte]=100&sort=book_title&page=1&limit=2&fields=book_title,book_pages`
+
+**Expected Response:** 
+- Books with 100+ pages
+- Sorted by title
+- First page, 2 items max
+- Only title and pages fields
+
+#### 9.5.2 Complex Author Query
+
+**GET** `{{baseUrl}}/authors?sort=-author_name&limit=3&fields=author_name,biography`
+
+**Expected Response:**
+- Authors sorted by name (descending)
+- Maximum 3 results
+- Only name and biography fields
+
+### 9.6 ✅ MongoDB Operator Tests
+
+#### 9.6.1 Greater Than or Equal (gte)
+
+**GET** `{{baseUrl}}/books?book_pages[gte]=250`
+
+**Expected Response:** Books with 250+ pages
+
+#### 9.6.2 Less Than or Equal (lte)
+
+**GET** `{{baseUrl}}/books?book_pages[lte]=300`
+
+**Expected Response:** Books with 300 or fewer pages
+
+#### 9.6.3 Range Query (gte + lte)
+
+**GET** `{{baseUrl}}/books?book_pages[gte]=200&book_pages[lte]=500`
+
+**Expected Response:** Books with 200-500 pages
+
+#### 9.6.4 Not Equal (ne)
+
+**GET** `{{baseUrl}}/loans?status[ne]=returned`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Expected Response:** Loans that are not returned
+
+### 9.7 ✅ Advanced Filtering Examples
+
+#### 9.7.1 Fine Amount Filtering
+
+**GET** `{{baseUrl}}/fines?accumulated_amount[gt]=5`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Expected Response:** Fines with amount greater than $5
+
+#### 9.7.2 Staff Role Filtering
+
+**GET** `{{baseUrl}}/staff?role=librarian`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Expected Response:** Only librarian staff members
+
+#### 9.7.3 Date Range Filtering (if applicable)
+
+**GET** `{{baseUrl}}/books?release_date[gte]=2000-01-01&release_date[lte]=2020-12-31`
+
+**Expected Response:** Books released between 2000-2020
+
+### 9.8 🚫 Edge Case Filtering Tests
+
+#### 9.8.1 Invalid Field Name
+
+**GET** `{{baseUrl}}/authors?invalid_field=test`
+
+**Expected Response:** Should work gracefully, return all authors
+
+#### 9.8.2 Empty Filter Results
+
+**GET** `{{baseUrl}}/authors?author_name=NonexistentAuthor123`
+
+**Expected Response:** Empty results array
+
+#### 9.8.3 Invalid Pagination
+
+**GET** `{{baseUrl}}/books?page=0&limit=-1`
+
+**Expected Response:** Should handle gracefully, use default values
+
+#### 9.8.4 Very Large Limit
+
+**GET** `{{baseUrl}}/authors?limit=99999`
+
+**Expected Response:** Should handle gracefully, may use system max limit
+
+### 9.9 📊 Performance Testing
+
+#### 9.9.1 Complex Query Performance
+
+**GET** `{{baseUrl}}/books?book_pages[gte]=100&sort=-book_title&page=1&limit=10&fields=book_title,book_pages,authorId`
+
+**Expected Performance:** Response time < 1000ms
+
+#### 9.9.2 Large Dataset Pagination
+
+**GET** `{{baseUrl}}/books?page=1&limit=50`
+
+**Expected Performance:** Response time < 500ms
+
+### 🎯 API Filtering Best Practices
+
+#### Query Parameter Format
+
+```
+# Basic filtering
+/books?field=value
+
+# MongoDB operators
+/books?field[operator]=value
+
+# Multiple filters
+/books?field1=value1&field2=value2
+
+# Sorting
+/books?sort=field          # ascending
+/books?sort=-field         # descending
+/books?sort=field1,-field2 # multiple fields
+
+# Pagination
+/books?page=1&limit=10
+
+# Field selection
+/books?fields=field1,field2
+
+# Combined
+/books?field=value&sort=field&page=1&limit=5&fields=field1,field2
+```
+
+#### Supported MongoDB Operators
+
+- `[gte]` - Greater than or equal
+- `[gt]` - Greater than
+- `[lte]` - Less than or equal
+- `[lt]` - Less than
+- `[ne]` - Not equal
+- `[in]` - In array (e.g., `status[in]=active,pending`)
+- `[nin]` - Not in array
+
+---
+
+## 10. �🚫 COMPREHENSIVE SECURITY & VALIDATION TESTS
+
+### 10.1 🚫 Unauthorized Access Tests
 
 #### Test Loans Without Token
 
@@ -482,7 +712,7 @@ This test verifies that the system properly prevents a book from being loaned tw
 **Headers:** `Authorization: Bearer invalid_token_here`
 **Expected Response:** `401 Unauthorized`
 
-### 9.2 🚫 Business Logic Validation Tests
+### 10.2 🚫 Business Logic Validation Tests
 
 #### Test Loan with Non-existent Book
 
@@ -572,7 +802,7 @@ This test verifies that the system properly prevents a book from being loaned tw
 
 **Expected Response:** `400 Bad Request` with message about passwords not matching
 
-### 9.3 🚫 Data Validation Tests
+### 10.3 🚫 Data Validation Tests
 
 #### Test Weak Password
 
@@ -715,9 +945,10 @@ This guide now covers:
 - **📋 Loans Management:** 4 tests
 - **💰 Fines Management:** 4 tests
 - **👨‍💼 Staff Management:** 5 tests (includes password update)
-- **🚫 Security & Validation:** 12+ tests (includes password security)
+- **� API Filtering & Pagination:** 20+ tests (filtering, sorting, pagination, field selection)
+- **�🚫 Security & Validation:** 12+ tests (includes password security)
 
-**Total: 45+ comprehensive test scenarios**
+**Total: 65+ comprehensive test scenarios**
 
 ---
 

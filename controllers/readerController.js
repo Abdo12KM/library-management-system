@@ -1,10 +1,17 @@
 const Reader = require("../models/readerModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 // Get all readers
 exports.getAllReaders = catchAsync(async (req, res, next) => {
-  const readers = await Reader.find();
+  const features = new ApiFilters(Reader.find(), req.query)
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const readers = await features.query;
 
   res.status(200).json({
     message: "Readers fetched successfully",

@@ -1,9 +1,16 @@
 const Author = require("../models/authorModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllAuthors = catchAsync(async (req, res, next) => {
-  const authors = await Author.find();
+  const features = new ApiFilters(Author.find(), req.query)
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const authors = await features.query;
 
   res.status(200).json({
     status: "success",

@@ -8,8 +8,9 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 
 ### 🎯 Comprehensive Testing Coverage
 
-- **60+ Individual Tests** across all endpoints
+- **75+ Individual Tests** across all endpoints
 - **Full CRUD Operations** (Create, Read, Update, Delete)
+- **API Filtering, Sorting & Pagination** testing
 - **Authentication & Authorization** testing
 - **Role-based Access Control** validation
 - **Profile Management** testing (updateMe endpoints)
@@ -86,7 +87,17 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 - Staff password updates
 - User listing and access
 
-### 8. Security (7 tests)
+### 8. API Filters (14 tests)
+
+- Field-based filtering (authors, books, readers, etc.)
+- Sorting (ascending/descending)
+- Pagination (page and limit parameters)
+- Field selection (choosing specific fields to return)
+- MongoDB operators (gte, lte, in, etc.)
+- Combined filtering (multiple parameters)
+- Edge cases (invalid parameters, empty results)
+
+### 9. Security (7 tests)
 
 - Unauthorized access prevention
 - Role-based access control
@@ -94,23 +105,23 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 - Password security validation
 - Authentication validation
 
-### 9. Data Validation (3 tests)
+### 10. Data Validation (3 tests)
 
 - Input validation
 - Duplicate prevention
 - Business rule enforcement
 
-### 10. Edge Cases (3 tests)
+### 11. Edge Cases (3 tests)
 
 - Nonexistent entity handling
 - Malformed ID handling
 - Large data processing
 
-### 11. Performance (1 test)
+### 12. Performance (1 test)
 
 - Concurrent operation handling
 
-### 12. Cleanup (5 tests)
+### 13. Cleanup (5 tests)
 
 - Resource cleanup
 - Data consistency

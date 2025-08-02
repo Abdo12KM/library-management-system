@@ -2,21 +2,31 @@ const Loan = require("../models/loanModel");
 const Fine = require("../models/fineModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllFines = catchAsync(async (req, res, next) => {
-  const fines = await Fine.find().populate({
-    path: "loanId",
-    populate: [
-      {
-        path: "bookId",
-        select: "book_title",
-      },
-      {
-        path: "readerId",
-        select: "reader_fname reader_lname",
-      },
-    ],
-  });
+  const features = new ApiFilters(
+    Fine.find().populate({
+      path: "loanId",
+      populate: [
+        {
+          path: "bookId",
+          select: "book_title",
+        },
+        {
+          path: "readerId",
+          select: "reader_fname reader_lname",
+        },
+      ],
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const fines = await features.query;
 
   res.status(200).json({
     status: "success",

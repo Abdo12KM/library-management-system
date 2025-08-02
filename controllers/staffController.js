@@ -1,6 +1,7 @@
 const Staff = require("../models/staffModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.createStaff = catchAsync(async (req, res, next) => {
   const newStaff = await Staff.create(req.body);
@@ -13,7 +14,13 @@ exports.createStaff = catchAsync(async (req, res, next) => {
 
 // Get all staff
 exports.getAllStaff = catchAsync(async (req, res, next) => {
-  const staff = await Staff.find();
+  const features = new ApiFilters(Staff.find(), req.query)
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const staff = await features.query;
 
   res.status(200).json({
     message: "Staff fetched successfully",

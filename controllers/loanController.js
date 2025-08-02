@@ -2,21 +2,31 @@ const Loan = require("../models/loanModel");
 const Book = require("../models/bookModel");
 const { catchAsync } = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllLoans = catchAsync(async (req, res, next) => {
-  const loans = await Loan.find()
-    .populate({
-      path: "readerId",
-      select: "reader_fname reader_lname reader_email",
-    })
-    .populate({
-      path: "staffId",
-      select: "staff_fname staff_lname staff_email",
-    })
-    .populate({
-      path: "bookId",
-      select: "book_title",
-    });
+  const features = new ApiFilters(
+    Loan.find()
+      .populate({
+        path: "readerId",
+        select: "reader_fname reader_lname reader_email",
+      })
+      .populate({
+        path: "staffId",
+        select: "staff_fname staff_lname staff_email",
+      })
+      .populate({
+        path: "bookId",
+        select: "book_title",
+      }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const loans = await features.query;
 
   res.status(200).json({
     status: "success",
@@ -114,15 +124,24 @@ exports.getOverdueLoans = catchAsync(async (req, res, next) => {
   // Update overdue loans first
   await Loan.updateOverdueLoans();
 
-  const overdueLoans = await Loan.find({ status: "overdue" })
-    .populate({
-      path: "readerId",
-      select: "reader_fname reader_lname reader_email",
-    })
-    .populate({
-      path: "bookId",
-      select: "book_title",
-    });
+  const features = new ApiFilters(
+    Loan.find({ status: "overdue" })
+      .populate({
+        path: "readerId",
+        select: "reader_fname reader_lname reader_email",
+      })
+      .populate({
+        path: "bookId",
+        select: "book_title",
+      }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const overdueLoans = await features.query;
 
   res.status(200).json({
     status: "success",

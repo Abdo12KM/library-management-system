@@ -1305,6 +1305,343 @@ async function testDeleteSecondAdmin() {
   }
 }
 
+// ===============================
+// API FILTERING TESTS
+// ===============================
+
+async function testAuthorFiltering() {
+  console.log("🔍 Testing Author Filtering...");
+  
+  // Test basic filtering by name
+  const result = await makeRequest("GET", `/authors?author_name=J.K. Rowling (Updated)`);
+  
+  if (result.success) {
+    const authors = result.data.data.authors;
+    if (authors.length > 0 && authors[0].author_name.includes("J.K. Rowling")) {
+      console.log("✅ Author filtering by name successful");
+      return true;
+    } else {
+      console.log("❌ Author filtering returned unexpected results");
+      return false;
+    }
+  } else {
+    console.log("❌ Author filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testAuthorSorting() {
+  console.log("🔢 Testing Author Sorting...");
+  
+  // Test sorting by name (ascending)
+  const result = await makeRequest("GET", "/authors?sort=author_name");
+  
+  if (result.success) {
+    const authors = result.data.data.authors;
+    if (authors.length >= 2) {
+      // Check if sorted correctly
+      const isSorted = authors[0].author_name <= authors[1].author_name;
+      if (isSorted) {
+        console.log("✅ Author sorting successful");
+        return true;
+      } else {
+        console.log("❌ Author sorting order incorrect");
+        return false;
+      }
+    } else {
+      console.log("✅ Author sorting successful (insufficient data for comparison)");
+      return true;
+    }
+  } else {
+    console.log("❌ Author sorting failed:", result.error);
+    return false;
+  }
+}
+
+async function testAuthorPagination() {
+  console.log("📄 Testing Author Pagination...");
+  
+  // Test pagination with limit
+  const result = await makeRequest("GET", "/authors?page=1&limit=1");
+  
+  if (result.success) {
+    const authors = result.data.data.authors;
+    if (authors.length <= 1) {
+      console.log("✅ Author pagination successful");
+      return true;
+    } else {
+      console.log("❌ Author pagination returned too many results");
+      return false;
+    }
+  } else {
+    console.log("❌ Author pagination failed:", result.error);
+    return false;
+  }
+}
+
+async function testAuthorFieldSelection() {
+  console.log("📋 Testing Author Field Selection...");
+  
+  // Test field selection
+  const result = await makeRequest("GET", "/authors?fields=author_name");
+  
+  if (result.success) {
+    const authors = result.data.data.authors;
+    if (authors.length > 0) {
+      const author = authors[0];
+      // Check if selected field is present
+      const hasSelectedField = author.hasOwnProperty('author_name');
+      // Check if unwanted fields are excluded (email and biography should not be present)
+      const hasUnwantedFields = author.hasOwnProperty('email') || author.hasOwnProperty('biography');
+      
+      if (hasSelectedField && !hasUnwantedFields) {
+        console.log("✅ Author field selection successful");
+        return true;
+      } else {
+        console.log("❌ Author field selection failed validation:");
+        console.log(`   Selected field present: ${hasSelectedField}`);
+        console.log(`   Unwanted fields excluded: ${!hasUnwantedFields}`);
+        console.log(`   Returned fields: ${Object.keys(author).join(', ')}`);
+        return false;
+      }
+    } else {
+      console.log("✅ Author field selection successful (no data to test)");
+      return true;
+    }
+  } else {
+    console.log("❌ Author field selection failed:", result.error);
+    return false;
+  }
+}
+
+async function testBookFiltering() {
+  console.log("📚 Testing Book Filtering...");
+  
+  // Test filtering by book pages (using MongoDB operator)
+  const result = await makeRequest("GET", "/books?book_pages[gte]=200");
+  
+  if (result.success) {
+    const books = result.data.data.books;
+    const allBooksHaveMinPages = books.every(book => book.book_pages >= 200);
+    if (allBooksHaveMinPages) {
+      console.log("✅ Book filtering with MongoDB operator successful");
+      return true;
+    } else {
+      console.log("❌ Book filtering returned books with incorrect page count");
+      return false;
+    }
+  } else {
+    console.log("❌ Book filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testBookSortingDescending() {
+  console.log("📚 Testing Book Sorting (Descending)...");
+  
+  // Test sorting by pages (descending)
+  const result = await makeRequest("GET", "/books?sort=-book_pages");
+  
+  if (result.success) {
+    const books = result.data.data.books;
+    if (books.length >= 2) {
+      const isSortedDesc = books[0].book_pages >= books[1].book_pages;
+      if (isSortedDesc) {
+        console.log("✅ Book descending sorting successful");
+        return true;
+      } else {
+        console.log("❌ Book descending sorting order incorrect");
+        return false;
+      }
+    } else {
+      console.log("✅ Book descending sorting successful (insufficient data)");
+      return true;
+    }
+  } else {
+    console.log("❌ Book descending sorting failed:", result.error);
+    return false;
+  }
+}
+
+async function testLoanFiltering() {
+  console.log("📋 Testing Loan Filtering...");
+  
+  // Test filtering by status
+  const result = await makeRequest("GET", "/loans?status=returned", null, testData.adminToken);
+  
+  if (result.success) {
+    const loans = result.data.data.loans;
+    const allLoansReturned = loans.every(loan => loan.status === "returned");
+    if (allLoansReturned) {
+      console.log("✅ Loan filtering by status successful");
+      return true;
+    } else {
+      console.log("❌ Loan filtering returned loans with incorrect status");
+      return false;
+    }
+  } else {
+    console.log("❌ Loan filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testPublisherPagination() {
+  console.log("🏢 Testing Publisher Pagination...");
+  
+  // Test pagination with page 1, limit 1
+  const result = await makeRequest("GET", "/publishers?page=1&limit=1");
+  
+  if (result.success) {
+    const publishers = result.data.data.publishers;
+    if (publishers.length <= 1) {
+      console.log("✅ Publisher pagination successful");
+      return true;
+    } else {
+      console.log("❌ Publisher pagination returned too many results");
+      return false;
+    }
+  } else {
+    console.log("❌ Publisher pagination failed:", result.error);
+    return false;
+  }
+}
+
+async function testReaderFiltering() {
+  console.log("👥 Testing Reader Filtering...");
+  
+  // Test filtering by first name
+  const result = await makeRequest("GET", "/readers?reader_fname=John", null, testData.adminToken);
+  
+  if (result.success) {
+    const readers = result.data.data || result.data;
+    const allReadersNamedJohn = Array.isArray(readers) ? 
+      readers.every(reader => reader.reader_fname === "John") : true;
+    if (allReadersNamedJohn) {
+      console.log("✅ Reader filtering by first name successful");
+      return true;
+    } else {
+      console.log("❌ Reader filtering returned readers with incorrect names");
+      return false;
+    }
+  } else {
+    console.log("❌ Reader filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testCombinedFiltering() {
+  console.log("🔗 Testing Combined Filtering (Multiple Parameters)...");
+  
+  // Test combining filtering, sorting, and pagination
+  const result = await makeRequest("GET", "/books?book_pages[gte]=100&sort=book_title&page=1&limit=2&fields=book_title,book_pages");
+  
+  if (result.success) {
+    const books = result.data.data.books;
+    // Verify all books have at least 100 pages
+    const allBooksHaveMinPages = books.every(book => book.book_pages >= 100);
+    // Verify pagination worked (max 2 results)
+    const paginationWorked = books.length <= 2;
+    // Verify field selection worked
+    const fieldSelectionWorked = books.every(book => 
+      Object.keys(book).every(key => 
+        ['book_title', 'book_pages', '_id', '__v', 'authorId', 'publisherId'].includes(key)
+      )
+    );
+    
+    if (allBooksHaveMinPages && paginationWorked && fieldSelectionWorked) {
+      console.log("✅ Combined filtering successful");
+      return true;
+    } else {
+      console.log("❌ Combined filtering failed validation checks");
+      return false;
+    }
+  } else {
+    console.log("❌ Combined filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testFineFiltering() {
+  console.log("💰 Testing Fine Filtering...");
+  
+  // Test filtering by status
+  const result = await makeRequest("GET", "/fines?status=unpaid", null, testData.adminToken);
+  
+  if (result.success) {
+    const fines = result.data.data.fines;
+    const allFinesUnpaid = fines.every(fine => fine.status === "unpaid");
+    if (allFinesUnpaid) {
+      console.log("✅ Fine filtering by status successful");
+      return true;
+    } else {
+      console.log("❌ Fine filtering returned fines with incorrect status");
+      return false;
+    }
+  } else {
+    console.log("❌ Fine filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testStaffFiltering() {
+  console.log("👨‍💼 Testing Staff Filtering...");
+  
+  // Test filtering by role
+  const result = await makeRequest("GET", "/staff?role=admin", null, testData.adminToken);
+  
+  if (result.success) {
+    const staff = result.data.data || result.data;
+    const allStaffAdmin = Array.isArray(staff) ? 
+      staff.every(member => member.role === "admin") : true;
+    if (allStaffAdmin) {
+      console.log("✅ Staff filtering by role successful");
+      return true;
+    } else {
+      console.log("❌ Staff filtering returned staff with incorrect roles");
+      return false;
+    }
+  } else {
+    console.log("❌ Staff filtering failed:", result.error);
+    return false;
+  }
+}
+
+async function testInvalidFilterParameters() {
+  console.log("❌ Testing Invalid Filter Parameters...");
+  
+  // Test with invalid field name (should still work but return all results)
+  const result = await makeRequest("GET", "/authors?invalid_field=test");
+  
+  if (result.success) {
+    console.log("✅ Invalid filter parameters handled gracefully");
+    return true;
+  } else {
+    console.log("❌ Invalid filter parameters caused server error");
+    return false;
+  }
+}
+
+async function testEmptyFilterResults() {
+  console.log("🔍 Testing Empty Filter Results...");
+  
+  // Test filter that should return no results
+  const result = await makeRequest("GET", "/authors?author_name=NonexistentAuthor123");
+  
+  if (result.success) {
+    const authors = result.data.data.authors;
+    if (authors.length === 0) {
+      console.log("✅ Empty filter results handled correctly");
+      return true;
+    } else {
+      console.log("❌ Filter returned unexpected results");
+      return false;
+    }
+  } else {
+    console.log("❌ Empty filter test failed:", result.error);
+    return false;
+  }
+}
+
 // Main test runner
 async function runTests() {
   console.log("🚀 Starting ENHANCED Comprehensive Library Management System API Tests\n");
@@ -1396,6 +1733,22 @@ async function runTests() {
     },
     { category: "Profiles", name: "Get All Readers", test: measureTime("Get All Readers", testGetAllReaders) },
     { category: "Profiles", name: "Get All Staff", test: measureTime("Get All Staff", testGetAllStaff) },
+
+    // ============= API FILTERING TESTS =============
+    { category: "API Filters", name: "Author Filtering", test: measureTime("Author Filtering", testAuthorFiltering) },
+    { category: "API Filters", name: "Author Sorting", test: measureTime("Author Sorting", testAuthorSorting) },
+    { category: "API Filters", name: "Author Pagination", test: measureTime("Author Pagination", testAuthorPagination) },
+    { category: "API Filters", name: "Author Field Selection", test: measureTime("Author Field Selection", testAuthorFieldSelection) },
+    { category: "API Filters", name: "Book Filtering", test: measureTime("Book Filtering", testBookFiltering) },
+    { category: "API Filters", name: "Book Sorting Desc", test: measureTime("Book Sorting Desc", testBookSortingDescending) },
+    { category: "API Filters", name: "Loan Filtering", test: measureTime("Loan Filtering", testLoanFiltering) },
+    { category: "API Filters", name: "Publisher Pagination", test: measureTime("Publisher Pagination", testPublisherPagination) },
+    { category: "API Filters", name: "Reader Filtering", test: measureTime("Reader Filtering", testReaderFiltering) },
+    { category: "API Filters", name: "Combined Filtering", test: measureTime("Combined Filtering", testCombinedFiltering) },
+    { category: "API Filters", name: "Fine Filtering", test: measureTime("Fine Filtering", testFineFiltering) },
+    { category: "API Filters", name: "Staff Filtering", test: measureTime("Staff Filtering", testStaffFiltering) },
+    { category: "API Filters", name: "Invalid Parameters", test: measureTime("Invalid Parameters", testInvalidFilterParameters) },
+    { category: "API Filters", name: "Empty Results", test: measureTime("Empty Results", testEmptyFilterResults) },
 
     // ============= SECURITY & VALIDATION TESTS =============
     {

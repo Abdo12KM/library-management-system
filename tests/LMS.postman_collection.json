@@ -1413,7 +1413,361 @@
       ]
     },
     {
-      "name": "🚫 Security & Validation Tests",
+      "name": "� API Filtering & Pagination",
+      "item": [
+        {
+          "name": "✅ Author Name Filtering",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has authors data', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "    pm.expect(jsonData.data).to.have.property('authors');",
+                  "});",
+                  "",
+                  "pm.test('Authors contain filtered name', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data.authors.length > 0) {",
+                  "        jsonData.data.authors.forEach(function(author) {",
+                  "            pm.expect(author.author_name).to.include('J.K. Rowling');",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors?author_name=J.K. Rowling",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"],
+              "query": [
+                {
+                  "key": "author_name",
+                  "value": "J.K. Rowling"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Book Pages Filtering (MongoDB Operator)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Books have minimum page count', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data.books.length > 0) {",
+                  "        jsonData.data.books.forEach(function(book) {",
+                  "            pm.expect(book.book_pages).to.be.at.least(200);",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books?book_pages[gte]=200",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"],
+              "query": [
+                {
+                  "key": "book_pages[gte]",
+                  "value": "200"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Author Sorting (Ascending)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Authors are sorted by name', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var authors = jsonData.data.authors;",
+                  "    if (authors.length > 1) {",
+                  "        for (let i = 0; i < authors.length - 1; i++) {",
+                  "            pm.expect(authors[i].author_name).to.be.at.most(authors[i + 1].author_name);",
+                  "        }",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors?sort=author_name",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "author_name"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Book Pagination",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Pagination limits results', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.books.length).to.be.at.most(2);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books?page=1&limit=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Book Field Selection",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Only selected fields returned', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data.books.length > 0) {",
+                  "        var book = jsonData.data.books[0];",
+                  "        pm.expect(book).to.have.property('book_title');",
+                  "        pm.expect(book).to.have.property('book_pages');",
+                  "        // Note: _id and populated fields may still be present",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books?fields=book_title,book_pages",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"],
+              "query": [
+                {
+                  "key": "fields",
+                  "value": "book_title,book_pages"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Loan Status Filtering",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('All loans have correct status', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data.loans.length > 0) {",
+                  "        jsonData.data.loans.forEach(function(loan) {",
+                  "            pm.expect(loan.status).to.equal('active');",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/loans?status=active",
+              "host": ["{{baseUrl}}"],
+              "path": ["loans"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "active"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Combined Filtering",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Complex filtering works', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var books = jsonData.data.books;",
+                  "    ",
+                  "    // Check pagination",
+                  "    pm.expect(books.length).to.be.at.most(2);",
+                  "    ",
+                  "    // Check filtering",
+                  "    if (books.length > 0) {",
+                  "        books.forEach(function(book) {",
+                  "            pm.expect(book.book_pages).to.be.at.least(100);",
+                  "        });",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books?book_pages[gte]=100&sort=book_title&page=1&limit=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"],
+              "query": [
+                {
+                  "key": "book_pages[gte]",
+                  "value": "100"
+                },
+                {
+                  "key": "sort",
+                  "value": "book_title"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "✅ Empty Filter Results",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Empty results handled correctly', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.authors).to.be.an('array');",
+                  "    pm.expect(jsonData.data.authors.length).to.equal(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors?author_name=NonexistentAuthor123",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"],
+              "query": [
+                {
+                  "key": "author_name",
+                  "value": "NonexistentAuthor123"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "�🚫 Security & Validation Tests",
       "item": [
         {
           "name": "🚫 Unauthorized Access to Loans",

@@ -1,9 +1,16 @@
 const Book = require("../models/bookModel");
 const AppError = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
+const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllBooks = catchAsync(async (req, res, next) => {
-  const bookList = await Book.find().populate("authorId").populate("publisherId");
+  const features = new ApiFilters(Book.find().populate("authorId").populate("publisherId"), req.query)
+    .filter()
+    .sort()
+    .fields()
+    .pagination();
+
+  const bookList = await features.query;
 
   res.status(200).json({
     status: "success",
