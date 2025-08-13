@@ -6,6 +6,7 @@ const {
   updateBook,
   deleteBook,
   validateBook,
+  updateBookStatus,
 } = require("../controllers/bookController");
 const { protect, restrictTo } = require("../controllers/authController");
 
@@ -18,6 +19,8 @@ Router.post("/", protect, restrictTo("admin", "librarian"), validateBook, create
 Router.get("/:id", getBookById);
 
 Router.patch("/:id", protect, restrictTo("admin", "librarian"), updateBook);
+
+Router.patch("/:id/status", protect, restrictTo("admin", "librarian"), updateBookStatus);
 
 Router.delete("/:id", protect, restrictTo("admin"), deleteBook);
 

@@ -7,8 +7,7 @@ exports.getAllAuthors = catchAsync(async (req, res, next) => {
   const features = new ApiFilters(Author.find(), req.query)
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const authors = await features.query;
 

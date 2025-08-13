@@ -8,8 +8,7 @@ exports.getAllReaders = catchAsync(async (req, res, next) => {
   const features = new ApiFilters(Reader.find(), req.query)
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const readers = await features.query;
 

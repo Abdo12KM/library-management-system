@@ -23,8 +23,7 @@ exports.getAllLoans = catchAsync(async (req, res, next) => {
   )
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const loans = await features.query;
 
@@ -49,10 +48,15 @@ exports.createLoan = catchAsync(async (req, res, next) => {
     return next(new AppError("Only staff members can create loans", 403));
   }
 
-  // Check if book exists
+  // Check if book exists and is available
   const book = await Book.findById(bookId);
   if (!book) {
     return next(new AppError(`Book with ID ${bookId} not found`, 404));
+  }
+
+  // Check if book is available for loan
+  if (book.book_status !== "available") {
+    return next(new AppError(`Book is currently ${book.book_status} and not available for loan`, 400));
   }
 
   // Check if reader exists
@@ -62,13 +66,11 @@ exports.createLoan = catchAsync(async (req, res, next) => {
     return next(new AppError(`Reader with ID ${readerId} not found`, 404));
   }
 
-  // Check if book is already loaned - a book can only have one active loan at a time
+  // Check if book is already loaned - this is redundant with status check but kept for safety
   const existingActiveLoan = await Loan.findOne({
     bookId: bookId,
     status: { $in: ["active", "overdue"] }, // Include overdue loans as they're still "out"
   });
-
-  console.log("Existing Active Loan:", existingActiveLoan);
 
   if (existingActiveLoan) {
     return next(new AppError("This book is currently on loan and not available", 400));
@@ -80,6 +82,9 @@ exports.createLoan = catchAsync(async (req, res, next) => {
       staffId: req.user._id, // Staff member processing the loan
       bookId,
     });
+
+    // Update book status to borrowed
+    await Book.findByIdAndUpdate(bookId, { book_status: "borrowed" });
 
     res.status(201).json({
       status: "success",
@@ -112,6 +117,9 @@ exports.returnBook = catchAsync(async (req, res, next) => {
   loan.status = "returned";
   await loan.save();
 
+  // Update book status back to available
+  await Book.findByIdAndUpdate(loan.bookId, { book_status: "available" });
+
   res.status(200).json({
     status: "success",
     data: {
@@ -138,8 +146,7 @@ exports.getOverdueLoans = catchAsync(async (req, res, next) => {
   )
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const overdueLoans = await features.query;
 

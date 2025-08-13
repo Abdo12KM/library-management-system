@@ -7,8 +7,7 @@ exports.getAllPublishers = catchAsync(async (req, res, next) => {
   const features = new ApiFilters(Publisher.find(), req.query)
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const publishers = await features.query;
 

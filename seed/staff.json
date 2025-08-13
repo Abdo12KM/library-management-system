@@ -1,0 +1,37 @@
+[
+    {
+        "staff_fname": "Alice",
+        "staff_lname": "Johnson",
+        "staff_email": "alice.johnson@library.com",
+        "password": "StaffPass@123",
+        "role": "librarian"
+    },
+    {
+        "staff_fname": "Bob",
+        "staff_lname": "Wilson",
+        "staff_email": "bob.wilson@library.com",
+        "password": "LibraryAdmin@456",
+        "role": "admin"
+    },
+    {
+        "staff_fname": "Carol",
+        "staff_lname": "Davis",
+        "staff_email": "carol.davis@library.com",
+        "password": "SecureLib@789",
+        "role": "librarian"
+    },
+    {
+        "staff_fname": "David",
+        "staff_lname": "Miller",
+        "staff_email": "david.miller@library.com",
+        "password": "Library@2024",
+        "role": "librarian"
+    },
+    {
+        "staff_fname": "Emma",
+        "staff_lname": "Brown",
+        "staff_email": "emma.brown@library.com",
+        "password": "StaffSecure@2024",
+        "role": "admin"
+    }
+]

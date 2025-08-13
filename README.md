@@ -6,10 +6,11 @@ A comprehensive **Library Management System** built with **Node.js**, **Express.
 
 - 🔐 **Multi-role Authentication** (Admin, Librarian, Reader)
 - 📖 **Complete Book Management** with Author & Publisher relations
-- 👥 **User Management** with role-based access control
+- 👥 **Staff Management** with role-based access control
 - 📋 **Loan Tracking** with automatic due dates and overdue detection
 - 💰 **Fine Management** with automatic calculation and payment tracking
-- 🧪 **Comprehensive Testing** (51+ automated tests)
+- 🔍 **Advanced API Filtering** with sorting, pagination, and field selection
+- 🧪 **Comprehensive Testing** (75+ automated tests)
 
 ## 🚀 Quick Start
 
@@ -77,6 +78,50 @@ API available at: `http://localhost:5000`
 
 **Legend:** ✅ Public, 🔒 Authentication required
 
+### 🔍 API Filtering & Query Features
+
+All GET endpoints support advanced filtering, sorting, pagination, and field selection:
+
+#### Filtering
+```bash
+# Basic filtering
+GET /api/books?book_title=Harry Potter
+GET /api/authors?author_name=J.K. Rowling
+
+# MongoDB operators
+GET /api/books?book_pages[gte]=200         # Pages >= 200
+GET /api/fines?accumulated_amount[lt]=10   # Amount < $10
+GET /api/loans?status[in]=active,overdue   # Status in array
+```
+
+#### Sorting
+```bash
+# Ascending/Descending
+GET /api/books?sort=book_title          # A-Z
+GET /api/books?sort=-release_date       # Newest first
+GET /api/authors?sort=author_name,-email # Multiple fields
+```
+
+#### Pagination
+```bash
+GET /api/books?page=2&limit=10          # Page 2, 10 items
+GET /api/authors?limit=5                # First 5 results
+```
+
+#### Field Selection
+```bash
+GET /api/books?fields=book_title,book_pages    # Only specific fields
+GET /api/authors?fields=author_name            # Reduce response size
+```
+
+#### Combined Queries
+```bash
+# Complex filtering
+GET /api/books?book_pages[gte]=200&sort=-book_title&page=1&limit=5&fields=book_title,book_pages
+```
+
+**Supported Operators:** `[gte]`, `[gt]`, `[lte]`, `[lt]`, `[ne]`, `[in]`, `[nin]`
+
 ### Default Admin Credentials
 
 - **Email:** `admin1@hotmail.com`
@@ -91,7 +136,15 @@ pnpm run test:reset          # Reset DB + run tests
 pnpm run test:full            # Reset DB + Detailed output + run tests
 ```
 
-**Postman Collection:** Import `tests/LMS.postman_collection.json`
+**Test Coverage:**
+- 75+ automated test scenarios
+- API filtering, sorting, and pagination tests
+- Complete CRUD operations
+- Authentication and authorization
+- Security and validation testing
+- Profile management testing
+
+**Postman Collection:** Import `tests/LMS.postman_collection.json` (65+ test scenarios)
 
 ## 🗄️ Database Schema
 

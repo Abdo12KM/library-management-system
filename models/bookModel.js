@@ -43,6 +43,27 @@ const bookSchema = new mongoose.Schema(
       ref: "Publisher",
       required: [true, "Book must have a publisher"],
     },
+    book_ISBN: {
+      type: String,
+      unique: true,
+      sparse: true, // Allow multiple null values but enforce uniqueness when present
+      trim: true,
+      validate: {
+        validator: function (v) {
+          // Basic ISBN validation (10 or 13 digits with optional hyphens)
+          if (!v) return true; // Allow empty/null
+          const isbn = v.replace(/[-\s]/g, ''); // Remove hyphens and spaces
+          return /^\d{10}(\d{3})?$/.test(isbn);
+        },
+        message: "Invalid ISBN format. Must be 10 or 13 digits.",
+      },
+    },
+    book_status: {
+      type: String,
+      enum: ["available", "borrowed", "maintenance", "lost"],
+      default: "available",
+      required: true,
+    },
   },
   {
     timestamps: true,

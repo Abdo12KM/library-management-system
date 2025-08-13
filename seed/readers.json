@@ -22,5 +22,61 @@
         "reader_phone_no": "+1987653421",
         "reader_address": "573 Ez St, Town, Country",
         "password": "Password!456"
+    },
+    {
+        "reader_fname": "Michael",
+        "reader_lname": "Johnson",
+        "reader_email": "michael.johnson@example.com",
+        "reader_phone_no": "+1555123456",
+        "reader_address": "789 Oak Ave, Springfield, USA",
+        "password": "MikePass@789"
+    },
+    {
+        "reader_fname": "Sarah",
+        "reader_lname": "Williams",
+        "reader_email": "sarah.williams@example.com",
+        "reader_phone_no": "+1555987654",
+        "reader_address": "321 Pine Dr, Riverside, USA",
+        "password": "SarahSecure@456"
+    },
+    {
+        "reader_fname": "David",
+        "reader_lname": "Brown",
+        "reader_email": "david.brown@example.com",
+        "reader_phone_no": "+1555456789",
+        "reader_address": "654 Maple Ln, Lakewood, USA",
+        "password": "DavidPass@321"
+    },
+    {
+        "reader_fname": "Emily",
+        "reader_lname": "Davis",
+        "reader_email": "emily.davis@example.com",
+        "reader_phone_no": "+1555789123",
+        "reader_address": "987 Cedar St, Hillside, USA",
+        "password": "EmilyStrong@654"
+    },
+    {
+        "reader_fname": "James",
+        "reader_lname": "Miller",
+        "reader_email": "james.miller@example.com",
+        "reader_phone_no": "+1555654321",
+        "reader_address": "147 Birch Rd, Greenville, USA",
+        "password": "JamesSecure@987"
+    },
+    {
+        "reader_fname": "Lisa",
+        "reader_lname": "Wilson",
+        "reader_email": "lisa.wilson@example.com",
+        "reader_phone_no": "+1555321987",
+        "reader_address": "258 Willow Way, Fairview, USA",
+        "password": "LisaPass@258"
+    },
+    {
+        "reader_fname": "Robert",
+        "reader_lname": "Moore",
+        "reader_email": "robert.moore@example.com",
+        "reader_phone_no": "+1555147258",
+        "reader_address": "369 Ash Blvd, Sunset, USA",
+        "password": "RobertStrong@369"
     }
 ]

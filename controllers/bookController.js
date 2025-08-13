@@ -7,8 +7,7 @@ exports.getAllBooks = catchAsync(async (req, res, next) => {
   const features = new ApiFilters(Book.find().populate("authorId").populate("publisherId"), req.query)
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const bookList = await features.query;
 
@@ -78,6 +77,36 @@ exports.deleteBook = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateBookStatus = catchAsync(async (req, res, next) => {
+  const { book_status } = req.body;
+  
+  if (!book_status) {
+    return next(new AppError("Book status is required", 400));
+  }
+
+  const allowedStatuses = ["available", "borrowed", "maintenance", "lost"];
+  if (!allowedStatuses.includes(book_status)) {
+    return next(new AppError(`Invalid status. Allowed: ${allowedStatuses.join(", ")}`, 400));
+  }
+
+  const book = await Book.findByIdAndUpdate(
+    req.params.id,
+    { book_status },
+    { new: true, runValidators: true }
+  );
+
+  if (!book) {
+    return next(new AppError("Book not found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      book,
+    },
+  });
+});
+
 exports.validateBook = (req, res, next) => {
   const { book_title, book_pages, release_date, authorId, publisherId } = req.body;
   if (!book_title || !book_pages || !release_date || !authorId || !publisherId) {
@@ -85,5 +114,11 @@ exports.validateBook = (req, res, next) => {
       new AppError("Missing required fields: book_title, book_pages, release_date, authorId, and publisherId", 400)
     );
   }
+  
+  // Set default status if not provided
+  if (!req.body.book_status) {
+    req.body.book_status = "available";
+  }
+  
   next();
 };

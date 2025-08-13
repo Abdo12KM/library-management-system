@@ -17,8 +17,7 @@ exports.getAllStaff = catchAsync(async (req, res, next) => {
   const features = new ApiFilters(Staff.find(), req.query)
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const staff = await features.query;
 

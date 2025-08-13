@@ -1,0 +1,167 @@
+[
+    {
+        "book_title": "The Shining",
+        "book_description": "A psychological horror novel about a family isolated in a haunted hotel during the winter.",
+        "book_pages": 447,
+        "release_date": "1977-01-28",
+        "book_tags": ["horror", "psychological", "thriller"],
+        "book_ISBN": "9780385121675",
+        "book_status": "available",
+        "author_name": "Stephen King",
+        "publisher_name": "Doubleday"
+    },
+    {
+        "book_title": "Harry Potter and the Philosopher's Stone",
+        "book_description": "The first novel in the Harry Potter series about a young wizard's journey.",
+        "book_pages": 223,
+        "release_date": "1997-06-26",
+        "book_tags": ["fantasy", "magic", "adventure", "young adult"],
+        "book_ISBN": "9780747532699",
+        "book_status": "available",
+        "author_name": "J.K. Rowling",
+        "publisher_name": "Scholastic Corporation"
+    },
+    {
+        "book_title": "1984",
+        "book_description": "A dystopian social science fiction novel about totalitarian control.",
+        "book_pages": 328,
+        "release_date": "1949-06-08",
+        "book_tags": ["dystopian", "science fiction", "political"],
+        "book_ISBN": "9780451524935",
+        "book_status": "available",
+        "author_name": "George Orwell",
+        "publisher_name": "Penguin Random House"
+    },
+    {
+        "book_title": "Murder on the Orient Express",
+        "book_description": "A detective novel featuring Hercule Poirot solving a murder on a train.",
+        "book_pages": 256,
+        "release_date": "1934-01-01",
+        "book_tags": ["mystery", "detective", "crime"],
+        "book_ISBN": "9780062693662",
+        "book_status": "available",
+        "author_name": "Agatha Christie",
+        "publisher_name": "HarperCollins"
+    },
+    {
+        "book_title": "To Kill a Mockingbird",
+        "book_description": "A novel about racial injustice and moral growth in the American South.",
+        "book_pages": 281,
+        "release_date": "1960-07-11",
+        "book_tags": ["classic", "drama", "social justice"],
+        "book_ISBN": "9780061120084",
+        "book_status": "available",
+        "author_name": "Harper Lee",
+        "publisher_name": "HarperCollins"
+    },
+    {
+        "book_title": "The Great Gatsby",
+        "book_description": "A classic American novel about the Jazz Age and the American Dream.",
+        "book_pages": 180,
+        "release_date": "1925-04-10",
+        "book_tags": ["classic", "american literature", "jazz age"],
+        "book_ISBN": "9780743273565",
+        "book_status": "available",
+        "author_name": "F. Scott Fitzgerald",
+        "publisher_name": "Simon & Schuster"
+    },
+    {
+        "book_title": "Pride and Prejudice",
+        "book_description": "A romantic novel about manners, upbringing, morality, and marriage.",
+        "book_pages": 432,
+        "release_date": "1813-01-28",
+        "book_tags": ["romance", "classic", "british literature"],
+        "book_ISBN": "9780141439518",
+        "book_status": "available",
+        "author_name": "Jane Austen",
+        "publisher_name": "Penguin Random House"
+    },
+    {
+        "book_title": "The Da Vinci Code",
+        "book_description": "A mystery thriller involving art, history, and religious conspiracy.",
+        "book_pages": 454,
+        "release_date": "2003-03-18",
+        "book_tags": ["thriller", "mystery", "conspiracy"],
+        "book_ISBN": "9780385504201",
+        "book_status": "available",
+        "author_name": "Dan Brown",
+        "publisher_name": "Doubleday"
+    },
+    {
+        "book_title": "The Handmaid's Tale",
+        "book_description": "A dystopian novel about a totalitarian society and women's rights.",
+        "book_pages": 311,
+        "release_date": "1985-08-17",
+        "book_tags": ["dystopian", "feminism", "science fiction"],
+        "book_ISBN": "9780385490818",
+        "book_status": "available",
+        "author_name": "Margaret Atwood",
+        "publisher_name": "Hachette Book Group"
+    },
+    {
+        "book_title": "Fahrenheit 451",
+        "book_description": "A dystopian novel about a future where books are banned and burned.",
+        "book_pages": 194,
+        "release_date": "1953-10-19",
+        "book_tags": ["dystopian", "science fiction", "censorship"],
+        "book_ISBN": "9781451673319",
+        "book_status": "available",
+        "author_name": "Ray Bradbury",
+        "publisher_name": "Simon & Schuster"
+    },
+    {
+        "book_title": "Harry Potter and the Chamber of Secrets",
+        "book_description": "The second novel in the Harry Potter series.",
+        "book_pages": 251,
+        "release_date": "1998-07-02",
+        "book_tags": ["fantasy", "magic", "adventure", "young adult"],
+        "book_ISBN": "9780439064873",
+        "book_status": "borrowed",
+        "author_name": "J.K. Rowling",
+        "publisher_name": "Scholastic Corporation"
+    },
+    {
+        "book_title": "Pet Sematary",
+        "book_description": "A horror novel about death and resurrection with terrifying consequences.",
+        "book_pages": 374,
+        "release_date": "1983-11-14",
+        "book_tags": ["horror", "supernatural", "thriller"],
+        "book_ISBN": "9780385018968",
+        "book_status": "available",
+        "author_name": "Stephen King",
+        "publisher_name": "Doubleday"
+    },
+    {
+        "book_title": "Animal Farm",
+        "book_description": "An allegorical novella about farm animals rebelling against their human farmer.",
+        "book_pages": 112,
+        "release_date": "1945-08-17",
+        "book_tags": ["allegory", "political", "classic"],
+        "book_ISBN": "9780451526342",
+        "book_status": "available",
+        "author_name": "George Orwell",
+        "publisher_name": "Penguin Random House"
+    },
+    {
+        "book_title": "And Then There Were None",
+        "book_description": "A mystery novel about ten strangers invited to an island where they are murdered one by one.",
+        "book_pages": 264,
+        "release_date": "1939-11-06",
+        "book_tags": ["mystery", "thriller", "crime"],
+        "book_ISBN": "9780062073488",
+        "book_status": "maintenance",
+        "author_name": "Agatha Christie",
+        "publisher_name": "HarperCollins"
+    },
+    {
+        "book_title": "Sense and Sensibility",
+        "book_description": "A novel about the lives and loves of the Dashwood sisters.",
+        "book_pages": 374,
+        "release_date": "1811-10-30",
+        "book_tags": ["romance", "classic", "british literature"],
+        "book_ISBN": "9780141439662",
+        "book_status": "available",
+        "author_name": "Jane Austen",
+        "publisher_name": "Penguin Random House"
+    }
+]

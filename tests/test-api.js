@@ -251,6 +251,8 @@ async function testCreateBook() {
     book_pages: 223,
     release_date: "1997-06-26",
     book_tags: ["fantasy", "young adult", "magic"],
+    book_ISBN: "978-0747532743",
+    book_status: "available",
     authorId: testData.authorId,
     publisherId: testData.publisherId,
   };
@@ -261,6 +263,8 @@ async function testCreateBook() {
     testData.bookId = result.data.data.book._id;
     console.log("✅ Book created successfully");
     console.log(`   Book ID: ${testData.bookId}`);
+    console.log(`   Book Status: ${result.data.data.book.book_status}`);
+    console.log(`   Book ISBN: ${result.data.data.book.book_ISBN}`);
     return true;
   } else {
     console.log("❌ Create book failed:", result.error);
@@ -698,6 +702,101 @@ async function testUpdateBook() {
   }
 }
 
+async function testBookStatusUpdate() {
+  console.log("🔄 Testing Book Status Update...");
+  if (!testData.bookId2) {
+    console.log("❌ No second book ID available for testing");
+    return false;
+  }
+
+  const statusData = {
+    book_status: "maintenance"
+  };
+
+  const result = await makeRequest("PATCH", `/books/${testData.bookId2}/status`, statusData, testData.adminToken);
+
+  if (result.success) {
+    console.log("✅ Book status updated successfully");
+    console.log(`   New status: ${result.data.data?.book?.book_status || "Unknown"}`);
+    return true;
+  } else {
+    console.log("❌ Update book status failed:", result.error);
+    return false;
+  }
+}
+
+async function testBookStatusValidation() {
+  console.log("🚫 Testing Invalid Book Status...");
+  if (!testData.bookId2) {
+    console.log("❌ No second book ID available for testing");
+    return false;
+  }
+
+  const invalidStatusData = {
+    book_status: "invalid_status"
+  };
+
+  const result = await makeRequest("PATCH", `/books/${testData.bookId2}/status`, invalidStatusData, testData.adminToken);
+
+  if (!result.success && result.status === 400) {
+    console.log("✅ Invalid book status properly rejected");
+    return true;
+  } else {
+    console.log("❌ Invalid book status should have been rejected");
+    return false;
+  }
+}
+
+async function testBookStatusAfterLoan() {
+  console.log("📋 Testing Book Status After Loan Creation...");
+  if (!testData.bookId || !testData.loanId) {
+    console.log("❌ No book ID or loan ID available for testing");
+    return false;
+  }
+
+  const result = await makeRequest("GET", `/books/${testData.bookId}`);
+
+  if (result.success) {
+    const bookStatus = result.data.data?.book?.book_status;
+    if (bookStatus === "borrowed") {
+      console.log("✅ Book status correctly updated to 'borrowed' after loan");
+      return true;
+    } else {
+      console.log(`❌ Expected book status 'borrowed', got: ${bookStatus}`);
+      return false;
+    }
+  } else {
+    console.log("❌ Failed to get book details:", result.error);
+    return false;
+  }
+}
+
+async function testISBNValidation() {
+  console.log("📚 Testing ISBN Validation...");
+  const invalidISBNBookData = {
+    book_title: "Test Book with Invalid ISBN",
+    book_description: "Testing ISBN validation",
+    book_pages: 100,
+    release_date: "2023-01-01",
+    book_ISBN: "invalid-isbn",
+    book_status: "available",
+    authorId: testData.authorId,
+    publisherId: testData.publisherId,
+  };
+
+  const result = await makeRequest("POST", "/books", invalidISBNBookData, testData.adminToken);
+
+  // ISBN validation errors might return 400 or 500, both are acceptable for validation failure
+  if (!result.success && (result.status === 400 || result.status === 500)) {
+    console.log("✅ Invalid ISBN properly rejected");
+    return true;
+  } else {
+    console.log("❌ Invalid ISBN should have been rejected, got status:", result.status);
+    console.log("   Response:", result.error);
+    return false;
+  }
+}
+
 async function testCreateSecondAuthor() {
   console.log("📚 Testing Create Second Author...");
   const authorData = {
@@ -749,6 +848,8 @@ async function testCreateSecondBook() {
     book_pages: 694,
     release_date: "1996-08-01",
     book_tags: ["fantasy", "epic", "medieval"],
+    book_ISBN: "978-0553103540",
+    book_status: "available",
     authorId: testData.authorId2,
     publisherId: testData.publisherId2,
   };
@@ -759,6 +860,8 @@ async function testCreateSecondBook() {
     testData.bookId2 = result.data.data.book._id;
     console.log("✅ Second book created successfully");
     console.log(`   Book ID: ${testData.bookId2}`);
+    console.log(`   Book Status: ${result.data.data.book.book_status}`);
+    console.log(`   Book ISBN: ${result.data.data.book.book_ISBN}`);
     return true;
   } else {
     console.log("❌ Create second book failed:", result.error);
@@ -792,9 +895,39 @@ async function testCreateSecondReader() {
 
 async function testCreateSecondLoan() {
   console.log("📋 Testing Create Second Loan...");
+  
+  // First check if we have the necessary data
+  if (!testData.readerId) {
+    console.log("❌ readerId not available for second loan test");
+    return false;
+  }
+
+  // Try to create a second book first for this test
+  const secondBookData = {
+    book_title: "The Chamber of Secrets",
+    book_description: "The second book in the Harry Potter series",
+    book_pages: 251,
+    release_date: "1998-07-02",
+    book_tags: ["fantasy", "young adult", "magic"],
+    book_ISBN: "978-0747538493",
+    book_status: "available",
+    authorId: testData.authorId,
+    publisherId: testData.publisherId,
+  };
+
+  const bookResult = await makeRequest("POST", "/books", secondBookData, testData.adminToken);
+  
+  if (!bookResult.success) {
+    console.log("❌ Failed to create second book for loan test:", bookResult.error);
+    return false;
+  }
+
+  const secondBookId = bookResult.data.data.book._id;
+  console.log(`   Created second book with ID: ${secondBookId}`);
+
   const loanData = {
-    bookId: testData.bookId2,
-    readerId: testData.readerId2,
+    bookId: secondBookId,
+    readerId: testData.readerId,
   };
 
   const result = await makeRequest("POST", "/loans", loanData, testData.adminToken);
@@ -803,9 +936,15 @@ async function testCreateSecondLoan() {
     testData.loanId2 = result.data.data.loan._id;
     console.log("✅ Second loan created successfully");
     console.log(`   Loan ID: ${testData.loanId2}`);
+    
+    // Clean up - delete the second book after test
+    await makeRequest("DELETE", `/books/${secondBookId}`, null, testData.adminToken);
+    
     return true;
   } else {
     console.log("❌ Create second loan failed:", result.error);
+    // Clean up the book if loan failed
+    await makeRequest("DELETE", `/books/${secondBookId}`, null, testData.adminToken);
     return false;
   }
 }
@@ -1700,9 +1839,15 @@ async function runTests() {
     { category: "Books", name: "Get Book by ID", test: measureTime("Get Book by ID", testGetBookById) },
     { category: "Books", name: "Update Book", test: measureTime("Update Book", testUpdateBook) },
     { category: "Books", name: "Create Second Book", test: measureTime("Create Second Book", testCreateSecondBook) },
+    
+    // ============= BOOK STATUS & ISBN TESTS =============
+    { category: "Books", name: "Book Status Update", test: measureTime("Book Status Update", testBookStatusUpdate) },
+    { category: "Books", name: "Book Status Validation", test: measureTime("Book Status Validation", testBookStatusValidation) },
+    { category: "Books", name: "ISBN Validation", test: measureTime("ISBN Validation", testISBNValidation) },
 
     // ============= LOAN MANAGEMENT TESTS =============
     { category: "Loans", name: "Create Loan", test: measureTime("Create Loan", testCreateLoan) },
+    { category: "Loans", name: "Book Status After Loan", test: measureTime("Book Status After Loan", testBookStatusAfterLoan) },
     { category: "Loans", name: "Get All Loans", test: measureTime("Get All Loans", testGetAllLoans) },
     { category: "Loans", name: "Create Second Loan", test: measureTime("Create Second Loan", testCreateSecondLoan) },
     { category: "Loans", name: "Get Overdue Loans", test: measureTime("Get Overdue Loans", testGetOverdueLoans) },

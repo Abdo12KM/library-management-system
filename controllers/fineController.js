@@ -23,8 +23,7 @@ exports.getAllFines = catchAsync(async (req, res, next) => {
   )
     .filter()
     .sort()
-    .fields()
-    .pagination();
+    .fields();
 
   const fines = await features.query;
 

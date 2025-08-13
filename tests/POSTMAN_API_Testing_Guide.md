@@ -212,6 +212,8 @@ Authorization: Bearer YOUR_TOKEN_HERE
   "book_pages": 223,
   "release_date": "1997-06-26",
   "book_tags": ["fantasy", "young adult", "magic"],
+  "book_ISBN": "978-0747532743",
+  "book_status": "available",
   "authorId": "{{authorId}}",
   "publisherId": "{{publisherId}}"
 }
@@ -225,7 +227,35 @@ Authorization: Bearer YOUR_TOKEN_HERE
 
 **GET** `{{baseUrl}}/books/{{bookId}}`
 
-### 4.4 🚫 Invalid Book Creation Test
+### 4.4 ✅ Update Book
+
+**PATCH** `{{baseUrl}}/books/{{bookId}}`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "book_title": "Harry Potter and the Philosopher's Stone (Updated Edition)",
+  "book_description": "The first book in the Harry Potter series - Updated description",
+  "book_pages": 250
+}
+```
+
+### 4.5 ✅ Update Book Status
+
+**PATCH** `{{baseUrl}}/books/{{bookId}}/status`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "book_status": "maintenance"
+}
+```
+
+### 4.6 🚫 Invalid Book Creation Test
 
 **POST** `{{baseUrl}}/books`
 **Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
@@ -240,6 +270,43 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
 **Expected Response:** `400 Bad Request` with validation error
+
+### 4.7 🚫 Invalid Book Status Test
+
+**PATCH** `{{baseUrl}}/books/{{bookId}}/status`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "book_status": "invalid_status"
+}
+```
+
+**Expected Response:** `400 Bad Request` with validation error
+
+### 4.8 🚫 Invalid ISBN Validation Test
+
+**POST** `{{baseUrl}}/books`
+**Headers:** `Authorization: Bearer YOUR_ADMIN_TOKEN`
+
+**Body (JSON):**
+
+```json
+{
+  "book_title": "Test Book with Invalid ISBN",
+  "book_description": "Testing ISBN validation",
+  "book_pages": 100,
+  "release_date": "2023-01-01",
+  "book_ISBN": "invalid-isbn",
+  "book_status": "available",
+  "authorId": "{{authorId}}",
+  "publisherId": "{{publisherId}}"
+}
+```
+
+**Expected Response:** `400 Bad Request` with ISBN validation error
 
 ---
 

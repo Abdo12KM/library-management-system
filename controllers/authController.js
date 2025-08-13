@@ -40,34 +40,6 @@ exports.signUpReader = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.signUpStaff = catchAsync(async (req, res, next) => {
-  const { staff_fname, staff_lname, staff_email, staff_join_date, password, role } = req.body;
-
-  // Verify email uniqueness
-  const existingStaff = await Staff.findOne({ staff_email });
-
-  if (existingStaff) {
-    return next(new AppError("Staff email already exists", 400));
-  }
-
-  const newStaff = await Staff.create({
-    staff_fname,
-    staff_lname,
-    staff_email,
-    staff_join_date,
-    password,
-    role,
-  });
-
-  const token = signToken({ id: newStaff._id, role: newStaff.role });
-
-  res.status(201).json({
-    message: "success",
-    data: newStaff,
-    token,
-  });
-});
-
 exports.loginReader = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 

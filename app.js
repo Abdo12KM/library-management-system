@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 const bookRoutes = require("./routes/bookRoutes");
@@ -10,10 +11,19 @@ const publisherRouter = require("./routes/publisherRoutes");
 const loanRouter = require("./routes/loanRoutes");
 const fineRouter = require("./routes/fineRoutes");
 const authRouter = require("./routes/authRoutes");
+const dashboardRouter = require("./routes/dashboardRoutes");
 
 dotenv.config({ path: "./.env" });
 
 const app = express();
+
+// CORS configuration for frontend
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -27,6 +37,7 @@ app.use("/api/publishers", publisherRouter);
 app.use("/api/loans", loanRouter);
 app.use("/api/fines", fineRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/dashboard", dashboardRouter);
 
 // Global error handling middleware
 app.use((err, req, res, next) => {
