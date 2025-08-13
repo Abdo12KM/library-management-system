@@ -5,8 +5,20 @@ const { catchAsync } = require("../utils/catchAsync");
 const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllFines = catchAsync(async (req, res, next) => {
+  let query = Fine.find();
+
+  // If user is a reader, only show fines for their own loans
+  if (req.user.role === "reader") {
+    // First get all loans belonging to this reader
+    const userLoans = await Loan.find({ readerId: req.user._id }).select('_id');
+    const userLoanIds = userLoans.map(loan => loan._id);
+    
+    // Filter fines to only include those for the reader's loans
+    query = query.where({ loanId: { $in: userLoanIds } });
+  }
+
   const features = new ApiFilters(
-    Fine.find().populate({
+    query.populate({
       path: "loanId",
       populate: [
         {
@@ -67,10 +79,17 @@ exports.createFine = catchAsync(async (req, res, next) => {
 });
 
 exports.payFine = catchAsync(async (req, res, next) => {
-  const fine = await Fine.findById(req.params.id);
+  const fine = await Fine.findById(req.params.id).populate('loanId');
 
   if (!fine) {
     return next(new AppError("Fine not found", 404));
+  }
+
+  // If user is a reader, check if the fine belongs to their loan
+  if (req.user.role === "reader") {
+    if (!fine.loanId || fine.loanId.readerId.toString() !== req.user._id.toString()) {
+      return next(new AppError("You can only pay your own fines", 403));
+    }
   }
 
   if (fine.status === "paid") {

@@ -9,7 +9,7 @@ const { protect, restrictTo } = require("../controllers/authController");
 
 const loanRouter = express.Router();
 
-loanRouter.get("/", protect, restrictTo("admin", "librarian"), getAllLoans);
+loanRouter.get("/", protect, getAllLoans);
 loanRouter.get(
   "/overdue",
   protect,

@@ -5,8 +5,20 @@ const AppError = require("../utils/appError");
 const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllLoans = catchAsync(async (req, res, next) => {
+  let query = Loan.find();
+
+  // If user is a reader, only show their own loans
+  if (req.user.role === "reader") {
+    // Check if readerId query parameter matches the logged-in user
+    if (req.query.readerId && req.query.readerId !== req.user._id.toString()) {
+      return next(new AppError("You can only view your own loans", 403));
+    }
+    // Force the query to only include the reader's loans
+    query = query.where({ readerId: req.user._id });
+  }
+
   const features = new ApiFilters(
-    Loan.find()
+    query
       .populate({
         path: "readerId",
         select: "reader_fname reader_lname reader_email",

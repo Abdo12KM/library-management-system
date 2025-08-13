@@ -9,7 +9,7 @@ const { protect, restrictTo } = require("../controllers/authController");
 
 const fineRouter = express.Router();
 
-fineRouter.get("/", protect, restrictTo("admin", "librarian"), getAllFines);
+fineRouter.get("/", protect, getAllFines);
 fineRouter.post("/", protect, restrictTo("admin", "librarian"), createFine);
 fineRouter.post(
   "/create-overdue",
