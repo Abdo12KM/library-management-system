@@ -152,7 +152,9 @@ async function makeRequest(method, url, data = null, token = null) {
     verboseLog(`Response status: ${response.status}`);
     return { success: true, data: response.data, status: response.status };
   } catch (error) {
-    verboseLog(`Request failed with status: ${error.response?.status || "No status"}`);
+    verboseLog(
+      `Request failed with status: ${error.response?.status || "No status"}`,
+    );
     return {
       success: false,
       error: error.response?.data || error.message,
@@ -165,7 +167,9 @@ async function makeRequest(method, url, data = null, token = null) {
 async function validateServerConnection() {
   console.log("🔍 Checking server connectivity...");
   try {
-    const response = await axios.get(BASE_URL.replace("/api", "/health"), { timeout: 5000 });
+    const response = await axios.get(BASE_URL.replace("/api", "/health"), {
+      timeout: 5000,
+    });
     console.log("✅ Server is running and accessible");
     return true;
   } catch (error) {
@@ -175,7 +179,9 @@ async function validateServerConnection() {
       console.log("✅ Server is running and accessible");
       return true;
     } catch (fallbackError) {
-      console.log("❌ Server is not accessible. Please ensure the server is running on http://localhost:5000");
+      console.log(
+        "❌ Server is not accessible. Please ensure the server is running on http://localhost:5000",
+      );
       console.log(`   Error: ${error.message}`);
       return false;
     }
@@ -185,7 +191,11 @@ async function validateServerConnection() {
 // Test functions
 async function testAdminLogin() {
   console.log("🔐 Testing Admin Login...");
-  const result = await makeRequest("POST", "/auth/login/staff", ADMIN_CREDENTIALS);
+  const result = await makeRequest(
+    "POST",
+    "/auth/login/staff",
+    ADMIN_CREDENTIALS,
+  );
 
   if (result.success) {
     testData.adminToken = result.data.token;
@@ -208,7 +218,12 @@ async function testCreateAuthor() {
     biography: "British author, best known for the Harry Potter series.",
   };
 
-  const result = await makeRequest("POST", "/authors", authorData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/authors",
+    authorData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.authorId = result.data.data.author._id;
@@ -230,7 +245,12 @@ async function testCreatePublisher() {
     no_published_books: 100,
   };
 
-  const result = await makeRequest("POST", "/publishers", publisherData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/publishers",
+    publisherData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.publisherId = result.data.data.publisher._id;
@@ -257,7 +277,12 @@ async function testCreateBook() {
     publisherId: testData.publisherId,
   };
 
-  const result = await makeRequest("POST", "/books", bookData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/books",
+    bookData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.bookId = result.data.data.book._id;
@@ -304,7 +329,11 @@ async function testReaderLogin() {
     password: "Reader@123",
   };
 
-  const result = await makeRequest("POST", "/auth/login/reader", readerCredentials);
+  const result = await makeRequest(
+    "POST",
+    "/auth/login/reader",
+    readerCredentials,
+  );
 
   if (result.success) {
     testData.readerToken = result.data.token;
@@ -323,7 +352,9 @@ async function testGetAllAuthors() {
 
   if (result.success) {
     console.log("✅ Get all authors successful");
-    console.log(`   Found ${result.data.results || result.data.data?.length || 0} authors`);
+    console.log(
+      `   Found ${result.data.results || result.data.data?.length || 0} authors`,
+    );
     return true;
   } else {
     console.log("❌ Get all authors failed:", result.error);
@@ -342,7 +373,9 @@ async function testGetAuthorById() {
 
   if (result.success) {
     console.log("✅ Get author by ID successful");
-    console.log(`   Author: ${result.data.data?.author?.author_name || "Unknown"}`);
+    console.log(
+      `   Author: ${result.data.data?.author?.author_name || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Get author by ID failed:", result.error);
@@ -356,7 +389,9 @@ async function testGetAllPublishers() {
 
   if (result.success) {
     console.log("✅ Get all publishers successful");
-    console.log(`   Found ${result.data.results || result.data.data?.length || 0} publishers`);
+    console.log(
+      `   Found ${result.data.results || result.data.data?.length || 0} publishers`,
+    );
     return true;
   } else {
     console.log("❌ Get all publishers failed:", result.error);
@@ -389,7 +424,9 @@ async function testGetAllLoans() {
 
   if (result.success) {
     console.log("✅ Get all loans successful");
-    console.log(`   Found ${result.data.results || result.data.data?.length || 0} loans`);
+    console.log(
+      `   Found ${result.data.results || result.data.data?.length || 0} loans`,
+    );
     return true;
   } else {
     console.log("❌ Get all loans failed:", result.error);
@@ -404,7 +441,12 @@ async function testReturnBook() {
     return false;
   }
 
-  const result = await makeRequest("PATCH", `/loans/${testData.loanId}/return`, null, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/loans/${testData.loanId}/return`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Book returned successfully");
@@ -421,7 +463,9 @@ async function testGetAllFines() {
 
   if (result.success) {
     console.log("✅ Get all fines successful");
-    console.log(`   Found ${result.data.results || result.data.data?.length || 0} fines`);
+    console.log(
+      `   Found ${result.data.results || result.data.data?.length || 0} fines`,
+    );
     return true;
   } else {
     console.log("❌ Get all fines failed:", result.error);
@@ -431,7 +475,12 @@ async function testGetAllFines() {
 
 async function testCreateOverdueFines() {
   console.log("⏰ Testing Create Overdue Fines...");
-  const result = await makeRequest("POST", "/fines/create-overdue", null, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/fines/create-overdue",
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Create overdue fines successful");
@@ -455,7 +504,12 @@ async function testCreateLoan() {
     readerId: testData.readerId,
   };
 
-  const result = await makeRequest("POST", "/loans", loanData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/loans",
+    loanData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.loanId = result.data.data.loan._id;
@@ -502,7 +556,11 @@ async function testInvalidLogin() {
     password: "wrongpassword",
   };
 
-  const result = await makeRequest("POST", "/auth/login/staff", invalidCredentials);
+  const result = await makeRequest(
+    "POST",
+    "/auth/login/staff",
+    invalidCredentials,
+  );
 
   if (!result.success && (result.status === 401 || result.status === 400)) {
     console.log("✅ Invalid credentials properly rejected");
@@ -525,15 +583,26 @@ async function testDuplicateReader() {
     password: "Reader@456",
   };
 
-  const result = await makeRequest("POST", "/auth/signup/reader", duplicateReaderData);
+  const result = await makeRequest(
+    "POST",
+    "/auth/signup/reader",
+    duplicateReaderData,
+  );
 
-  if (!result.success && (result.status === 400 || result.status === 409 || result.status === 500)) {
+  if (
+    !result.success &&
+    (result.status === 400 || result.status === 409 || result.status === 500)
+  ) {
     console.log("✅ Duplicate email properly rejected");
-    console.log(`   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`);
+    console.log(
+      `   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`,
+    );
     return true;
   } else {
     console.log("❌ Duplicate reader test failed - should have been rejected");
-    console.log(`   Status: ${result.status}, Response: ${JSON.stringify(result.data || result.error)}`);
+    console.log(
+      `   Status: ${result.status}, Response: ${JSON.stringify(result.data || result.error)}`,
+    );
     return false;
   }
 }
@@ -546,13 +615,20 @@ async function testInvalidBookCreation() {
     // Missing required fields like authorId, publisherId
   };
 
-  const result = await makeRequest("POST", "/books", invalidBookData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/books",
+    invalidBookData,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 400) {
     console.log("✅ Invalid book data properly rejected");
     return true;
   } else {
-    console.log("❌ Invalid book creation test failed - should have been rejected");
+    console.log(
+      "❌ Invalid book creation test failed - should have been rejected",
+    );
     return false;
   }
 }
@@ -572,7 +648,12 @@ async function testCreateLibrarian() {
     role: "librarian",
   };
 
-  const result = await makeRequest("POST", "/staff", librarianData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/staff",
+    librarianData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.librarianId = result.data.data._id;
@@ -596,7 +677,12 @@ async function testCreateSecondAdmin() {
     role: "admin",
   };
 
-  const result = await makeRequest("POST", "/staff", secondAdminData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/staff",
+    secondAdminData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.secondAdminId = result.data.data._id;
@@ -616,7 +702,11 @@ async function testLibrarianLogin() {
     password: "Librarian@123",
   };
 
-  const result = await makeRequest("POST", "/auth/login/staff", librarianCredentials);
+  const result = await makeRequest(
+    "POST",
+    "/auth/login/staff",
+    librarianCredentials,
+  );
 
   if (result.success) {
     testData.librarianToken = result.data.token;
@@ -638,14 +728,22 @@ async function testUpdateAuthor() {
 
   const updateData = {
     author_name: "J.K. Rowling (Updated)",
-    biography: "British author, best known for the Harry Potter series. Updated biography.",
+    biography:
+      "British author, best known for the Harry Potter series. Updated biography.",
   };
 
-  const result = await makeRequest("PATCH", `/authors/${testData.authorId}`, updateData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/authors/${testData.authorId}`,
+    updateData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Author updated successfully");
-    console.log(`   Updated name: ${result.data.data?.author?.author_name || "Unknown"}`);
+    console.log(
+      `   Updated name: ${result.data.data?.author?.author_name || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Update author failed:", result.error);
@@ -665,11 +763,18 @@ async function testUpdatePublisher() {
     no_published_books: 150,
   };
 
-  const result = await makeRequest("PATCH", `/publishers/${testData.publisherId}`, updateData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/publishers/${testData.publisherId}`,
+    updateData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Publisher updated successfully");
-    console.log(`   Updated name: ${result.data.data?.publisher?.publisher_name || "Unknown"}`);
+    console.log(
+      `   Updated name: ${result.data.data?.publisher?.publisher_name || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Update publisher failed:", result.error);
@@ -686,15 +791,23 @@ async function testUpdateBook() {
 
   const updateData = {
     book_title: "Harry Potter and the Philosopher's Stone (Updated Edition)",
-    book_description: "The first book in the Harry Potter series - Updated description",
+    book_description:
+      "The first book in the Harry Potter series - Updated description",
     book_pages: 250,
   };
 
-  const result = await makeRequest("PATCH", `/books/${testData.bookId}`, updateData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/books/${testData.bookId}`,
+    updateData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Book updated successfully");
-    console.log(`   Updated title: ${result.data.data?.book?.book_title || "Unknown"}`);
+    console.log(
+      `   Updated title: ${result.data.data?.book?.book_title || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Update book failed:", result.error);
@@ -710,14 +823,21 @@ async function testBookStatusUpdate() {
   }
 
   const statusData = {
-    book_status: "maintenance"
+    book_status: "maintenance",
   };
 
-  const result = await makeRequest("PATCH", `/books/${testData.bookId2}/status`, statusData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/books/${testData.bookId2}/status`,
+    statusData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Book status updated successfully");
-    console.log(`   New status: ${result.data.data?.book?.book_status || "Unknown"}`);
+    console.log(
+      `   New status: ${result.data.data?.book?.book_status || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Update book status failed:", result.error);
@@ -733,10 +853,15 @@ async function testBookStatusValidation() {
   }
 
   const invalidStatusData = {
-    book_status: "invalid_status"
+    book_status: "invalid_status",
   };
 
-  const result = await makeRequest("PATCH", `/books/${testData.bookId2}/status`, invalidStatusData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/books/${testData.bookId2}/status`,
+    invalidStatusData,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 400) {
     console.log("✅ Invalid book status properly rejected");
@@ -784,14 +909,22 @@ async function testISBNValidation() {
     publisherId: testData.publisherId,
   };
 
-  const result = await makeRequest("POST", "/books", invalidISBNBookData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/books",
+    invalidISBNBookData,
+    testData.adminToken,
+  );
 
   // ISBN validation errors might return 400 or 500, both are acceptable for validation failure
   if (!result.success && (result.status === 400 || result.status === 500)) {
     console.log("✅ Invalid ISBN properly rejected");
     return true;
   } else {
-    console.log("❌ Invalid ISBN should have been rejected, got status:", result.status);
+    console.log(
+      "❌ Invalid ISBN should have been rejected, got status:",
+      result.status,
+    );
     console.log("   Response:", result.error);
     return false;
   }
@@ -802,10 +935,16 @@ async function testCreateSecondAuthor() {
   const authorData = {
     author_name: "George R.R. Martin",
     email: "grrm@example.com",
-    biography: "American novelist and short story writer, best known for A Song of Ice and Fire.",
+    biography:
+      "American novelist and short story writer, best known for A Song of Ice and Fire.",
   };
 
-  const result = await makeRequest("POST", "/authors", authorData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/authors",
+    authorData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.authorId2 = result.data.data.author._id;
@@ -827,7 +966,12 @@ async function testCreateSecondPublisher() {
     no_published_books: 200,
   };
 
-  const result = await makeRequest("POST", "/publishers", publisherData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/publishers",
+    publisherData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.publisherId2 = result.data.data.publisher._id;
@@ -854,7 +998,12 @@ async function testCreateSecondBook() {
     publisherId: testData.publisherId2,
   };
 
-  const result = await makeRequest("POST", "/books", bookData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/books",
+    bookData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.bookId2 = result.data.data.book._id;
@@ -895,7 +1044,7 @@ async function testCreateSecondReader() {
 
 async function testCreateSecondLoan() {
   console.log("📋 Testing Create Second Loan...");
-  
+
   // First check if we have the necessary data
   if (!testData.readerId) {
     console.log("❌ readerId not available for second loan test");
@@ -915,10 +1064,18 @@ async function testCreateSecondLoan() {
     publisherId: testData.publisherId,
   };
 
-  const bookResult = await makeRequest("POST", "/books", secondBookData, testData.adminToken);
-  
+  const bookResult = await makeRequest(
+    "POST",
+    "/books",
+    secondBookData,
+    testData.adminToken,
+  );
+
   if (!bookResult.success) {
-    console.log("❌ Failed to create second book for loan test:", bookResult.error);
+    console.log(
+      "❌ Failed to create second book for loan test:",
+      bookResult.error,
+    );
     return false;
   }
 
@@ -930,33 +1087,53 @@ async function testCreateSecondLoan() {
     readerId: testData.readerId,
   };
 
-  const result = await makeRequest("POST", "/loans", loanData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/loans",
+    loanData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.loanId2 = result.data.data.loan._id;
     console.log("✅ Second loan created successfully");
     console.log(`   Loan ID: ${testData.loanId2}`);
-    
+
     // Clean up - delete the second book after test
-    await makeRequest("DELETE", `/books/${secondBookId}`, null, testData.adminToken);
-    
+    await makeRequest(
+      "DELETE",
+      `/books/${secondBookId}`,
+      null,
+      testData.adminToken,
+    );
+
     return true;
   } else {
     console.log("❌ Create second loan failed:", result.error);
     // Clean up the book if loan failed
-    await makeRequest("DELETE", `/books/${secondBookId}`, null, testData.adminToken);
+    await makeRequest(
+      "DELETE",
+      `/books/${secondBookId}`,
+      null,
+      testData.adminToken,
+    );
     return false;
   }
 }
 
 async function testGetReaderProfile() {
   console.log("👤 Testing Get Reader Profile...");
-  const result = await makeRequest("GET", "/readers/getMe", null, testData.readerToken);
+  const result = await makeRequest(
+    "GET",
+    "/readers/getMe",
+    null,
+    testData.readerToken,
+  );
 
   if (result.success) {
     console.log("✅ Get reader profile successful");
     console.log(
-      `   Reader: ${result.data.reader?.reader_fname || "Unknown"} ${result.data.reader?.reader_lname || ""}`
+      `   Reader: ${result.data.reader?.reader_fname || "Unknown"} ${result.data.reader?.reader_lname || ""}`,
     );
     return true;
   } else {
@@ -967,11 +1144,18 @@ async function testGetReaderProfile() {
 
 async function testGetStaffProfile() {
   console.log("👨‍💼 Testing Get Staff Profile...");
-  const result = await makeRequest("GET", "/staff/getMe", null, testData.adminToken);
+  const result = await makeRequest(
+    "GET",
+    "/staff/getMe",
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Get staff profile successful");
-    console.log(`   Staff: ${result.data.staff?.staff_fname || "Unknown"} ${result.data.staff?.staff_lname || ""}`);
+    console.log(
+      `   Staff: ${result.data.staff?.staff_fname || "Unknown"} ${result.data.staff?.staff_lname || ""}`,
+    );
     return true;
   } else {
     console.log("❌ Get staff profile failed:", result.error);
@@ -988,11 +1172,18 @@ async function testUpdateReaderProfile() {
     reader_address: "456 Updated St, New City, Country",
   };
 
-  const result = await makeRequest("PATCH", "/readers/updateMe", updateData, testData.readerToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/readers/updateMe",
+    updateData,
+    testData.readerToken,
+  );
 
   if (result.success) {
     console.log("✅ Update reader profile successful");
-    console.log(`   Updated name: ${result.data.reader_fname} ${result.data.reader_lname}`);
+    console.log(
+      `   Updated name: ${result.data.reader_fname} ${result.data.reader_lname}`,
+    );
     return true;
   } else {
     console.log("❌ Update reader profile failed:", result.error);
@@ -1008,11 +1199,18 @@ async function testUpdateStaffProfile() {
     staff_email: "admin.updated@library.com",
   };
 
-  const result = await makeRequest("PATCH", "/staff/updateMe", updateData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/staff/updateMe",
+    updateData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Update staff profile successful");
-    console.log(`   Updated name: ${result.data.staff_fname} ${result.data.staff_lname}`);
+    console.log(
+      `   Updated name: ${result.data.staff_fname} ${result.data.staff_lname}`,
+    );
     return true;
   } else {
     console.log("❌ Update staff profile failed:", result.error);
@@ -1028,7 +1226,12 @@ async function testUpdateReaderPassword() {
     passwordConfirm: "NewReaderPassword@123",
   };
 
-  const result = await makeRequest("PATCH", "/readers/updateMyPassword", passwordData, testData.readerToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/readers/updateMyPassword",
+    passwordData,
+    testData.readerToken,
+  );
 
   if (result.success) {
     console.log("✅ Update reader password successful");
@@ -1047,7 +1250,12 @@ async function testUpdateStaffPassword() {
     passwordConfirm: "NewAdmin@1234",
   };
 
-  const result = await makeRequest("PATCH", "/staff/updateMyPassword", passwordData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/staff/updateMyPassword",
+    passwordData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Update staff password successful");
@@ -1060,7 +1268,12 @@ async function testUpdateStaffPassword() {
 
 async function testGetAllReaders() {
   console.log("👥 Testing Get All Readers...");
-  const result = await makeRequest("GET", "/readers", null, testData.adminToken);
+  const result = await makeRequest(
+    "GET",
+    "/readers",
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Get all readers successful");
@@ -1088,11 +1301,18 @@ async function testGetAllStaff() {
 
 async function testGetOverdueLoans() {
   console.log("⏰ Testing Get Overdue Loans...");
-  const result = await makeRequest("GET", "/loans/overdue", null, testData.adminToken);
+  const result = await makeRequest(
+    "GET",
+    "/loans/overdue",
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Get overdue loans successful");
-    console.log(`   Found ${result.data.results || result.data.data?.length || 0} overdue loans`);
+    console.log(
+      `   Found ${result.data.results || result.data.data?.length || 0} overdue loans`,
+    );
     return true;
   } else {
     console.log("❌ Get overdue loans failed:", result.error);
@@ -1113,7 +1333,12 @@ async function testCreateFine() {
     penalty_rate: 1.5,
   };
 
-  const result = await makeRequest("POST", "/fines", fineData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/fines",
+    fineData,
+    testData.adminToken,
+  );
 
   if (result.success) {
     testData.fineId = result.data.data.fine._id;
@@ -1133,11 +1358,18 @@ async function testPayFine() {
     return false;
   }
 
-  const result = await makeRequest("PATCH", `/fines/${testData.fineId}/pay`, null, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    `/fines/${testData.fineId}/pay`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success) {
     console.log("✅ Fine paid successfully");
-    console.log(`   Fine status: ${result.data.data?.fine?.status || "Unknown"}`);
+    console.log(
+      `   Fine status: ${result.data.data?.fine?.status || "Unknown"}`,
+    );
     return true;
   } else {
     console.log("❌ Pay fine failed:", result.error);
@@ -1165,7 +1397,12 @@ async function testLibrarianCannotDeleteEntities() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/authors/${testData.authorId}`, null, testData.librarianToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/authors/${testData.authorId}`,
+    null,
+    testData.librarianToken,
+  );
 
   if (!result.success && (result.status === 401 || result.status === 403)) {
     console.log("✅ Librarian properly denied delete access");
@@ -1186,7 +1423,12 @@ async function testInvalidDataValidation() {
     biography: "Test biography",
   };
 
-  const result = await makeRequest("POST", "/authors", invalidAuthorData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/authors",
+    invalidAuthorData,
+    testData.adminToken,
+  );
 
   if (!result.success && (result.status === 500 || result.status === 400)) {
     console.log("✅ Invalid email format properly rejected");
@@ -1205,18 +1447,29 @@ async function testPasswordUpdatePrevention() {
     password: "NewPassword@123",
   };
 
-  const result = await makeRequest("PATCH", "/staff/updateMe", updateData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/staff/updateMe",
+    updateData,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 400) {
-    const errorMessage = result.error?.message || JSON.stringify(result.error) || "";
-    if (errorMessage.includes("not for password updates") || errorMessage.includes("password")) {
+    const errorMessage =
+      result.error?.message || JSON.stringify(result.error) || "";
+    if (
+      errorMessage.includes("not for password updates") ||
+      errorMessage.includes("password")
+    ) {
       console.log("✅ Password update properly blocked");
       return true;
     }
   }
 
   console.log("❌ Password update prevention test failed");
-  console.log(`   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`);
+  console.log(
+    `   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`,
+  );
   return false;
 }
 
@@ -1229,18 +1482,29 @@ async function testWrongCurrentPassword() {
     passwordConfirm: "NewPassword@123",
   };
 
-  const result = await makeRequest("PATCH", "/staff/updateMyPassword", passwordData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/staff/updateMyPassword",
+    passwordData,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 401) {
-    const errorMessage = result.error?.message || JSON.stringify(result.error) || "";
-    if (errorMessage.includes("current password is incorrect") || errorMessage.includes("incorrect")) {
+    const errorMessage =
+      result.error?.message || JSON.stringify(result.error) || "";
+    if (
+      errorMessage.includes("current password is incorrect") ||
+      errorMessage.includes("incorrect")
+    ) {
       console.log("✅ Wrong current password properly rejected");
       return true;
     }
   }
 
   console.log("❌ Wrong current password test failed");
-  console.log(`   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`);
+  console.log(
+    `   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`,
+  );
   return false;
 }
 
@@ -1253,18 +1517,29 @@ async function testPasswordConfirmationMismatch() {
     passwordConfirm: "DifferentPassword@123",
   };
 
-  const result = await makeRequest("PATCH", "/staff/updateMyPassword", passwordData, testData.adminToken);
+  const result = await makeRequest(
+    "PATCH",
+    "/staff/updateMyPassword",
+    passwordData,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 400) {
-    const errorMessage = result.error?.message || JSON.stringify(result.error) || "";
-    if (errorMessage.includes("do not match") || errorMessage.includes("confirm")) {
+    const errorMessage =
+      result.error?.message || JSON.stringify(result.error) || "";
+    if (
+      errorMessage.includes("do not match") ||
+      errorMessage.includes("confirm")
+    ) {
       console.log("✅ Password confirmation mismatch properly rejected");
       return true;
     }
   }
 
   console.log("❌ Password confirmation mismatch test failed");
-  console.log(`   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`);
+  console.log(
+    `   Status: ${result.status}, Error: ${JSON.stringify(result.error)}`,
+  );
   return false;
 }
 
@@ -1282,7 +1557,12 @@ async function testLargeDataHandling() {
     publisherId: testData.publisherId,
   };
 
-  const result = await makeRequest("POST", "/books", bookData, testData.adminToken);
+  const result = await makeRequest(
+    "POST",
+    "/books",
+    bookData,
+    testData.adminToken,
+  );
 
   if (!result.success && (result.status === 500 || result.status === 400)) {
     console.log("✅ Large data properly rejected");
@@ -1327,7 +1607,12 @@ async function testDeleteNonexistentEntity() {
   console.log("🗑️ Testing Delete Nonexistent Entity...");
 
   const fakeId = "507f1f77bcf86cd799439011"; // Valid ObjectId format but nonexistent
-  const result = await makeRequest("DELETE", `/authors/${fakeId}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/authors/${fakeId}`,
+    null,
+    testData.adminToken,
+  );
 
   if (!result.success && result.status === 404) {
     console.log("✅ Nonexistent entity deletion properly handled");
@@ -1361,7 +1646,12 @@ async function testDeleteSecondBook() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/books/${testData.bookId2}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/books/${testData.bookId2}`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success || result.status === 204) {
     console.log("✅ Second book deleted successfully");
@@ -1379,7 +1669,12 @@ async function testDeleteSecondAuthor() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/authors/${testData.authorId2}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/authors/${testData.authorId2}`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success || result.status === 204) {
     console.log("✅ Second author deleted successfully");
@@ -1397,7 +1692,12 @@ async function testDeleteSecondPublisher() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/publishers/${testData.publisherId2}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/publishers/${testData.publisherId2}`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success || result.status === 204) {
     console.log("✅ Second publisher deleted successfully");
@@ -1415,7 +1715,12 @@ async function testDeleteReader() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/readers/${testData.readerId2}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/readers/${testData.readerId2}`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success || result.status === 204) {
     console.log("✅ Reader deleted successfully");
@@ -1433,7 +1738,12 @@ async function testDeleteSecondAdmin() {
     return false;
   }
 
-  const result = await makeRequest("DELETE", `/staff/${testData.secondAdminId}`, null, testData.adminToken);
+  const result = await makeRequest(
+    "DELETE",
+    `/staff/${testData.secondAdminId}`,
+    null,
+    testData.adminToken,
+  );
 
   if (result.success || result.status === 204) {
     console.log("✅ Second admin deleted successfully");
@@ -1450,10 +1760,13 @@ async function testDeleteSecondAdmin() {
 
 async function testAuthorFiltering() {
   console.log("🔍 Testing Author Filtering...");
-  
+
   // Test basic filtering by name
-  const result = await makeRequest("GET", `/authors?author_name=J.K. Rowling (Updated)`);
-  
+  const result = await makeRequest(
+    "GET",
+    `/authors?author_name=J.K. Rowling (Updated)`,
+  );
+
   if (result.success) {
     const authors = result.data.data.authors;
     if (authors.length > 0 && authors[0].author_name.includes("J.K. Rowling")) {
@@ -1471,10 +1784,10 @@ async function testAuthorFiltering() {
 
 async function testAuthorSorting() {
   console.log("🔢 Testing Author Sorting...");
-  
+
   // Test sorting by name (ascending)
   const result = await makeRequest("GET", "/authors?sort=author_name");
-  
+
   if (result.success) {
     const authors = result.data.data.authors;
     if (authors.length >= 2) {
@@ -1488,7 +1801,9 @@ async function testAuthorSorting() {
         return false;
       }
     } else {
-      console.log("✅ Author sorting successful (insufficient data for comparison)");
+      console.log(
+        "✅ Author sorting successful (insufficient data for comparison)",
+      );
       return true;
     }
   } else {
@@ -1499,10 +1814,10 @@ async function testAuthorSorting() {
 
 async function testAuthorPagination() {
   console.log("📄 Testing Author Pagination...");
-  
+
   // Test pagination with limit
   const result = await makeRequest("GET", "/authors?page=1&limit=1");
-  
+
   if (result.success) {
     const authors = result.data.data.authors;
     if (authors.length <= 1) {
@@ -1520,19 +1835,20 @@ async function testAuthorPagination() {
 
 async function testAuthorFieldSelection() {
   console.log("📋 Testing Author Field Selection...");
-  
+
   // Test field selection
   const result = await makeRequest("GET", "/authors?fields=author_name");
-  
+
   if (result.success) {
     const authors = result.data.data.authors;
     if (authors.length > 0) {
       const author = authors[0];
       // Check if selected field is present
-      const hasSelectedField = author.hasOwnProperty('author_name');
+      const hasSelectedField = author.hasOwnProperty("author_name");
       // Check if unwanted fields are excluded (email and biography should not be present)
-      const hasUnwantedFields = author.hasOwnProperty('email') || author.hasOwnProperty('biography');
-      
+      const hasUnwantedFields =
+        author.hasOwnProperty("email") || author.hasOwnProperty("biography");
+
       if (hasSelectedField && !hasUnwantedFields) {
         console.log("✅ Author field selection successful");
         return true;
@@ -1540,7 +1856,7 @@ async function testAuthorFieldSelection() {
         console.log("❌ Author field selection failed validation:");
         console.log(`   Selected field present: ${hasSelectedField}`);
         console.log(`   Unwanted fields excluded: ${!hasUnwantedFields}`);
-        console.log(`   Returned fields: ${Object.keys(author).join(', ')}`);
+        console.log(`   Returned fields: ${Object.keys(author).join(", ")}`);
         return false;
       }
     } else {
@@ -1555,13 +1871,13 @@ async function testAuthorFieldSelection() {
 
 async function testBookFiltering() {
   console.log("📚 Testing Book Filtering...");
-  
+
   // Test filtering by book pages (using MongoDB operator)
   const result = await makeRequest("GET", "/books?book_pages[gte]=200");
-  
+
   if (result.success) {
     const books = result.data.data.books;
-    const allBooksHaveMinPages = books.every(book => book.book_pages >= 200);
+    const allBooksHaveMinPages = books.every((book) => book.book_pages >= 200);
     if (allBooksHaveMinPages) {
       console.log("✅ Book filtering with MongoDB operator successful");
       return true;
@@ -1577,10 +1893,10 @@ async function testBookFiltering() {
 
 async function testBookSortingDescending() {
   console.log("📚 Testing Book Sorting (Descending)...");
-  
+
   // Test sorting by pages (descending)
   const result = await makeRequest("GET", "/books?sort=-book_pages");
-  
+
   if (result.success) {
     const books = result.data.data.books;
     if (books.length >= 2) {
@@ -1604,13 +1920,18 @@ async function testBookSortingDescending() {
 
 async function testLoanFiltering() {
   console.log("📋 Testing Loan Filtering...");
-  
+
   // Test filtering by status
-  const result = await makeRequest("GET", "/loans?status=returned", null, testData.adminToken);
-  
+  const result = await makeRequest(
+    "GET",
+    "/loans?status=returned",
+    null,
+    testData.adminToken,
+  );
+
   if (result.success) {
     const loans = result.data.data.loans;
-    const allLoansReturned = loans.every(loan => loan.status === "returned");
+    const allLoansReturned = loans.every((loan) => loan.status === "returned");
     if (allLoansReturned) {
       console.log("✅ Loan filtering by status successful");
       return true;
@@ -1626,10 +1947,10 @@ async function testLoanFiltering() {
 
 async function testPublisherPagination() {
   console.log("🏢 Testing Publisher Pagination...");
-  
+
   // Test pagination with page 1, limit 1
   const result = await makeRequest("GET", "/publishers?page=1&limit=1");
-  
+
   if (result.success) {
     const publishers = result.data.data.publishers;
     if (publishers.length <= 1) {
@@ -1647,14 +1968,20 @@ async function testPublisherPagination() {
 
 async function testReaderFiltering() {
   console.log("👥 Testing Reader Filtering...");
-  
+
   // Test filtering by first name
-  const result = await makeRequest("GET", "/readers?reader_fname=John", null, testData.adminToken);
-  
+  const result = await makeRequest(
+    "GET",
+    "/readers?reader_fname=John",
+    null,
+    testData.adminToken,
+  );
+
   if (result.success) {
     const readers = result.data.data || result.data;
-    const allReadersNamedJohn = Array.isArray(readers) ? 
-      readers.every(reader => reader.reader_fname === "John") : true;
+    const allReadersNamedJohn = Array.isArray(readers)
+      ? readers.every((reader) => reader.reader_fname === "John")
+      : true;
     if (allReadersNamedJohn) {
       console.log("✅ Reader filtering by first name successful");
       return true;
@@ -1670,23 +1997,33 @@ async function testReaderFiltering() {
 
 async function testCombinedFiltering() {
   console.log("🔗 Testing Combined Filtering (Multiple Parameters)...");
-  
+
   // Test combining filtering, sorting, and pagination
-  const result = await makeRequest("GET", "/books?book_pages[gte]=100&sort=book_title&page=1&limit=2&fields=book_title,book_pages");
-  
+  const result = await makeRequest(
+    "GET",
+    "/books?book_pages[gte]=100&sort=book_title&page=1&limit=2&fields=book_title,book_pages",
+  );
+
   if (result.success) {
     const books = result.data.data.books;
     // Verify all books have at least 100 pages
-    const allBooksHaveMinPages = books.every(book => book.book_pages >= 100);
+    const allBooksHaveMinPages = books.every((book) => book.book_pages >= 100);
     // Verify pagination worked (max 2 results)
     const paginationWorked = books.length <= 2;
     // Verify field selection worked
-    const fieldSelectionWorked = books.every(book => 
-      Object.keys(book).every(key => 
-        ['book_title', 'book_pages', '_id', '__v', 'authorId', 'publisherId'].includes(key)
-      )
+    const fieldSelectionWorked = books.every((book) =>
+      Object.keys(book).every((key) =>
+        [
+          "book_title",
+          "book_pages",
+          "_id",
+          "__v",
+          "authorId",
+          "publisherId",
+        ].includes(key),
+      ),
     );
-    
+
     if (allBooksHaveMinPages && paginationWorked && fieldSelectionWorked) {
       console.log("✅ Combined filtering successful");
       return true;
@@ -1702,13 +2039,18 @@ async function testCombinedFiltering() {
 
 async function testFineFiltering() {
   console.log("💰 Testing Fine Filtering...");
-  
+
   // Test filtering by status
-  const result = await makeRequest("GET", "/fines?status=unpaid", null, testData.adminToken);
-  
+  const result = await makeRequest(
+    "GET",
+    "/fines?status=unpaid",
+    null,
+    testData.adminToken,
+  );
+
   if (result.success) {
     const fines = result.data.data.fines;
-    const allFinesUnpaid = fines.every(fine => fine.status === "unpaid");
+    const allFinesUnpaid = fines.every((fine) => fine.status === "unpaid");
     if (allFinesUnpaid) {
       console.log("✅ Fine filtering by status successful");
       return true;
@@ -1724,14 +2066,20 @@ async function testFineFiltering() {
 
 async function testStaffFiltering() {
   console.log("👨‍💼 Testing Staff Filtering...");
-  
+
   // Test filtering by role
-  const result = await makeRequest("GET", "/staff?role=admin", null, testData.adminToken);
-  
+  const result = await makeRequest(
+    "GET",
+    "/staff?role=admin",
+    null,
+    testData.adminToken,
+  );
+
   if (result.success) {
     const staff = result.data.data || result.data;
-    const allStaffAdmin = Array.isArray(staff) ? 
-      staff.every(member => member.role === "admin") : true;
+    const allStaffAdmin = Array.isArray(staff)
+      ? staff.every((member) => member.role === "admin")
+      : true;
     if (allStaffAdmin) {
       console.log("✅ Staff filtering by role successful");
       return true;
@@ -1747,10 +2095,10 @@ async function testStaffFiltering() {
 
 async function testInvalidFilterParameters() {
   console.log("❌ Testing Invalid Filter Parameters...");
-  
+
   // Test with invalid field name (should still work but return all results)
   const result = await makeRequest("GET", "/authors?invalid_field=test");
-  
+
   if (result.success) {
     console.log("✅ Invalid filter parameters handled gracefully");
     return true;
@@ -1762,10 +2110,13 @@ async function testInvalidFilterParameters() {
 
 async function testEmptyFilterResults() {
   console.log("🔍 Testing Empty Filter Results...");
-  
+
   // Test filter that should return no results
-  const result = await makeRequest("GET", "/authors?author_name=NonexistentAuthor123");
-  
+  const result = await makeRequest(
+    "GET",
+    "/authors?author_name=NonexistentAuthor123",
+  );
+
   if (result.success) {
     const authors = result.data.data.authors;
     if (authors.length === 0) {
@@ -1783,12 +2134,18 @@ async function testEmptyFilterResults() {
 
 // Main test runner
 async function runTests() {
-  console.log("🚀 Starting ENHANCED Comprehensive Library Management System API Tests\n");
+  console.log(
+    "🚀 Starting ENHANCED Comprehensive Library Management System API Tests\n",
+  );
   console.log("=".repeat(80));
 
   const testSuite = [
     // ============= AUTHENTICATION & AUTHORIZATION TESTS =============
-    { category: "Authentication", name: "Admin Login", test: measureTime("Admin Login", testAdminLogin) },
+    {
+      category: "Authentication",
+      name: "Admin Login",
+      test: measureTime("Admin Login", testAdminLogin),
+    },
     {
       category: "Authentication",
       name: "Create Librarian",
@@ -1799,9 +2156,21 @@ async function runTests() {
       name: "Create Second Admin",
       test: measureTime("Create Second Admin", testCreateSecondAdmin),
     },
-    { category: "Authentication", name: "Librarian Login", test: measureTime("Librarian Login", testLibrarianLogin) },
-    { category: "Authentication", name: "Create Reader", test: measureTime("Create Reader", testCreateReader) },
-    { category: "Authentication", name: "Reader Login", test: measureTime("Reader Login", testReaderLogin) },
+    {
+      category: "Authentication",
+      name: "Librarian Login",
+      test: measureTime("Librarian Login", testLibrarianLogin),
+    },
+    {
+      category: "Authentication",
+      name: "Create Reader",
+      test: measureTime("Create Reader", testCreateReader),
+    },
+    {
+      category: "Authentication",
+      name: "Reader Login",
+      test: measureTime("Reader Login", testReaderLogin),
+    },
     {
       category: "Authentication",
       name: "Create Second Reader",
@@ -1809,10 +2178,26 @@ async function runTests() {
     },
 
     // ============= AUTHOR CRUD TESTS =============
-    { category: "Authors", name: "Create Author", test: measureTime("Create Author", testCreateAuthor) },
-    { category: "Authors", name: "Get All Authors", test: measureTime("Get All Authors", testGetAllAuthors) },
-    { category: "Authors", name: "Get Author by ID", test: measureTime("Get Author by ID", testGetAuthorById) },
-    { category: "Authors", name: "Update Author", test: measureTime("Update Author", testUpdateAuthor) },
+    {
+      category: "Authors",
+      name: "Create Author",
+      test: measureTime("Create Author", testCreateAuthor),
+    },
+    {
+      category: "Authors",
+      name: "Get All Authors",
+      test: measureTime("Get All Authors", testGetAllAuthors),
+    },
+    {
+      category: "Authors",
+      name: "Get Author by ID",
+      test: measureTime("Get Author by ID", testGetAuthorById),
+    },
+    {
+      category: "Authors",
+      name: "Update Author",
+      test: measureTime("Update Author", testUpdateAuthor),
+    },
     {
       category: "Authors",
       name: "Create Second Author",
@@ -1820,13 +2205,21 @@ async function runTests() {
     },
 
     // ============= PUBLISHER CRUD TESTS =============
-    { category: "Publishers", name: "Create Publisher", test: measureTime("Create Publisher", testCreatePublisher) },
+    {
+      category: "Publishers",
+      name: "Create Publisher",
+      test: measureTime("Create Publisher", testCreatePublisher),
+    },
     {
       category: "Publishers",
       name: "Get All Publishers",
       test: measureTime("Get All Publishers", testGetAllPublishers),
     },
-    { category: "Publishers", name: "Update Publisher", test: measureTime("Update Publisher", testUpdatePublisher) },
+    {
+      category: "Publishers",
+      name: "Update Publisher",
+      test: measureTime("Update Publisher", testUpdatePublisher),
+    },
     {
       category: "Publishers",
       name: "Create Second Publisher",
@@ -1834,66 +2227,206 @@ async function runTests() {
     },
 
     // ============= BOOK CRUD TESTS =============
-    { category: "Books", name: "Create Book", test: measureTime("Create Book", testCreateBook) },
-    { category: "Books", name: "Get All Books", test: measureTime("Get All Books", testGetAllBooks) },
-    { category: "Books", name: "Get Book by ID", test: measureTime("Get Book by ID", testGetBookById) },
-    { category: "Books", name: "Update Book", test: measureTime("Update Book", testUpdateBook) },
-    { category: "Books", name: "Create Second Book", test: measureTime("Create Second Book", testCreateSecondBook) },
-    
+    {
+      category: "Books",
+      name: "Create Book",
+      test: measureTime("Create Book", testCreateBook),
+    },
+    {
+      category: "Books",
+      name: "Get All Books",
+      test: measureTime("Get All Books", testGetAllBooks),
+    },
+    {
+      category: "Books",
+      name: "Get Book by ID",
+      test: measureTime("Get Book by ID", testGetBookById),
+    },
+    {
+      category: "Books",
+      name: "Update Book",
+      test: measureTime("Update Book", testUpdateBook),
+    },
+    {
+      category: "Books",
+      name: "Create Second Book",
+      test: measureTime("Create Second Book", testCreateSecondBook),
+    },
+
     // ============= BOOK STATUS & ISBN TESTS =============
-    { category: "Books", name: "Book Status Update", test: measureTime("Book Status Update", testBookStatusUpdate) },
-    { category: "Books", name: "Book Status Validation", test: measureTime("Book Status Validation", testBookStatusValidation) },
-    { category: "Books", name: "ISBN Validation", test: measureTime("ISBN Validation", testISBNValidation) },
+    {
+      category: "Books",
+      name: "Book Status Update",
+      test: measureTime("Book Status Update", testBookStatusUpdate),
+    },
+    {
+      category: "Books",
+      name: "Book Status Validation",
+      test: measureTime("Book Status Validation", testBookStatusValidation),
+    },
+    {
+      category: "Books",
+      name: "ISBN Validation",
+      test: measureTime("ISBN Validation", testISBNValidation),
+    },
 
     // ============= LOAN MANAGEMENT TESTS =============
-    { category: "Loans", name: "Create Loan", test: measureTime("Create Loan", testCreateLoan) },
-    { category: "Loans", name: "Book Status After Loan", test: measureTime("Book Status After Loan", testBookStatusAfterLoan) },
-    { category: "Loans", name: "Get All Loans", test: measureTime("Get All Loans", testGetAllLoans) },
-    { category: "Loans", name: "Create Second Loan", test: measureTime("Create Second Loan", testCreateSecondLoan) },
-    { category: "Loans", name: "Get Overdue Loans", test: measureTime("Get Overdue Loans", testGetOverdueLoans) },
-    { category: "Loans", name: "Return Book", test: measureTime("Return Book", testReturnBook) },
+    {
+      category: "Loans",
+      name: "Create Loan",
+      test: measureTime("Create Loan", testCreateLoan),
+    },
+    {
+      category: "Loans",
+      name: "Book Status After Loan",
+      test: measureTime("Book Status After Loan", testBookStatusAfterLoan),
+    },
+    {
+      category: "Loans",
+      name: "Get All Loans",
+      test: measureTime("Get All Loans", testGetAllLoans),
+    },
+    {
+      category: "Loans",
+      name: "Create Second Loan",
+      test: measureTime("Create Second Loan", testCreateSecondLoan),
+    },
+    {
+      category: "Loans",
+      name: "Get Overdue Loans",
+      test: measureTime("Get Overdue Loans", testGetOverdueLoans),
+    },
+    {
+      category: "Loans",
+      name: "Return Book",
+      test: measureTime("Return Book", testReturnBook),
+    },
 
     // ============= FINE MANAGEMENT TESTS =============
-    { category: "Fines", name: "Create Fine", test: measureTime("Create Fine", testCreateFine) },
-    { category: "Fines", name: "Get All Fines", test: measureTime("Get All Fines", testGetAllFines) },
+    {
+      category: "Fines",
+      name: "Create Fine",
+      test: measureTime("Create Fine", testCreateFine),
+    },
+    {
+      category: "Fines",
+      name: "Get All Fines",
+      test: measureTime("Get All Fines", testGetAllFines),
+    },
     {
       category: "Fines",
       name: "Create Overdue Fines",
       test: measureTime("Create Overdue Fines", testCreateOverdueFines),
     },
-    { category: "Fines", name: "Pay Fine", test: measureTime("Pay Fine", testPayFine) },
+    {
+      category: "Fines",
+      name: "Pay Fine",
+      test: measureTime("Pay Fine", testPayFine),
+    },
 
     // ============= USER PROFILE TESTS =============
-    { category: "Profiles", name: "Get Reader Profile", test: measureTime("Get Reader Profile", testGetReaderProfile) },
+    {
+      category: "Profiles",
+      name: "Get Reader Profile",
+      test: measureTime("Get Reader Profile", testGetReaderProfile),
+    },
     {
       category: "Profiles",
       name: "Update Reader Profile",
       test: measureTime("Update Reader Profile", testUpdateReaderProfile),
     },
-    { category: "Profiles", name: "Get Staff Profile", test: measureTime("Get Staff Profile", testGetStaffProfile) },
+    {
+      category: "Profiles",
+      name: "Get Staff Profile",
+      test: measureTime("Get Staff Profile", testGetStaffProfile),
+    },
     {
       category: "Profiles",
       name: "Update Staff Profile",
       test: measureTime("Update Staff Profile", testUpdateStaffProfile),
     },
-    { category: "Profiles", name: "Get All Readers", test: measureTime("Get All Readers", testGetAllReaders) },
-    { category: "Profiles", name: "Get All Staff", test: measureTime("Get All Staff", testGetAllStaff) },
+    {
+      category: "Profiles",
+      name: "Get All Readers",
+      test: measureTime("Get All Readers", testGetAllReaders),
+    },
+    {
+      category: "Profiles",
+      name: "Get All Staff",
+      test: measureTime("Get All Staff", testGetAllStaff),
+    },
 
     // ============= API FILTERING TESTS =============
-    { category: "API Filters", name: "Author Filtering", test: measureTime("Author Filtering", testAuthorFiltering) },
-    { category: "API Filters", name: "Author Sorting", test: measureTime("Author Sorting", testAuthorSorting) },
-    { category: "API Filters", name: "Author Pagination", test: measureTime("Author Pagination", testAuthorPagination) },
-    { category: "API Filters", name: "Author Field Selection", test: measureTime("Author Field Selection", testAuthorFieldSelection) },
-    { category: "API Filters", name: "Book Filtering", test: measureTime("Book Filtering", testBookFiltering) },
-    { category: "API Filters", name: "Book Sorting Desc", test: measureTime("Book Sorting Desc", testBookSortingDescending) },
-    { category: "API Filters", name: "Loan Filtering", test: measureTime("Loan Filtering", testLoanFiltering) },
-    { category: "API Filters", name: "Publisher Pagination", test: measureTime("Publisher Pagination", testPublisherPagination) },
-    { category: "API Filters", name: "Reader Filtering", test: measureTime("Reader Filtering", testReaderFiltering) },
-    { category: "API Filters", name: "Combined Filtering", test: measureTime("Combined Filtering", testCombinedFiltering) },
-    { category: "API Filters", name: "Fine Filtering", test: measureTime("Fine Filtering", testFineFiltering) },
-    { category: "API Filters", name: "Staff Filtering", test: measureTime("Staff Filtering", testStaffFiltering) },
-    { category: "API Filters", name: "Invalid Parameters", test: measureTime("Invalid Parameters", testInvalidFilterParameters) },
-    { category: "API Filters", name: "Empty Results", test: measureTime("Empty Results", testEmptyFilterResults) },
+    {
+      category: "API Filters",
+      name: "Author Filtering",
+      test: measureTime("Author Filtering", testAuthorFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Author Sorting",
+      test: measureTime("Author Sorting", testAuthorSorting),
+    },
+    {
+      category: "API Filters",
+      name: "Author Pagination",
+      test: measureTime("Author Pagination", testAuthorPagination),
+    },
+    {
+      category: "API Filters",
+      name: "Author Field Selection",
+      test: measureTime("Author Field Selection", testAuthorFieldSelection),
+    },
+    {
+      category: "API Filters",
+      name: "Book Filtering",
+      test: measureTime("Book Filtering", testBookFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Book Sorting Desc",
+      test: measureTime("Book Sorting Desc", testBookSortingDescending),
+    },
+    {
+      category: "API Filters",
+      name: "Loan Filtering",
+      test: measureTime("Loan Filtering", testLoanFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Publisher Pagination",
+      test: measureTime("Publisher Pagination", testPublisherPagination),
+    },
+    {
+      category: "API Filters",
+      name: "Reader Filtering",
+      test: measureTime("Reader Filtering", testReaderFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Combined Filtering",
+      test: measureTime("Combined Filtering", testCombinedFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Fine Filtering",
+      test: measureTime("Fine Filtering", testFineFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Staff Filtering",
+      test: measureTime("Staff Filtering", testStaffFiltering),
+    },
+    {
+      category: "API Filters",
+      name: "Invalid Parameters",
+      test: measureTime("Invalid Parameters", testInvalidFilterParameters),
+    },
+    {
+      category: "API Filters",
+      name: "Empty Results",
+      test: measureTime("Empty Results", testEmptyFilterResults),
+    },
 
     // ============= SECURITY & VALIDATION TESTS =============
     {
@@ -1901,21 +2434,34 @@ async function runTests() {
       name: "Unauthorized Access",
       test: measureTime("Unauthorized Access", testUnauthorizedAccess),
     },
-    { category: "Security", name: "Invalid Login", test: measureTime("Invalid Login", testInvalidLogin) },
+    {
+      category: "Security",
+      name: "Invalid Login",
+      test: measureTime("Invalid Login", testInvalidLogin),
+    },
     {
       category: "Security",
       name: "Reader Cannot Access Admin",
-      test: measureTime("Reader Cannot Access Admin", testReaderCannotAccessAdminEndpoints),
+      test: measureTime(
+        "Reader Cannot Access Admin",
+        testReaderCannotAccessAdminEndpoints,
+      ),
     },
     {
       category: "Security",
       name: "Librarian Cannot Delete",
-      test: measureTime("Librarian Cannot Delete", testLibrarianCannotDeleteEntities),
+      test: measureTime(
+        "Librarian Cannot Delete",
+        testLibrarianCannotDeleteEntities,
+      ),
     },
     {
       category: "Security",
       name: "Password Update Prevention",
-      test: measureTime("Password Update Prevention", testPasswordUpdatePrevention),
+      test: measureTime(
+        "Password Update Prevention",
+        testPasswordUpdatePrevention,
+      ),
     },
     {
       category: "Security",
@@ -1925,7 +2471,10 @@ async function runTests() {
     {
       category: "Security",
       name: "Password Confirmation Mismatch",
-      test: measureTime("Password Confirmation Mismatch", testPasswordConfirmationMismatch),
+      test: measureTime(
+        "Password Confirmation Mismatch",
+        testPasswordConfirmationMismatch,
+      ),
     },
 
     // ============= PASSWORD UPDATE TESTS (after security tests) =============
@@ -1941,7 +2490,11 @@ async function runTests() {
     },
 
     // ============= DATA VALIDATION TESTS =============
-    { category: "Validation", name: "Duplicate Reader", test: measureTime("Duplicate Reader", testDuplicateReader) },
+    {
+      category: "Validation",
+      name: "Duplicate Reader",
+      test: measureTime("Duplicate Reader", testDuplicateReader),
+    },
     {
       category: "Validation",
       name: "Invalid Book Creation",
@@ -1957,9 +2510,16 @@ async function runTests() {
     {
       category: "Edge Cases",
       name: "Delete Nonexistent Entity",
-      test: measureTime("Delete Nonexistent Entity", testDeleteNonexistentEntity),
+      test: measureTime(
+        "Delete Nonexistent Entity",
+        testDeleteNonexistentEntity,
+      ),
     },
-    { category: "Edge Cases", name: "Malformed ID", test: measureTime("Malformed ID", testMalformedId) },
+    {
+      category: "Edge Cases",
+      name: "Malformed ID",
+      test: measureTime("Malformed ID", testMalformedId),
+    },
     {
       category: "Edge Cases",
       name: "Large Data Handling",
@@ -1974,7 +2534,11 @@ async function runTests() {
     },
 
     // ============= CLEANUP TESTS =============
-    { category: "Cleanup", name: "Delete Second Book", test: measureTime("Delete Second Book", testDeleteSecondBook) },
+    {
+      category: "Cleanup",
+      name: "Delete Second Book",
+      test: measureTime("Delete Second Book", testDeleteSecondBook),
+    },
     {
       category: "Cleanup",
       name: "Delete Second Author",
@@ -1985,7 +2549,11 @@ async function runTests() {
       name: "Delete Second Publisher",
       test: measureTime("Delete Second Publisher", testDeleteSecondPublisher),
     },
-    { category: "Cleanup", name: "Delete Reader", test: measureTime("Delete Reader", testDeleteReader) },
+    {
+      category: "Cleanup",
+      name: "Delete Reader",
+      test: measureTime("Delete Reader", testDeleteReader),
+    },
     {
       category: "Cleanup",
       name: "Delete Second Admin",
@@ -2064,7 +2632,9 @@ async function runTests() {
 
   Object.entries(categoryStats).forEach(([category, stats]) => {
     const successRate = ((stats.passed / stats.total) * 100).toFixed(1);
-    console.log(`🔸 ${category}: ${stats.passed}/${stats.total} passed (${successRate}%)`);
+    console.log(
+      `🔸 ${category}: ${stats.passed}/${stats.total} passed (${successRate}%)`,
+    );
   });
 
   // Overall Statistics
@@ -2074,18 +2644,23 @@ async function runTests() {
   console.log(`📈 Total Tests: ${testStats.totalTests}`);
   console.log(`✅ Passed: ${testStats.passedTests}`);
   console.log(`❌ Failed: ${testStats.failedTests}`);
-  console.log(`📊 Success Rate: ${((testStats.passedTests / testStats.totalTests) * 100).toFixed(1)}%`);
+  console.log(
+    `📊 Success Rate: ${((testStats.passedTests / testStats.totalTests) * 100).toFixed(1)}%`,
+  );
 
   // Performance Statistics
-  const totalTestTime = Object.values(testStats.testTimes).reduce((sum, time) => sum + time, 0);
+  const totalTestTime = Object.values(testStats.testTimes).reduce(
+    (sum, time) => sum + time,
+    0,
+  );
   const avgTestTime = totalTestTime / Object.keys(testStats.testTimes).length;
   const slowestTest = Object.entries(testStats.testTimes).reduce(
     (max, [name, time]) => (time > max.time ? { name, time } : max),
-    { name: "", time: 0 }
+    { name: "", time: 0 },
   );
   const fastestTest = Object.entries(testStats.testTimes).reduce(
     (min, [name, time]) => (time < min.time ? { name, time } : min),
-    { name: "", time: Infinity }
+    { name: "", time: Infinity },
   );
 
   console.log(`⏱️  Total Execution Time: ${totalTestTime}ms`);
@@ -2095,9 +2670,13 @@ async function runTests() {
 
   if (testStats.failedTests === 0) {
     console.log("\n🎉 ALL TESTS PASSED! Your API is working perfectly.");
-    console.log("🏆 Your Library Management System API is comprehensive and robust!");
+    console.log(
+      "🏆 Your Library Management System API is comprehensive and robust!",
+    );
   } else {
-    console.log(`\n⚠️  ${testStats.failedTests} test(s) failed. Please check the error messages above.`);
+    console.log(
+      `\n⚠️  ${testStats.failedTests} test(s) failed. Please check the error messages above.`,
+    );
   }
 
   // Display captured test data
@@ -2106,7 +2685,8 @@ async function runTests() {
   console.log("=".repeat(80));
   Object.entries(testData).forEach(([key, value]) => {
     if (value && typeof value === "string") {
-      const displayValue = value.length > 40 ? `${value.substring(0, 40)}...` : value;
+      const displayValue =
+        value.length > 40 ? `${value.substring(0, 40)}...` : value;
       console.log(`   ${key}: ${displayValue}`);
     } else if (value && typeof value === "object") {
       console.log(`   ${key}: [${value.length} items]`);
@@ -2225,7 +2805,9 @@ async function main() {
     console.log("🔍 VALIDATING SERVER CONNECTION");
     const serverOnline = await validateServerConnection();
     if (!serverOnline) {
-      console.log("\n🚨 Cannot proceed with tests. Please start the server first.");
+      console.log(
+        "\n🚨 Cannot proceed with tests. Please start the server first.",
+      );
       console.log("💡 Run: npm start or node server.js");
       process.exit(1);
     }

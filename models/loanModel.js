@@ -38,13 +38,15 @@ const loanSchema = new mongoose.Schema(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-  }
+  },
 );
 
 // Pre-save middleware to set due date (14 days from start date)
 loanSchema.pre("save", function (next) {
   if (this.isNew) {
-    this.loan_due_date = new Date(this.loan_start_date.getTime() + 14 * 24 * 60 * 60 * 1000);
+    this.loan_due_date = new Date(
+      this.loan_start_date.getTime() + 14 * 24 * 60 * 60 * 1000,
+    );
   }
   next();
 });
@@ -57,7 +59,7 @@ loanSchema.statics.updateOverdueLoans = async function () {
       loan_due_date: { $lt: now },
       status: "active",
     },
-    { status: "overdue" }
+    { status: "overdue" },
   );
 };
 
@@ -75,7 +77,7 @@ loanSchema.index(
   {
     unique: true,
     partialFilterExpression: { status: { $in: ["active", "overdue"] } },
-  }
+  },
 );
 
 const Loan = mongoose.model("Loan", loanSchema);

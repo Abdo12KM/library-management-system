@@ -1,5 +1,13 @@
 const express = require("express");
-const { createStaff, getAllStaff, getStaffById, deleteStaff, getMe, updateMe, updateMyPassword } = require("../controllers/staffController");
+const {
+  createStaff,
+  getAllStaff,
+  getStaffById,
+  deleteStaff,
+  getMe,
+  updateMe,
+  updateMyPassword,
+} = require("../controllers/staffController");
 const { protect, restrictTo } = require("../controllers/authController");
 
 const staffRouter = express.Router();

@@ -33,7 +33,7 @@ const publisherSchema = new mongoose.Schema(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-  }
+  },
 );
 
 const Publisher = mongoose.model("Publisher", publisherSchema);

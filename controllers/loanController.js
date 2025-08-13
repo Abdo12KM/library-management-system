@@ -19,7 +19,7 @@ exports.getAllLoans = catchAsync(async (req, res, next) => {
         path: "bookId",
         select: "book_title",
       }),
-    req.query
+    req.query,
   )
     .filter()
     .sort()
@@ -56,7 +56,12 @@ exports.createLoan = catchAsync(async (req, res, next) => {
 
   // Check if book is available for loan
   if (book.book_status !== "available") {
-    return next(new AppError(`Book is currently ${book.book_status} and not available for loan`, 400));
+    return next(
+      new AppError(
+        `Book is currently ${book.book_status} and not available for loan`,
+        400,
+      ),
+    );
   }
 
   // Check if reader exists
@@ -73,7 +78,9 @@ exports.createLoan = catchAsync(async (req, res, next) => {
   });
 
   if (existingActiveLoan) {
-    return next(new AppError("This book is currently on loan and not available", 400));
+    return next(
+      new AppError("This book is currently on loan and not available", 400),
+    );
   }
 
   try {
@@ -95,7 +102,9 @@ exports.createLoan = catchAsync(async (req, res, next) => {
   } catch (error) {
     // Handle duplicate key error from the unique index
     if (error.code === 11000 && error.keyPattern && error.keyPattern.bookId) {
-      return next(new AppError("This book is currently on loan and not available", 400));
+      return next(
+        new AppError("This book is currently on loan and not available", 400),
+      );
     }
     // Re-throw other errors
     throw error;
@@ -142,7 +151,7 @@ exports.getOverdueLoans = catchAsync(async (req, res, next) => {
         path: "bookId",
         select: "book_title",
       }),
-    req.query
+    req.query,
   )
     .filter()
     .sort()

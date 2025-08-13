@@ -13,7 +13,12 @@ const authorRouter = express.Router();
 authorRouter.get("/", getAllAuthors);
 authorRouter.post("/", protect, restrictTo("admin", "librarian"), createAuthor);
 authorRouter.get("/:id", getAuthorById);
-authorRouter.patch("/:id", protect, restrictTo("admin", "librarian"), updateAuthor);
+authorRouter.patch(
+  "/:id",
+  protect,
+  restrictTo("admin", "librarian"),
+  updateAuthor,
+);
 authorRouter.delete("/:id", protect, restrictTo("admin"), deleteAuthor);
 
 module.exports = authorRouter;

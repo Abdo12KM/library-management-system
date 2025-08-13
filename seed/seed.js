@@ -2,263 +2,286 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const fs = require("fs");
 dotenv.config({
-    path: "./.env"
-})
+  path: "./.env",
+});
 
 mongoose
-    .connect(process.env.DATABASE_URI)
-    .then(() => {
-        console.log("DB connection successfully");
-    })
-    .catch((err) => {
-        console.log(err.message);
-    });
+  .connect(process.env.DATABASE_URI)
+  .then(() => {
+    console.log("DB connection successfully");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 exports.importDataToDB = (Model, data) => {
-    Model.create(data)
-        .then(() => {
-            console.log(`Data seeded successfully into ${Model.modelName}`);
-        })
-        .catch((err) => {
-            console.error(`Error seeding ${Model.modelName}:`, err);
-        })
-        .finally(() => {
-            process.exit();
-        });
+  Model.create(data)
+    .then(() => {
+      console.log(`Data seeded successfully into ${Model.modelName}`);
+    })
+    .catch((err) => {
+      console.error(`Error seeding ${Model.modelName}:`, err);
+    })
+    .finally(() => {
+      process.exit();
+    });
 };
 
 exports.deleteCollectionData = (Model) => {
-    Model.deleteMany({})
-        .then(() => {
-            console.log(`All documents deleted from ${Model.modelName}`);
-        })
-        .catch((err) => {
-            console.error(`Error deleting documents from ${Model.modelName}:`, err);
-        })
-        .finally(() => {
-            process.exit();
-        });
+  Model.deleteMany({})
+    .then(() => {
+      console.log(`All documents deleted from ${Model.modelName}`);
+    })
+    .catch((err) => {
+      console.error(`Error deleting documents from ${Model.modelName}:`, err);
+    })
+    .finally(() => {
+      process.exit();
+    });
 };
 
 exports.seedAllData = async () => {
-    try {
-        const Reader = require("../models/readerModel");
-        const Author = require("../models/authorModel");
-        const Publisher = require("../models/publisherModel");
-        const Staff = require("../models/staffModel");
-        const Book = require("../models/bookModel");
+  try {
+    const Reader = require("../models/readerModel");
+    const Author = require("../models/authorModel");
+    const Publisher = require("../models/publisherModel");
+    const Staff = require("../models/staffModel");
+    const Book = require("../models/bookModel");
 
-        console.log("Starting complete database seeding...");
+    console.log("Starting complete database seeding...");
 
-        // Step 1: Seed Authors
-        console.log("Seeding Authors...");
-        const authorsData = JSON.parse(fs.readFileSync(`${__dirname}/authors.json`, "utf-8"));
-        await Author.create(authorsData);
-        console.log("✓ Authors seeded successfully");
+    // Step 1: Seed Authors
+    console.log("Seeding Authors...");
+    const authorsData = JSON.parse(
+      fs.readFileSync(`${__dirname}/authors.json`, "utf-8"),
+    );
+    await Author.create(authorsData);
+    console.log("✓ Authors seeded successfully");
 
-        // Step 2: Seed Publishers
-        console.log("Seeding Publishers...");
-        const publishersData = JSON.parse(fs.readFileSync(`${__dirname}/publishers.json`, "utf-8"));
-        await Publisher.create(publishersData);
-        console.log("✓ Publishers seeded successfully");
+    // Step 2: Seed Publishers
+    console.log("Seeding Publishers...");
+    const publishersData = JSON.parse(
+      fs.readFileSync(`${__dirname}/publishers.json`, "utf-8"),
+    );
+    await Publisher.create(publishersData);
+    console.log("✓ Publishers seeded successfully");
 
-        // Step 3: Seed Staff
-        console.log("Seeding Staff...");
-        const staffData = JSON.parse(fs.readFileSync(`${__dirname}/staff.json`, "utf-8"));
-        await Staff.create(staffData);
-        console.log("✓ Staff seeded successfully");
+    // Step 3: Seed Staff
+    console.log("Seeding Staff...");
+    const staffData = JSON.parse(
+      fs.readFileSync(`${__dirname}/staff.json`, "utf-8"),
+    );
+    await Staff.create(staffData);
+    console.log("✓ Staff seeded successfully");
 
-        // Step 4: Seed Readers
-        console.log("Seeding Readers...");
-        const readersData = JSON.parse(fs.readFileSync(`${__dirname}/readers.json`, "utf-8"));
-        await Reader.create(readersData);
-        console.log("✓ Readers seeded successfully");
+    // Step 4: Seed Readers
+    console.log("Seeding Readers...");
+    const readersData = JSON.parse(
+      fs.readFileSync(`${__dirname}/readers.json`, "utf-8"),
+    );
+    await Reader.create(readersData);
+    console.log("✓ Readers seeded successfully");
 
-        // Step 5: Seed Books (with reference resolution)
-        console.log("Seeding Books...");
-        const booksData = JSON.parse(fs.readFileSync(`${__dirname}/books.json`, "utf-8"));
-        
-        // Get all authors and publishers to map names to IDs
-        const authors = await Author.find({});
-        const publishers = await Publisher.find({});
-        
-        const authorMap = {};
-        const publisherMap = {};
-        
-        authors.forEach(author => {
-            authorMap[author.author_name] = author._id;
-        });
-        
-        publishers.forEach(publisher => {
-            publisherMap[publisher.publisher_name] = publisher._id;
-        });
+    // Step 5: Seed Books (with reference resolution)
+    console.log("Seeding Books...");
+    const booksData = JSON.parse(
+      fs.readFileSync(`${__dirname}/books.json`, "utf-8"),
+    );
 
-        // Transform books data to use actual ObjectIds
-        const booksWithRefs = booksData.map(book => {
-            const { author_name, publisher_name, ...bookData } = book;
-            
-            if (!authorMap[author_name]) {
-                throw new Error(`Author "${author_name}" not found in database`);
-            }
-            if (!publisherMap[publisher_name]) {
-                throw new Error(`Publisher "${publisher_name}" not found in database`);
-            }
-            
-            return {
-                ...bookData,
-                authorId: authorMap[author_name],
-                publisherId: publisherMap[publisher_name],
-                release_date: new Date(book.release_date)
-            };
-        });
+    // Get all authors and publishers to map names to IDs
+    const authors = await Author.find({});
+    const publishers = await Publisher.find({});
 
-        await Book.create(booksWithRefs);
-        console.log("✓ Books seeded successfully");
+    const authorMap = {};
+    const publisherMap = {};
 
-        // Step 6: Seed Loans (with reference resolution)
-        console.log("Seeding Loans...");
-        const loansData = JSON.parse(fs.readFileSync(`${__dirname}/loans.json`, "utf-8"));
-        
-        // Get all readers, staff, and books to map to IDs
-        const readers = await Reader.find({});
-        const staff = await Staff.find({});
-        const books = await Book.find({});
-        
-        const readerMap = {};
-        const staffMap = {};
-        const bookMap = {};
-        
-        readers.forEach(reader => {
-            readerMap[reader.reader_email] = reader._id;
-        });
-        
-        staff.forEach(staffMember => {
-            staffMap[staffMember.staff_email] = staffMember._id;
-        });
-        
-        books.forEach(book => {
-            bookMap[book.book_title] = book._id;
-        });
+    authors.forEach((author) => {
+      authorMap[author.author_name] = author._id;
+    });
 
-        // Transform loans data to use actual ObjectIds
-        const loansWithRefs = loansData.map(loan => {
-            const { reader_email, staff_email, book_title, ...loanData } = loan;
-            
-            if (!readerMap[reader_email]) {
-                throw new Error(`Reader with email "${reader_email}" not found in database`);
-            }
-            if (!staffMap[staff_email]) {
-                throw new Error(`Staff with email "${staff_email}" not found in database`);
-            }
-            if (!bookMap[book_title]) {
-                throw new Error(`Book with title "${book_title}" not found in database`);
-            }
-            
-            return {
-                ...loanData,
-                readerId: readerMap[reader_email],
-                staffId: staffMap[staff_email],
-                bookId: bookMap[book_title],
-                loan_start_date: new Date(loan.loan_start_date),
-                loan_return_date: loan.loan_return_date ? new Date(loan.loan_return_date) : undefined
-            };
-        });
+    publishers.forEach((publisher) => {
+      publisherMap[publisher.publisher_name] = publisher._id;
+    });
 
-        const Loan = require("../models/loanModel");
-        await Loan.create(loansWithRefs);
-        console.log("✓ Loans seeded successfully");
+    // Transform books data to use actual ObjectIds
+    const booksWithRefs = booksData.map((book) => {
+      const { author_name, publisher_name, ...bookData } = book;
 
-        // Step 7: Seed Fines (with reference resolution)
-        console.log("Seeding Fines...");
-        const finesData = JSON.parse(fs.readFileSync(`${__dirname}/fines.json`, "utf-8"));
-        
-        // Get loans to map to fine data
-        const loans = await Loan.find({}).populate('readerId').populate('bookId');
-        const loanMap = {};
-        
-        loans.forEach(loan => {
-            const key = `${loan.readerId.reader_email}_${loan.bookId.book_title}`;
-            loanMap[key] = loan._id;
-        });
+      if (!authorMap[author_name]) {
+        throw new Error(`Author "${author_name}" not found in database`);
+      }
+      if (!publisherMap[publisher_name]) {
+        throw new Error(`Publisher "${publisher_name}" not found in database`);
+      }
 
-        // Transform fines data to use actual ObjectIds
-        const finesWithRefs = finesData.map(fine => {
-            const { reader_email, book_title, ...fineData } = fine;
-            const loanKey = `${reader_email}_${book_title}`;
-            
-            if (!loanMap[loanKey]) {
-                console.warn(`Warning: Loan for reader "${reader_email}" and book "${book_title}" not found, skipping fine`);
-                return null;
-            }
-            
-            return {
-                ...fineData,
-                loanId: loanMap[loanKey],
-                fine_due_date: new Date(fine.fine_due_date)
-            };
-        }).filter(fine => fine !== null); // Remove null entries
+      return {
+        ...bookData,
+        authorId: authorMap[author_name],
+        publisherId: publisherMap[publisher_name],
+        release_date: new Date(book.release_date),
+      };
+    });
 
-        const Fine = require("../models/fineModel");
-        await Fine.create(finesWithRefs);
-        console.log("✓ Fines seeded successfully");
+    await Book.create(booksWithRefs);
+    console.log("✓ Books seeded successfully");
 
-        console.log("\n🎉 All data seeded successfully!");
-        console.log("Database contents:");
-        console.log(`- ${authorsData.length} Authors`);
-        console.log(`- ${publishersData.length} Publishers`);
-        console.log(`- ${staffData.length} Staff members`);
-        console.log(`- ${readersData.length} Readers`);
-        console.log(`- ${booksData.length} Books`);
-        console.log(`- ${loansWithRefs.length} Loans`);
-        console.log(`- ${finesWithRefs.length} Fines`);
+    // Step 6: Seed Loans (with reference resolution)
+    console.log("Seeding Loans...");
+    const loansData = JSON.parse(
+      fs.readFileSync(`${__dirname}/loans.json`, "utf-8"),
+    );
 
-    } catch (error) {
-        console.error("Error seeding all data:", error);
-    } finally {
-        process.exit();
-    }
+    // Get all readers, staff, and books to map to IDs
+    const readers = await Reader.find({});
+    const staff = await Staff.find({});
+    const books = await Book.find({});
+
+    const readerMap = {};
+    const staffMap = {};
+    const bookMap = {};
+
+    readers.forEach((reader) => {
+      readerMap[reader.reader_email] = reader._id;
+    });
+
+    staff.forEach((staffMember) => {
+      staffMap[staffMember.staff_email] = staffMember._id;
+    });
+
+    books.forEach((book) => {
+      bookMap[book.book_title] = book._id;
+    });
+
+    // Transform loans data to use actual ObjectIds
+    const loansWithRefs = loansData.map((loan) => {
+      const { reader_email, staff_email, book_title, ...loanData } = loan;
+
+      if (!readerMap[reader_email]) {
+        throw new Error(
+          `Reader with email "${reader_email}" not found in database`,
+        );
+      }
+      if (!staffMap[staff_email]) {
+        throw new Error(
+          `Staff with email "${staff_email}" not found in database`,
+        );
+      }
+      if (!bookMap[book_title]) {
+        throw new Error(
+          `Book with title "${book_title}" not found in database`,
+        );
+      }
+
+      return {
+        ...loanData,
+        readerId: readerMap[reader_email],
+        staffId: staffMap[staff_email],
+        bookId: bookMap[book_title],
+        loan_start_date: new Date(loan.loan_start_date),
+        loan_return_date: loan.loan_return_date
+          ? new Date(loan.loan_return_date)
+          : undefined,
+      };
+    });
+
+    const Loan = require("../models/loanModel");
+    await Loan.create(loansWithRefs);
+    console.log("✓ Loans seeded successfully");
+
+    // Step 7: Seed Fines (with reference resolution)
+    console.log("Seeding Fines...");
+    const finesData = JSON.parse(
+      fs.readFileSync(`${__dirname}/fines.json`, "utf-8"),
+    );
+
+    // Get loans to map to fine data
+    const loans = await Loan.find({}).populate("readerId").populate("bookId");
+    const loanMap = {};
+
+    loans.forEach((loan) => {
+      const key = `${loan.readerId.reader_email}_${loan.bookId.book_title}`;
+      loanMap[key] = loan._id;
+    });
+
+    // Transform fines data to use actual ObjectIds
+    const finesWithRefs = finesData
+      .map((fine) => {
+        const { reader_email, book_title, ...fineData } = fine;
+        const loanKey = `${reader_email}_${book_title}`;
+
+        if (!loanMap[loanKey]) {
+          console.warn(
+            `Warning: Loan for reader "${reader_email}" and book "${book_title}" not found, skipping fine`,
+          );
+          return null;
+        }
+
+        return {
+          ...fineData,
+          loanId: loanMap[loanKey],
+          fine_due_date: new Date(fine.fine_due_date),
+        };
+      })
+      .filter((fine) => fine !== null); // Remove null entries
+
+    const Fine = require("../models/fineModel");
+    await Fine.create(finesWithRefs);
+    console.log("✓ Fines seeded successfully");
+
+    console.log("\n🎉 All data seeded successfully!");
+    console.log("Database contents:");
+    console.log(`- ${authorsData.length} Authors`);
+    console.log(`- ${publishersData.length} Publishers`);
+    console.log(`- ${staffData.length} Staff members`);
+    console.log(`- ${readersData.length} Readers`);
+    console.log(`- ${booksData.length} Books`);
+    console.log(`- ${loansWithRefs.length} Loans`);
+    console.log(`- ${finesWithRefs.length} Fines`);
+  } catch (error) {
+    console.error("Error seeding all data:", error);
+  } finally {
+    process.exit();
+  }
 };
 
 exports.deleteAllData = async () => {
-    try {
-        const Reader = require("../models/readerModel");
-        const Author = require("../models/authorModel");
-        const Publisher = require("../models/publisherModel");
-        const Staff = require("../models/staffModel");
-        const Book = require("../models/bookModel");
-        const Loan = require("../models/loanModel");
-        const Fine = require("../models/fineModel");
+  try {
+    const Reader = require("../models/readerModel");
+    const Author = require("../models/authorModel");
+    const Publisher = require("../models/publisherModel");
+    const Staff = require("../models/staffModel");
+    const Book = require("../models/bookModel");
+    const Loan = require("../models/loanModel");
+    const Fine = require("../models/fineModel");
 
-        console.log("Deleting all data from database...");
+    console.log("Deleting all data from database...");
 
-        // Delete in reverse order to handle dependencies
-        await Fine.deleteMany({});
-        console.log("✓ Fines deleted");
+    // Delete in reverse order to handle dependencies
+    await Fine.deleteMany({});
+    console.log("✓ Fines deleted");
 
-        await Loan.deleteMany({});
-        console.log("✓ Loans deleted");
+    await Loan.deleteMany({});
+    console.log("✓ Loans deleted");
 
-        await Book.deleteMany({});
-        console.log("✓ Books deleted");
+    await Book.deleteMany({});
+    console.log("✓ Books deleted");
 
-        await Reader.deleteMany({});
-        console.log("✓ Readers deleted");
+    await Reader.deleteMany({});
+    console.log("✓ Readers deleted");
 
-        await Staff.deleteMany({});
-        console.log("✓ Staff deleted");
+    await Staff.deleteMany({});
+    console.log("✓ Staff deleted");
 
-        await Publisher.deleteMany({});
-        console.log("✓ Publishers deleted");
+    await Publisher.deleteMany({});
+    console.log("✓ Publishers deleted");
 
-        await Author.deleteMany({});
-        console.log("✓ Authors deleted");
+    await Author.deleteMany({});
+    console.log("✓ Authors deleted");
 
-        console.log("\n🗑️  All data deleted successfully!");
-
-    } catch (error) {
-        console.error("Error deleting all data:", error);
-    } finally {
-        process.exit();
-    }
+    console.log("\n🗑️  All data deleted successfully!");
+  } catch (error) {
+    console.error("Error deleting all data:", error);
+  } finally {
+    process.exit();
+  }
 };
-

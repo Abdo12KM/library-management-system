@@ -11,7 +11,14 @@ const signToken = (payload) => {
 };
 
 exports.signUpReader = catchAsync(async (req, res, next) => {
-  const { reader_fname, reader_lname, reader_email, reader_phone_no, reader_address, password } = req.body;
+  const {
+    reader_fname,
+    reader_lname,
+    reader_email,
+    reader_phone_no,
+    reader_address,
+    password,
+  } = req.body;
 
   // Verify email and phone number uniqueness
   const existingReader = await Reader.findOne({
@@ -47,7 +54,9 @@ exports.loginReader = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide email and password", 400));
   }
 
-  const reader = await Reader.findOne({ reader_email: email }).select("+password");
+  const reader = await Reader.findOne({ reader_email: email }).select(
+    "+password",
+  );
 
   if (!reader || !(await reader.correctPassword(password))) {
     return next(new AppError("Incorrect email or password", 401));
@@ -97,8 +106,13 @@ exports.loginStaff = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  if (!req.headers.authorization || !req.headers.authorization.startsWith("Bearer")) {
-    return next(new AppError("You are not logged in! please log in to get access", 401));
+  if (
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith("Bearer")
+  ) {
+    return next(
+      new AppError("You are not logged in! please log in to get access", 401),
+    );
   }
 
   const token = req.headers.authorization.split(" ")[1]; // Bearer token => [Bearer , token]
@@ -139,7 +153,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new AppError("You do not have permission to perform this action", 403));
+      return next(
+        new AppError("You do not have permission to perform this action", 403),
+      );
     }
 
     next();

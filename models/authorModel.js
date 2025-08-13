@@ -25,7 +25,7 @@ const authorSchema = new mongoose.Schema(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
-  }
+  },
 );
 
 const Author = mongoose.model("Author", authorSchema);

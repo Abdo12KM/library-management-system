@@ -5,12 +5,15 @@ This guide explains how to use the comprehensive database seeding system to popu
 ## Quick Start
 
 ### Seed All Data at Once (Recommended)
+
 ```bash
 pnpm db:seedAll
 ```
+
 This command will seed all data in the correct order:
+
 1. Authors (35 diverse authors)
-2. Publishers (25 publishing houses)  
+2. Publishers (25 publishing houses)
 3. Staff (15 library staff members)
 4. Readers (40 library patrons)
 5. Books (60+ books with varied statuses)
@@ -18,9 +21,11 @@ This command will seed all data in the correct order:
 7. Fines (25+ fines covering various states)
 
 ### Delete All Data
+
 ```bash
 pnpm db:deleteAll
 ```
+
 This command will delete all data from the database in the correct order to handle dependencies.
 
 ## Individual Model Seeding
@@ -28,6 +33,7 @@ This command will delete all data from the database in the correct order to hand
 You can also seed individual models:
 
 ### Import Data
+
 ```bash
 pnpm db:seedReaders     # Seed 40 readers with diverse profiles
 pnpm db:seedAuthors     # Seed 35 famous and contemporary authors
@@ -39,6 +45,7 @@ pnpm db:seedFines       # Seed 25+ fines (pending, paid, waived)
 ```
 
 ### Delete Data
+
 ```bash
 pnpm db:deleteReaders     # Delete all readers
 pnpm db:deleteAuthors     # Delete all authors
@@ -52,6 +59,7 @@ pnpm db:deleteFines       # Delete all fines
 ## Comprehensive Seed Data Files
 
 ### `seed/readers.json` (40 readers)
+
 - Diverse demographics and locations across the USA
 - Realistic email addresses from various providers
 - Complete address information with real city/state/zip codes
@@ -59,6 +67,7 @@ pnpm db:deleteFines       # Delete all fines
 - Mix of new and experienced library users
 
 ### `seed/authors.json` (35 authors)
+
 - Classic authors: Stephen King, J.K. Rowling, George Orwell, Agatha Christie
 - Contemporary voices: Chimamanda Ngozi Adichie, Sally Rooney, Liu Cixin
 - Diverse backgrounds: African American, Latin American, Asian, European
@@ -66,6 +75,7 @@ pnpm db:deleteFines       # Delete all fines
 - Real biographical information
 
 ### `seed/publishers.json` (25 publishers)
+
 - Major publishers: Penguin Random House, HarperCollins, Simon & Schuster
 - Academic presses: Oxford University Press, Cambridge University Press
 - Specialty publishers: Tor Books, Europa Editions, Beacon Press
@@ -73,12 +83,14 @@ pnpm db:deleteFines       # Delete all fines
 - Real websites and publication histories
 
 ### `seed/staff.json` (15 staff members)
+
 - Mix of librarians and administrators
 - Diverse names and backgrounds
 - Strong passwords following security requirements
 - Realistic library email addresses
 
 ### `seed/books.json` (60+ books)
+
 - Classic literature: Pride and Prejudice, 1984, To Kill a Mockingbird
 - Contemporary fiction: Normal People, Americanah, The Underground Railroad
 - Various genres: horror, fantasy, science fiction, mystery, literary fiction
@@ -92,6 +104,7 @@ pnpm db:deleteFines       # Delete all fines
 - Rich descriptions and accurate tagging
 
 ### `seed/loans.json` (30+ loans)
+
 - **Active loans**: Currently borrowed, within due period
 - **Overdue loans**: Past due date, accumulating fines
 - **Returned loans**: Complete transaction history
@@ -103,6 +116,7 @@ pnpm db:deleteFines       # Delete all fines
 - Proper date handling for due dates and return dates
 
 ### `seed/fines.json` (25+ fines)
+
 - **Pending fines**: Overdue books with accumulating penalties
 - **Paid fines**: Resolved financial obligations
 - **Waived fines**: Forgiven penalties (student discounts, special circumstances)
@@ -116,24 +130,28 @@ pnpm db:deleteFines       # Delete all fines
 The seeding system creates realistic interconnected data:
 
 ### Book Status Distribution
+
 - **Available** (40%): Ready for checkout
-- **Borrowed** (35%): Currently with patrons  
+- **Borrowed** (35%): Currently with patrons
 - **Maintenance** (15%): Being processed/repaired
 - **Lost** (10%): Missing from collection
 
 ### Loan Scenarios
+
 - **Active loans**: Books currently borrowed, due dates in future
 - **Overdue loans**: Past due dates, triggering fine generation
 - **Returned loans**: Complete borrowing history for analytics
 - **Staff assignments**: Different librarians handling various transactions
 
 ### Fine Management
+
 - **Pending fines**: Active overdue charges
 - **Payment tracking**: Resolved financial obligations
 - **Waiver system**: Forgiven fines for special circumstances
 - **Escalating penalties**: Higher rates for valuable/rare books
 
 ### Author Diversity
+
 - **Geographic representation**: American, British, Nigerian, Japanese, Colombian, etc.
 - **Genre coverage**: Literary fiction, science fiction, mystery, horror, non-fiction
 - **Time periods**: Victorian classics to contemporary bestsellers
@@ -144,23 +162,27 @@ The seeding system creates realistic interconnected data:
 After seeding, you'll have data to test:
 
 ### Library Operations
+
 - **Book availability checks** across different statuses
 - **Borrowing workflows** with proper validation
 - **Return processing** with date calculations
 - **Fine calculations** with various penalty rates
 
 ### User Management
+
 - **Reader registration** with validation
 - **Staff authentication** with role-based access
 - **Profile management** with diverse demographics
 
 ### Reporting & Analytics
+
 - **Popular books** tracking (multiple copies/high demand)
 - **Overdue analysis** with fine correlation
 - **Staff performance** across different transactions
 - **Collection management** with status distribution
 
 ### Search & Filtering
+
 - **Multi-genre searching** across diverse collection
 - **Author-based queries** with prolific writers
 - **Status-based filtering** for availability
@@ -169,6 +191,7 @@ After seeding, you'll have data to test:
 ## Usage Examples
 
 ### Complete Database Reset and Seed
+
 ```bash
 # Delete all existing data
 pnpm db:deleteAll
@@ -178,6 +201,7 @@ pnpm db:seedAll
 ```
 
 ### Testing Specific Workflows
+
 ```bash
 # Test overdue loan processing
 pnpm db:seedLoans
@@ -191,6 +215,7 @@ pnpm db:seedReaders  # Diverse user base
 ```
 
 ### Development Workflow
+
 ```bash
 # Quick reset for testing
 pnpm db:deleteAll && pnpm db:seedAll
@@ -210,6 +235,7 @@ pnpm db:seedBooks && pnpm db:seedLoans  # Borrowing system
 ## Sample Data Overview
 
 After seeding, you'll have:
+
 - **35 Authors**: From Stephen King to Chimamanda Ngozi Adichie
 - **25 Publishers**: Major houses to specialty presses
 - **15 Staff Members**: Librarians and administrators
@@ -229,16 +255,19 @@ After seeding, you'll have:
 5. **"Loan not found for fine"**: Some fines may be skipped if corresponding loans don't exist
 
 ### Environment Setup
+
 - **Environment**: Make sure your `.env` file is properly configured with `DATABASE_URI`
 - **Dependencies**: Ensure all npm packages are installed
 - **Order Matters**: When seeding individually, follow the dependency order
 - **Data Validation**: All seeded data follows the application's validation rules
 
 ### Performance Notes
+
 - **Large Dataset**: 200+ total records across all collections
 - **Seeding Time**: Complete seeding takes 30-60 seconds depending on system
 - **Memory Usage**: Adequate for development/testing environments
-- **Production**: Consider subset of data for production testing  
+- **Production**: Consider subset of data for production testing
+
 3. **Duplicate key errors**: Data might already exist - try deleting first
 4. **Connection errors**: Check your DATABASE_URI in `.env`
 
@@ -250,7 +279,7 @@ If you prefer to use the direct commands:
 # Seed all data
 node seed/seed-caller.js --seed-all
 
-# Delete all data  
+# Delete all data
 node seed/seed-caller.js --delete-all
 
 # Seed specific model

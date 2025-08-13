@@ -19,7 +19,7 @@ exports.getAllFines = catchAsync(async (req, res, next) => {
         },
       ],
     }),
-    req.query
+    req.query,
   )
     .filter()
     .sort()
@@ -103,7 +103,9 @@ exports.createFinesForOverdueLoans = catchAsync(async (req, res, next) => {
 
     if (!existingFine) {
       // Calculate days overdue
-      const daysOverdue = Math.ceil((new Date() - loan.loan_due_date) / (1000 * 60 * 60 * 24));
+      const daysOverdue = Math.ceil(
+        (new Date() - loan.loan_due_date) / (1000 * 60 * 60 * 24),
+      );
       const accumulatedAmount = daysOverdue * 1.0; // $1 per day
 
       await Fine.create({

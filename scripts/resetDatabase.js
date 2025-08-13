@@ -41,9 +41,13 @@ const resetDatabase = async () => {
     console.log("✅ Database connected successfully");
 
     if (includeStaff) {
-      console.log("\n🗑️  Starting COMPLETE database reset (clearing ALL collections)...");
+      console.log(
+        "\n🗑️  Starting COMPLETE database reset (clearing ALL collections)...",
+      );
     } else {
-      console.log("\n🗑️  Starting database reset (preserving Staff collection)...");
+      console.log(
+        "\n🗑️  Starting database reset (preserving Staff collection)...",
+      );
     }
 
     // Define collections to clear
@@ -65,7 +69,9 @@ const resetDatabase = async () => {
       const count = await collection.model.countDocuments();
       if (count > 0) {
         await collection.model.deleteMany({});
-        console.log(`✅ Cleared ${collection.name} collection (${count} documents)`);
+        console.log(
+          `✅ Cleared ${collection.name} collection (${count} documents)`,
+        );
       } else {
         console.log(`ℹ️  ${collection.name} collection was already empty`);
       }

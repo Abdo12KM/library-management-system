@@ -350,7 +350,7 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```json
 {
   "reader_fname": "John Updated",
-  "reader_lname": "Doe Updated", 
+  "reader_lname": "Doe Updated",
   "reader_phone_no": "+1234567899",
   "reader_address": "456 Updated St, New City, Country"
 }
@@ -519,7 +519,7 @@ This test verifies that the system properly prevents a book from being loaned tw
 ```json
 {
   "passwordCurrent": "Admin@1234",
-  "password": "NewAdminPassword@123", 
+  "password": "NewAdminPassword@123",
   "passwordConfirm": "NewAdminPassword@123"
 }
 ```
@@ -598,13 +598,13 @@ This test verifies that the system properly prevents a book from being loaned tw
 
 **GET** `{{baseUrl}}/books?fields=book_title,book_pages`
 
-**Expected Response:** Books with only title and pages fields (plus _id)
+**Expected Response:** Books with only title and pages fields (plus \_id)
 
 #### 9.4.2 Select Author Name Only
 
 **GET** `{{baseUrl}}/authors?fields=author_name`
 
-**Expected Response:** Authors with only name field (plus _id)
+**Expected Response:** Authors with only name field (plus \_id)
 
 ### 9.5 ✅ Combined Filtering Tests
 
@@ -612,7 +612,8 @@ This test verifies that the system properly prevents a book from being loaned tw
 
 **GET** `{{baseUrl}}/books?book_pages[gte]=100&sort=book_title&page=1&limit=2&fields=book_title,book_pages`
 
-**Expected Response:** 
+**Expected Response:**
+
 - Books with 100+ pages
 - Sorted by title
 - First page, 2 items max
@@ -623,6 +624,7 @@ This test verifies that the system properly prevents a book from being loaned tw
 **GET** `{{baseUrl}}/authors?sort=-author_name&limit=3&fields=author_name,biography`
 
 **Expected Response:**
+
 - Authors sorted by name (descending)
 - Maximum 3 results
 - Only name and biography fields
@@ -961,13 +963,11 @@ This test verifies that the system properly prevents a book from being loaned tw
 ### Available Testing Options
 
 1. **📋 Postman Collection**
-
    - Import `LMS.postman_collection.json`
    - Run individual requests or entire collection
    - Automated test assertions included
 
 2. **🔧 Node.js Test Script**
-
    - Run: `node tests/test-api.js`
    - With database reset: `node tests/test-api.js --reset`
    - Comprehensive automated testing with detailed reporting

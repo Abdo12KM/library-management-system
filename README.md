@@ -66,15 +66,15 @@ API available at: `http://localhost:5000`
 
 ### Core Resources
 
-| Resource          | GET      | POST     | PATCH     | DELETE   | 
-| ----------------- | -------- | -------- | --------- | -------- | 
-| `/api/authors`    | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
-| `/api/publishers` | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
-| `/api/books`      | ✅       | 🔒 Staff | 🔒 Staff  | 🔒 Admin |
-| `/api/readers`    | 🔒 Staff | 🔒 Admin | ✅ (`/updateMe`) | 🔒 Admin |
-| `/api/staff`      | 🔒 Admin | 🔒 Admin | ✅ (`/updateMe`) | 🔒 Admin |
-| `/api/loans`      | 🔒 Staff | 🔒 Staff | 🔒 Staff (`/return`) | 
-| `/api/fines`      | 🔒 Staff | 🔒 Staff | ✅ (`/pay`)  | 
+| Resource          | GET      | POST     | PATCH                | DELETE   |
+| ----------------- | -------- | -------- | -------------------- | -------- |
+| `/api/authors`    | ✅       | 🔒 Staff | 🔒 Staff             | 🔒 Admin |
+| `/api/publishers` | ✅       | 🔒 Staff | 🔒 Staff             | 🔒 Admin |
+| `/api/books`      | ✅       | 🔒 Staff | 🔒 Staff             | 🔒 Admin |
+| `/api/readers`    | 🔒 Staff | 🔒 Admin | ✅ (`/updateMe`)     | 🔒 Admin |
+| `/api/staff`      | 🔒 Admin | 🔒 Admin | ✅ (`/updateMe`)     | 🔒 Admin |
+| `/api/loans`      | 🔒 Staff | 🔒 Staff | 🔒 Staff (`/return`) |
+| `/api/fines`      | 🔒 Staff | 🔒 Staff | ✅ (`/pay`)          |
 
 **Legend:** ✅ Public, 🔒 Authentication required
 
@@ -83,6 +83,7 @@ API available at: `http://localhost:5000`
 All GET endpoints support advanced filtering, sorting, pagination, and field selection:
 
 #### Filtering
+
 ```bash
 # Basic filtering
 GET /api/books?book_title=Harry Potter
@@ -95,6 +96,7 @@ GET /api/loans?status[in]=active,overdue   # Status in array
 ```
 
 #### Sorting
+
 ```bash
 # Ascending/Descending
 GET /api/books?sort=book_title          # A-Z
@@ -103,18 +105,21 @@ GET /api/authors?sort=author_name,-email # Multiple fields
 ```
 
 #### Pagination
+
 ```bash
 GET /api/books?page=2&limit=10          # Page 2, 10 items
 GET /api/authors?limit=5                # First 5 results
 ```
 
 #### Field Selection
+
 ```bash
 GET /api/books?fields=book_title,book_pages    # Only specific fields
 GET /api/authors?fields=author_name            # Reduce response size
 ```
 
 #### Combined Queries
+
 ```bash
 # Complex filtering
 GET /api/books?book_pages[gte]=200&sort=-book_title&page=1&limit=5&fields=book_title,book_pages
@@ -137,6 +142,7 @@ pnpm run test:full            # Reset DB + Detailed output + run tests
 ```
 
 **Test Coverage:**
+
 - 75+ automated test scenarios
 - API filtering, sorting, and pagination tests
 - Complete CRUD operations

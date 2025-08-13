@@ -14,13 +14,24 @@ const Router = express.Router();
 
 Router.get("/", getAllBooks);
 
-Router.post("/", protect, restrictTo("admin", "librarian"), validateBook, createBook);
+Router.post(
+  "/",
+  protect,
+  restrictTo("admin", "librarian"),
+  validateBook,
+  createBook,
+);
 
 Router.get("/:id", getBookById);
 
 Router.patch("/:id", protect, restrictTo("admin", "librarian"), updateBook);
 
-Router.patch("/:id/status", protect, restrictTo("admin", "librarian"), updateBookStatus);
+Router.patch(
+  "/:id/status",
+  protect,
+  restrictTo("admin", "librarian"),
+  updateBookStatus,
+);
 
 Router.delete("/:id", protect, restrictTo("admin"), deleteBook);
 

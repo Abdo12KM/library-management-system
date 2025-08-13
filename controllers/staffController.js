@@ -68,8 +68,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         "This route is not for password updates. Please use /updateMyPassword.",
-        400
-      )
+        400,
+      ),
     );
   }
 
@@ -81,10 +81,14 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 
   // Update user document
-  const updatedStaff = await Staff.findByIdAndUpdate(req.user._id, filteredBody, {
-    new: true,
-    runValidators: true,
-  });
+  const updatedStaff = await Staff.findByIdAndUpdate(
+    req.user._id,
+    filteredBody,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 
   res.status(200).json({
     message: "Staff profile updated successfully",
@@ -104,12 +108,19 @@ exports.updateMyPassword = catchAsync(async (req, res, next) => {
 
   // 3) Validate new password
   if (!req.body.password || !req.body.passwordConfirm) {
-    return next(new AppError("Please provide both new password and password confirmation.", 400));
+    return next(
+      new AppError(
+        "Please provide both new password and password confirmation.",
+        400,
+      ),
+    );
   }
 
   // 4) Check if new password matches confirmation
   if (req.body.password !== req.body.passwordConfirm) {
-    return next(new AppError("Password and password confirmation do not match.", 400));
+    return next(
+      new AppError("Password and password confirmation do not match.", 400),
+    );
   }
 
   // 5) If so, update password

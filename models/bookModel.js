@@ -52,7 +52,7 @@ const bookSchema = new mongoose.Schema(
         validator: function (v) {
           // Basic ISBN validation (10 or 13 digits with optional hyphens)
           if (!v) return true; // Allow empty/null
-          const isbn = v.replace(/[-\s]/g, ''); // Remove hyphens and spaces
+          const isbn = v.replace(/[-\s]/g, ""); // Remove hyphens and spaces
           return /^\d{10}(\d{3})?$/.test(isbn);
         },
         message: "Invalid ISBN format. Must be 10 or 13 digits.",
@@ -67,7 +67,7 @@ const bookSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Book = mongoose.model("Book", bookSchema);

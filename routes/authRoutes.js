@@ -1,5 +1,9 @@
 const express = require("express");
-const { signUpReader, loginReader, loginStaff } = require("../controllers/authController");
+const {
+  signUpReader,
+  loginReader,
+  loginStaff,
+} = require("../controllers/authController");
 
 const authRouter = express.Router();
 authRouter.post("/signup/reader", signUpReader);

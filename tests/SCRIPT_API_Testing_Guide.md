@@ -82,7 +82,7 @@ This is a comprehensive, enhanced test suite for the Library Management System A
 - Reader profile management
 - Reader profile updates
 - Reader password updates
-- Staff profile management  
+- Staff profile management
 - Staff profile updates
 - Staff password updates
 - User listing and access

@@ -4,7 +4,10 @@ const { catchAsync } = require("../utils/catchAsync");
 const ApiFilters = require("../utils/ApiFilters");
 
 exports.getAllBooks = catchAsync(async (req, res, next) => {
-  const features = new ApiFilters(Book.find().populate("authorId").populate("publisherId"), req.query)
+  const features = new ApiFilters(
+    Book.find().populate("authorId").populate("publisherId"),
+    req.query,
+  )
     .filter()
     .sort()
     .fields();
@@ -21,7 +24,9 @@ exports.getAllBooks = catchAsync(async (req, res, next) => {
 });
 
 exports.getBookById = catchAsync(async (req, res, next) => {
-  const book = await Book.findById(req.params.id).populate("authorId").populate("publisherId");
+  const book = await Book.findById(req.params.id)
+    .populate("authorId")
+    .populate("publisherId");
 
   if (!book) {
     return next(new AppError("Book not found", 404));
@@ -79,20 +84,25 @@ exports.deleteBook = catchAsync(async (req, res, next) => {
 
 exports.updateBookStatus = catchAsync(async (req, res, next) => {
   const { book_status } = req.body;
-  
+
   if (!book_status) {
     return next(new AppError("Book status is required", 400));
   }
 
   const allowedStatuses = ["available", "borrowed", "maintenance", "lost"];
   if (!allowedStatuses.includes(book_status)) {
-    return next(new AppError(`Invalid status. Allowed: ${allowedStatuses.join(", ")}`, 400));
+    return next(
+      new AppError(
+        `Invalid status. Allowed: ${allowedStatuses.join(", ")}`,
+        400,
+      ),
+    );
   }
 
   const book = await Book.findByIdAndUpdate(
     req.params.id,
     { book_status },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   );
 
   if (!book) {
@@ -108,17 +118,27 @@ exports.updateBookStatus = catchAsync(async (req, res, next) => {
 });
 
 exports.validateBook = (req, res, next) => {
-  const { book_title, book_pages, release_date, authorId, publisherId } = req.body;
-  if (!book_title || !book_pages || !release_date || !authorId || !publisherId) {
+  const { book_title, book_pages, release_date, authorId, publisherId } =
+    req.body;
+  if (
+    !book_title ||
+    !book_pages ||
+    !release_date ||
+    !authorId ||
+    !publisherId
+  ) {
     return next(
-      new AppError("Missing required fields: book_title, book_pages, release_date, authorId, and publisherId", 400)
+      new AppError(
+        "Missing required fields: book_title, book_pages, release_date, authorId, and publisherId",
+        400,
+      ),
     );
   }
-  
+
   // Set default status if not provided
   if (!req.body.book_status) {
     req.body.book_status = "available";
   }
-  
+
   next();
 };

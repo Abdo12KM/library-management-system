@@ -10,14 +10,14 @@ router.use(authController.protect);
 router.get(
   "/admin",
   authController.restrictTo("admin", "librarian"),
-  dashboardController.getAdminDashboardStats
+  dashboardController.getAdminDashboardStats,
 );
 
 // Reader dashboard route
 router.get(
   "/reader",
   authController.restrictTo("reader"),
-  dashboardController.getReaderDashboardStats
+  dashboardController.getReaderDashboardStats,
 );
 
 module.exports = router;

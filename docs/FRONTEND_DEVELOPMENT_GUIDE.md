@@ -22,6 +22,7 @@ This guide provides comprehensive instructions for building a modern, responsive
 ### 🎨 UI/UX Requirements
 
 #### Design System
+
 - **Modern, Clean Interface** with consistent spacing and typography
 - **Responsive Design** (Mobile-first approach)
 - **Dark/Light Mode** toggle
@@ -30,6 +31,7 @@ This guide provides comprehensive instructions for building a modern, responsive
 - **Toast Notifications** for user feedback
 
 #### Color Scheme
+
 - **Primary:** Blue (#3B82F6)
 - **Secondary:** Slate (#64748B)
 - **Success:** Green (#10B981)
@@ -39,6 +41,7 @@ This guide provides comprehensive instructions for building a modern, responsive
 ### 🏗️ Application Architecture
 
 #### Folder Structure
+
 ```
 library-frontend/
 ├── app/                    # Next.js App Router
@@ -64,16 +67,19 @@ library-frontend/
 ### 🔐 Authentication & Authorization
 
 #### All Users
+
 - **Login/Logout** functionality
 - **Profile Management** (view, edit profile, change password)
 - **Responsive Navigation** with role-based menu items
 
 ### 👨‍💼 Admin Features
+
 - **Dashboard Overview** with key metrics and charts
 - **Staff Management** (staff CRUD)
 - **Complete System Control** (all resources management)
 
 ### 📚 Librarian Features
+
 - **Library Operations Dashboard**
 - **Book Management** (CRUD operations)
 - **Author & Publisher Management**
@@ -82,6 +88,7 @@ library-frontend/
 - **Reader Management** (view, manage reader accounts)
 
 ### 👤 Reader Features
+
 - **Personal Dashboard** with active loans and fines
 - **Book Catalog** with advanced search and filtering
 - **Loan History** and current status
@@ -91,6 +98,7 @@ library-frontend/
 ## 📱 Pages & Components Structure
 
 ### 🌐 Public Pages
+
 1. **Landing Page** (`/`)
    - Hero section with library overview
    - Feature highlights
@@ -101,6 +109,7 @@ library-frontend/
    - Contact details
 
 ### 🔒 Authentication Pages
+
 1. **Login Page** (`/auth/login`)
    - Role-based login (Staff/Reader)
    - Form validation
@@ -113,10 +122,12 @@ library-frontend/
 ### 🏠 Dashboard Pages
 
 #### Admin Dashboard (`/dashboard`)
+
 - **Overview** - Key metrics, charts, recent activities
 - **Users** - Staff and reader management
 
 #### Librarian Dashboard (`/dashboard`)
+
 - **Overview** - Library operations summary
 - **Books** - Book catalog management
 - **Authors** - Author management
@@ -126,6 +137,7 @@ library-frontend/
 - **Readers** - Reader account management
 
 #### Reader Dashboard (`/dashboard`)
+
 - **Overview** - Personal summary, active loans, fines
 - **Catalog** - Browse and search books
 - **My Loans** - Current and past loans
@@ -135,24 +147,28 @@ library-frontend/
 ### 🧩 Key Components
 
 #### Layout Components
+
 - **Navbar** - Responsive navigation with role-based menus
 - **Sidebar** - Dashboard navigation
 - **Footer** - Links and information
 - **Breadcrumbs** - Navigation context
 
 #### Data Components
+
 - **DataTable** - Sortable, filterable tables with pagination
 - **SearchBar** - Advanced search with filters
 - **Charts** - Dashboard analytics
 - **StatsCards** - Metric displays
 
 #### Form Components
+
 - **LoginForm** - Authentication
 - **BookForm** - Book creation/editing
 - **UserForm** - Staff Management
 - **ProfileForm** - Profile editing
 
 #### UI Components
+
 - **LoadingSpinner** - Loading states
 - **ErrorBoundary** - Error handling
 - **ConfirmDialog** - Action confirmations
@@ -161,17 +177,20 @@ library-frontend/
 ## 🔗 API Integration Requirements
 
 ### 📡 HTTP Client Setup
+
 - **Base URL Configuration** - Environment-based API endpoints
 - **Request/Response Interceptors** - Token handling, error management
 - **Retry Logic** - Network failure handling
 - **Loading States** - Global loading management
 
 ### 🔑 Authentication Flow
+
 - **JWT Token Management** - Secure storage and refresh
 - **Role-based Routing** - Route protection by user role
 - **Session Management** - Auto-logout on token expiry
 
 ### 📊 Data Fetching Patterns
+
 - **React Query** for server state management
 - **Optimistic Updates** for better UX
 - **Background Refetching** for data freshness
@@ -180,11 +199,13 @@ library-frontend/
 ## 🎨 Design & UX Specifications
 
 ### 📱 Responsive Breakpoints
+
 - **Mobile:** 320px - 767px
 - **Tablet:** 768px - 1023px
 - **Desktop:** 1024px+
 
 ### 🎭 Component States
+
 - **Default** - Normal state
 - **Hover** - Interactive feedback
 - **Loading** - Processing indication
@@ -192,6 +213,7 @@ library-frontend/
 - **Empty** - No data states with helpful messages
 
 ### ♿ Accessibility Requirements
+
 - **WCAG 2.1 AA Compliance**
 - **Keyboard Navigation** support
 - **Screen Reader** compatibility
@@ -226,6 +248,7 @@ npx shadcn-ui@latest add button input label card table dialog toast form select 
 ### 3. Environment Configuration
 
 Create `.env.local`:
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 NEXTAUTH_SECRET=your-nextauth-secret
@@ -235,6 +258,7 @@ NEXTAUTH_URL=http://localhost:3000
 ### 4. TypeScript Configuration
 
 Update `tsconfig.json` with path mapping:
+
 ```json
 {
   "compilerOptions": {
@@ -254,6 +278,7 @@ Update `tsconfig.json` with path mapping:
 ### 🎯 Phase 1: Project Setup & Foundation
 
 #### Prompt 1: Project Structure & Configuration
+
 ```
 Create a Next.js 15 project structure for a Library Management System frontend with:
 
@@ -269,6 +294,7 @@ Include all necessary configuration files, providers, and basic layout component
 ```
 
 #### Prompt 2: Type Definitions & API Layer
+
 ```
 Create comprehensive TypeScript definitions and API layer for a Library Management System with these entities:
 
@@ -286,6 +312,7 @@ Include proper TypeScript generics for reusable API patterns.
 ### 🎨 Phase 2: Core Components & UI
 
 #### Prompt 3: Reusable UI Components
+
 ```
 Build a comprehensive component library for a Library Management System using Shadcn/UI:
 
@@ -302,6 +329,7 @@ Ensure all components are fully accessible and responsive.
 ```
 
 #### Prompt 4: Layout Components
+
 ```
 Create layout components for a multi-role Library Management System:
 
@@ -320,6 +348,7 @@ Include responsive behavior and smooth transitions.
 ### 🏠 Phase 3: Authentication & Staff Management
 
 #### Prompt 5: Authentication System
+
 ```
 Implement a complete authentication system for a Library Management System:
 
@@ -336,6 +365,7 @@ Include proper error handling and loading states.
 ```
 
 #### Prompt 6: Staff Management (Admin/Librarian)
+
 ```
 Create Staff Management interfaces for Admin and Librarian roles:
 
@@ -354,6 +384,7 @@ Ensure proper validation and error handling throughout.
 ### 📚 Phase 4: Library Management Features
 
 #### Prompt 7: Book Catalog & Management
+
 ```
 Build comprehensive book management features:
 
@@ -370,6 +401,7 @@ Include image upload and management for book covers.
 ```
 
 #### Prompt 8: Loan Management System
+
 ```
 Create a complete loan management system:
 
@@ -388,6 +420,7 @@ Include proper date handling and status management.
 ### 💰 Phase 5: Fine Management & Analytics
 
 #### Prompt 9: Fine Management System
+
 ```
 Implement fine management features:
 
@@ -404,6 +437,7 @@ Include proper financial calculations and audit trails.
 ```
 
 #### Prompt 10: Dashboard & Analytics
+
 ```
 Create role-specific dashboards with analytics:
 
@@ -422,6 +456,7 @@ Include real-time data updates and export functionality.
 ### 🔍 Phase 6: Advanced Features & Polish
 
 #### Prompt 11: Advanced Search & Filtering
+
 ```
 Implement advanced search and filtering capabilities:
 
@@ -438,6 +473,7 @@ Include debounced search and proper performance optimization.
 ```
 
 #### Prompt 12: Final Polish & Optimization
+
 ```
 Add final polish and optimization features:
 
@@ -456,41 +492,49 @@ Include deployment configuration for Vercel.
 ## 🚀 Development Timeline
 
 ### Week 1: Foundation
+
 - Project setup and configuration
 - Type definitions and API layer
 - Basic layout components
 
 ### Week 2: Authentication & Core UI
+
 - Authentication system
 - Reusable UI components
 - Layout components
 
 ### Week 3: Library Management
+
 - Book catalog and management
 - Author/Publisher management
 - Basic CRUD operations
 
 ### Week 4: Loan System
+
 - Loan creation and management
 - Return processing
 - Overdue tracking
 
 ### Week 5: Fine Management
+
 - Fine calculation and display
 - Payment processing
 - Fine analytics
 
 ### Week 6: Dashboards & Analytics
+
 - Role-specific dashboards
 - Charts and analytics
 - Performance metrics
 
 ### Week 7: Advanced Features
+
 - Advanced search and filtering
 - Export functionality
 - User preferences
 
 ### Week 8: Polish & Testing
+
 - Performance optimization
 - Testing and bug fixes
 - Deployment preparation
@@ -498,42 +542,50 @@ Include deployment configuration for Vercel.
 ## 📚 Learning Resources
 
 ### Next.js 15
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [App Router Guide](https://nextjs.org/docs/app)
 
 ### TypeScript
+
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 - [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app)
 
 ### Styling & UI
+
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Shadcn/UI Documentation](https://ui.shadcn.com)
 
 ### State Management
+
 - [React Query Documentation](https://tanstack.com/query/latest)
 - [Zustand Documentation](https://zustand-demo.pmnd.rs)
 
 ## 🎯 Success Criteria
 
 ### Functionality
+
 - ✅ All user roles can perform their designated tasks
 - ✅ Real-time data synchronization
 - ✅ Proper error handling and recovery
 - ✅ Responsive design across all devices
 
 ### Performance
+
 - ✅ Page load times under 3 seconds
 - ✅ Smooth animations and transitions
 - ✅ Optimized bundle size
 - ✅ Efficient API calls and caching
 
 ### User Experience
+
 - ✅ Intuitive navigation and workflow
 - ✅ Accessible to users with disabilities
 - ✅ Clear feedback for all user actions
 - ✅ Consistent design language
 
 ### Technical Quality
+
 - ✅ Type-safe codebase with minimal any types
 - ✅ Comprehensive error boundaries
 - ✅ Clean, maintainable code structure
