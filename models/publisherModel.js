@@ -23,11 +23,6 @@ const publisherSchema = new mongoose.Schema(
       min: [1000, "Year must be at least 1000"],
       max: [new Date().getFullYear(), "Year cannot be in the future"],
     },
-    no_published_books: {
-      type: Number,
-      default: 0,
-      min: [0, "Number of published books cannot be negative"],
-    },
   },
   {
     toJSON: { virtuals: true },
@@ -35,6 +30,14 @@ const publisherSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+// Virtual field to calculate number of published books
+publisherSchema.virtual('no_published_books', {
+  ref: 'Book',
+  localField: '_id',
+  foreignField: 'publisherId',
+  count: true
+});
 
 const Publisher = mongoose.model("Publisher", publisherSchema);
 module.exports = Publisher;
