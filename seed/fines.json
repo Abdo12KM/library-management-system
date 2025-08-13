@@ -1,0 +1,202 @@
+[
+    {
+        "reader_email": "jane.smith@example.com",
+        "book_title": "Murder on the Orient Express",
+        "fine_due_date": "2024-11-29T23:59:59.000Z",
+        "accumulated_amount": 45.50,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "michael.johnson@example.com",
+        "book_title": "One Hundred Years of Solitude",
+        "fine_due_date": "2024-12-04T23:59:59.000Z",
+        "accumulated_amount": 34.00,
+        "penalty_rate": 2.0,
+        "status": "pending"
+    },
+    {
+        "reader_email": "david.brown@example.com",
+        "book_title": "The Lost Symbol",
+        "fine_due_date": "2024-12-09T23:59:59.000Z",
+        "accumulated_amount": 28.50,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "james.miller@example.com",
+        "book_title": "The Sun Also Rises",
+        "fine_due_date": "2024-11-24T23:59:59.000Z",
+        "accumulated_amount": 68.00,
+        "penalty_rate": 2.0,
+        "status": "pending"
+    },
+    {
+        "reader_email": "robert.moore@example.com",
+        "book_title": "A Farewell to Arms",
+        "fine_due_date": "2024-12-02T23:59:59.000Z",
+        "accumulated_amount": 39.50,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "christopher.anderson@outlook.com",
+        "book_title": "Harry Potter and the Prisoner of Azkaban",
+        "fine_due_date": "2024-12-06T23:59:59.000Z",
+        "accumulated_amount": 31.00,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "benjamin.martinez@email.com",
+        "book_title": "Chronicle of a Death Foretold",
+        "fine_due_date": "2024-12-12T23:59:59.000Z",
+        "accumulated_amount": 22.50,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "matthew.taylor@provider.com",
+        "book_title": "The Alchemist",
+        "fine_due_date": "2024-11-26T23:59:59.000Z",
+        "accumulated_amount": 51.00,
+        "penalty_rate": 3.0,
+        "status": "pending"
+    },
+    {
+        "reader_email": "nicholas.harris@service.com",
+        "book_title": "No Longer at Ease",
+        "fine_due_date": "2024-11-30T23:59:59.000Z",
+        "accumulated_amount": 41.50,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "william.lewis@connect.com",
+        "book_title": "I, Robot",
+        "fine_due_date": "2024-12-08T23:59:59.000Z",
+        "accumulated_amount": 29.00,
+        "penalty_rate": 1.5,
+        "status": "pending"
+    },
+    {
+        "reader_email": "sophia.rodriguez@domain.com",
+        "book_title": "The Great Gatsby",
+        "fine_due_date": "2024-10-15T23:59:59.000Z",
+        "accumulated_amount": 25.00,
+        "penalty_rate": 2.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "olivia.white@webmail.com",
+        "book_title": "Pride and Prejudice",
+        "fine_due_date": "2024-09-20T23:59:59.000Z",
+        "accumulated_amount": 18.50,
+        "penalty_rate": 1.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "emma.clark@network.com",
+        "book_title": "1984",
+        "fine_due_date": "2024-08-25T23:59:59.000Z",
+        "accumulated_amount": 32.00,
+        "penalty_rate": 2.0,
+        "status": "paid"
+    },
+    {
+        "reader_email": "alexander.young@secure.net",
+        "book_title": "To Kill a Mockingbird",
+        "fine_due_date": "2024-07-30T23:59:59.000Z",
+        "accumulated_amount": 15.50,
+        "penalty_rate": 1.5,
+        "status": "waived"
+    },
+    {
+        "reader_email": "charlotte.king@web.org",
+        "book_title": "Angels & Demons",
+        "fine_due_date": "2024-06-15T23:59:59.000Z",
+        "accumulated_amount": 12.00,
+        "penalty_rate": 1.0,
+        "status": "waived"
+    },
+    {
+        "reader_email": "daniel.wright@system.com",
+        "book_title": "The Handmaid's Tale",
+        "fine_due_date": "2024-05-20T23:59:59.000Z",
+        "accumulated_amount": 27.50,
+        "penalty_rate": 2.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "amelia.lopez@platform.net",
+        "book_title": "Beloved",
+        "fine_due_date": "2024-04-10T23:59:59.000Z",
+        "accumulated_amount": 19.00,
+        "penalty_rate": 1.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "jacob.hill@technology.org",
+        "book_title": "Norwegian Wood",
+        "fine_due_date": "2024-03-18T23:59:59.000Z",
+        "accumulated_amount": 8.50,
+        "penalty_rate": 1.0,
+        "status": "waived"
+    },
+    {
+        "reader_email": "harper.scott@innovation.com",
+        "book_title": "Mrs. Dalloway",
+        "fine_due_date": "2024-02-22T23:59:59.000Z",
+        "accumulated_amount": 21.00,
+        "penalty_rate": 1.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "lucas.green@future.net",
+        "book_title": "Great Expectations",
+        "fine_due_date": "2024-01-28T23:59:59.000Z",
+        "accumulated_amount": 35.50,
+        "penalty_rate": 2.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "evelyn.adams@network.co",
+        "book_title": "I Know Why the Caged Bird Sings",
+        "fine_due_date": "2024-11-05T23:59:59.000Z",
+        "accumulated_amount": 14.00,
+        "penalty_rate": 1.0,
+        "status": "waived"
+    },
+    {
+        "reader_email": "mason.baker@solutions.org",
+        "book_title": "Kindred",
+        "fine_due_date": "2024-10-12T23:59:59.000Z",
+        "accumulated_amount": 26.50,
+        "penalty_rate": 1.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "luna.gonzalez@global.com",
+        "book_title": "American Gods",
+        "fine_due_date": "2024-09-08T23:59:59.000Z",
+        "accumulated_amount": 43.00,
+        "penalty_rate": 2.0,
+        "status": "paid"
+    },
+    {
+        "reader_email": "logan.nelson@enterprise.net",
+        "book_title": "Things Fall Apart",
+        "fine_due_date": "2024-08-14T23:59:59.000Z",
+        "accumulated_amount": 17.50,
+        "penalty_rate": 1.5,
+        "status": "paid"
+    },
+    {
+        "reader_email": "ella.carter@systems.org",
+        "book_title": "Foundation",
+        "fine_due_date": "2024-07-21T23:59:59.000Z",
+        "accumulated_amount": 29.00,
+        "penalty_rate": 2.0,
+        "status": "paid"
+    }
+]

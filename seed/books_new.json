@@ -19,7 +19,7 @@
         "book_ISBN": "9780670813025",
         "book_status": "borrowed",
         "author_name": "Stephen King",
-        "publisher_name": "Viking Penguin"
+        "publisher_name": "Viking Press"
     },
     {
         "book_title": "Harry Potter and the Philosopher's Stone",
@@ -181,7 +181,7 @@
         "book_pages": 474,
         "release_date": "1815-12-23",
         "book_tags": ["romance", "comedy", "classic"],
-        "book_ISBN": "9770141439587",
+        "book_ISBN": "9780141439587",
         "book_status": "borrowed",
         "author_name": "Jane Austen",
         "publisher_name": "Penguin Random House"
@@ -691,93 +691,5 @@
         "book_status": "available",
         "author_name": "Zadie Smith",
         "publisher_name": "Vintage Books"
-    },
-    {
-        "book_title": "Pachinko",
-        "book_description": "A multi-generational saga of a Korean family living in Japan from the early 1900s to the 1980s.",
-        "book_pages": 490,
-        "release_date": "2017-02-07",
-        "book_tags": ["historical fiction", "korean literature", "family saga", "immigration"],
-        "book_ISBN": "9781455563937",
-        "book_status": "available",
-        "author_name": "Min Jin Lee",
-        "publisher_name": "Grand Central Publishing"
-    },
-    {
-        "book_title": "Normal People",
-        "book_description": "A novel about the complex relationship between Connell and Marianne from their school days to university.",
-        "book_pages": 266,
-        "release_date": "2018-08-28",
-        "book_tags": ["contemporary fiction", "romance", "irish literature", "coming of age"],
-        "book_ISBN": "9781984822178",
-        "book_status": "available",
-        "author_name": "Sally Rooney",
-        "publisher_name": "Hogarth Press"
-    },
-    {
-        "book_title": "An American Marriage",
-        "book_description": "A novel about a young African American couple whose lives are changed when the husband is wrongly imprisoned.",
-        "book_pages": 308,
-        "release_date": "2018-02-06",
-        "book_tags": ["contemporary fiction", "african american literature", "marriage", "social justice"],
-        "book_ISBN": "9781616201340",
-        "book_status": "available",
-        "author_name": "Tayari Jones",
-        "publisher_name": "Algonquin Books"
-    },
-    {
-        "book_title": "The Three-Body Problem",
-        "book_description": "The first novel in the Remembrance of Earth's Past trilogy about humanity's first contact with an alien civilization.",
-        "book_pages": 400,
-        "release_date": "2006-05-01",
-        "book_tags": ["science fiction", "chinese literature", "space opera", "alien contact"],
-        "book_ISBN": "9780765382030",
-        "book_status": "available",
-        "author_name": "Liu Cixin",
-        "publisher_name": "Tor Books"
-    },
-    {
-        "book_title": "Giovanni's Room",
-        "book_description": "A novel about an American man living in Paris who must choose between his fiancée and a male lover.",
-        "book_pages": 159,
-        "release_date": "1956-10-01",
-        "book_tags": ["lgbtq literature", "expatriate fiction", "psychological fiction", "classic"],
-        "book_ISBN": "9780345806567",
-        "book_status": "available",
-        "author_name": "James Baldwin",
-        "publisher_name": "Dell Publishing"
-    },
-    {
-        "book_title": "Americanah",
-        "book_description": "A novel about a young Nigerian woman who travels to America for university and her experiences with race and identity.",
-        "book_pages": 477,
-        "release_date": "2013-05-14",
-        "book_tags": ["contemporary fiction", "nigerian literature", "immigration", "race", "identity"],
-        "book_ISBN": "9780307271082",
-        "book_status": "available",
-        "author_name": "Chimamanda Ngozi Adichie",
-        "publisher_name": "Knopf"
-    },
-    {
-        "book_title": "My Brilliant Friend",
-        "book_description": "The first novel in the Neapolitan Novels series about the friendship between Elena and Lila in post-war Naples.",
-        "book_pages": 331,
-        "release_date": "2012-10-01",
-        "book_tags": ["contemporary fiction", "italian literature", "friendship", "coming of age"],
-        "book_ISBN": "9781609450786",
-        "book_status": "available",
-        "author_name": "Elena Ferrante",
-        "publisher_name": "Europa Editions"
-    },
-    {
-        "book_title": "The Underground Railroad",
-        "book_description": "A novel that reimagines the Underground Railroad as an actual railroad system beneath the Southern soil.",
-        "book_pages": 306,
-        "release_date": "2016-08-02",
-        "book_tags": ["historical fiction", "african american literature", "slavery", "magical realism"],
-        "book_ISBN": "9780385542364",
-        "book_status": "available",
-        "author_name": "Colson Whitehead",
-        "publisher_name": "Doubleday"
     }
 ]

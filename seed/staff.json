@@ -1,37 +1,107 @@
 [
-    {
-        "staff_fname": "Alice",
-        "staff_lname": "Johnson",
-        "staff_email": "alice.johnson@library.com",
-        "password": "StaffPass@123",
-        "role": "librarian"
-    },
-    {
-        "staff_fname": "Bob",
-        "staff_lname": "Wilson",
-        "staff_email": "bob.wilson@library.com",
-        "password": "LibraryAdmin@456",
-        "role": "admin"
-    },
-    {
-        "staff_fname": "Carol",
-        "staff_lname": "Davis",
-        "staff_email": "carol.davis@library.com",
-        "password": "SecureLib@789",
-        "role": "librarian"
-    },
-    {
-        "staff_fname": "David",
-        "staff_lname": "Miller",
-        "staff_email": "david.miller@library.com",
-        "password": "Library@2024",
-        "role": "librarian"
-    },
-    {
-        "staff_fname": "Emma",
-        "staff_lname": "Brown",
-        "staff_email": "emma.brown@library.com",
-        "password": "StaffSecure@2024",
-        "role": "admin"
-    }
+  {
+    "staff_fname": "Alice",
+    "staff_lname": "Johnson",
+    "staff_email": "alice.johnson@library.com",
+    "password": "StaffPass@123",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Bob",
+    "staff_lname": "Wilson",
+    "staff_email": "bob.wilson@library.com",
+    "password": "LibraryAdmin@456",
+    "role": "admin"
+  },
+  {
+    "staff_fname": "Carol",
+    "staff_lname": "Davis",
+    "staff_email": "carol.davis@library.com",
+    "password": "SecureLib@789",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "David",
+    "staff_lname": "Miller",
+    "staff_email": "david.miller@library.com",
+    "password": "Library@2024",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Emma",
+    "staff_lname": "Brown",
+    "staff_email": "emma.brown@library.com",
+    "password": "StaffSecure@2024",
+    "role": "admin"
+  },
+  {
+    "staff_fname": "Frank",
+    "staff_lname": "Thompson",
+    "staff_email": "frank.thompson@library.com",
+    "password": "FrankLibrary@789",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Grace",
+    "staff_lname": "Martinez",
+    "staff_email": "grace.martinez@library.com",
+    "password": "GraceAdmin@456",
+    "role": "admin"
+  },
+  {
+    "staff_fname": "Henry",
+    "staff_lname": "Garcia",
+    "staff_email": "henry.garcia@library.com",
+    "password": "HenrySecure@123",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Iris",
+    "staff_lname": "Rodriguez",
+    "staff_email": "iris.rodriguez@library.com",
+    "password": "IrisLibrary@890",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Jack",
+    "staff_lname": "Anderson",
+    "staff_email": "jack.anderson@library.com",
+    "password": "JackAdmin@567",
+    "role": "admin"
+  },
+  {
+    "staff_fname": "Kate",
+    "staff_lname": "Taylor",
+    "staff_email": "kate.taylor@library.com",
+    "password": "KateSecure@234",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Leo",
+    "staff_lname": "White",
+    "staff_email": "leo.white@library.com",
+    "password": "LeoLibrary@678",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Maria",
+    "staff_lname": "Harris",
+    "staff_email": "maria.harris@library.com",
+    "password": "MariaAdmin@345",
+    "role": "admin"
+  },
+  {
+    "staff_fname": "Nathan",
+    "staff_lname": "Clark",
+    "staff_email": "nathan.clark@library.com",
+    "password": "NathanSecure@901",
+    "role": "librarian"
+  },
+  {
+    "staff_fname": "Olivia",
+    "staff_lname": "Lewis",
+    "staff_email": "olivia.lewis@library.com",
+    "password": "OliviaLibrary@012",
+    "role": "librarian"
+  }
 ]

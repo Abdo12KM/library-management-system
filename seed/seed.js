@@ -115,6 +115,93 @@ exports.seedAllData = async () => {
         await Book.create(booksWithRefs);
         console.log("✓ Books seeded successfully");
 
+        // Step 6: Seed Loans (with reference resolution)
+        console.log("Seeding Loans...");
+        const loansData = JSON.parse(fs.readFileSync(`${__dirname}/loans.json`, "utf-8"));
+        
+        // Get all readers, staff, and books to map to IDs
+        const readers = await Reader.find({});
+        const staff = await Staff.find({});
+        const books = await Book.find({});
+        
+        const readerMap = {};
+        const staffMap = {};
+        const bookMap = {};
+        
+        readers.forEach(reader => {
+            readerMap[reader.reader_email] = reader._id;
+        });
+        
+        staff.forEach(staffMember => {
+            staffMap[staffMember.staff_email] = staffMember._id;
+        });
+        
+        books.forEach(book => {
+            bookMap[book.book_title] = book._id;
+        });
+
+        // Transform loans data to use actual ObjectIds
+        const loansWithRefs = loansData.map(loan => {
+            const { reader_email, staff_email, book_title, ...loanData } = loan;
+            
+            if (!readerMap[reader_email]) {
+                throw new Error(`Reader with email "${reader_email}" not found in database`);
+            }
+            if (!staffMap[staff_email]) {
+                throw new Error(`Staff with email "${staff_email}" not found in database`);
+            }
+            if (!bookMap[book_title]) {
+                throw new Error(`Book with title "${book_title}" not found in database`);
+            }
+            
+            return {
+                ...loanData,
+                readerId: readerMap[reader_email],
+                staffId: staffMap[staff_email],
+                bookId: bookMap[book_title],
+                loan_start_date: new Date(loan.loan_start_date),
+                loan_return_date: loan.loan_return_date ? new Date(loan.loan_return_date) : undefined
+            };
+        });
+
+        const Loan = require("../models/loanModel");
+        await Loan.create(loansWithRefs);
+        console.log("✓ Loans seeded successfully");
+
+        // Step 7: Seed Fines (with reference resolution)
+        console.log("Seeding Fines...");
+        const finesData = JSON.parse(fs.readFileSync(`${__dirname}/fines.json`, "utf-8"));
+        
+        // Get loans to map to fine data
+        const loans = await Loan.find({}).populate('readerId').populate('bookId');
+        const loanMap = {};
+        
+        loans.forEach(loan => {
+            const key = `${loan.readerId.reader_email}_${loan.bookId.book_title}`;
+            loanMap[key] = loan._id;
+        });
+
+        // Transform fines data to use actual ObjectIds
+        const finesWithRefs = finesData.map(fine => {
+            const { reader_email, book_title, ...fineData } = fine;
+            const loanKey = `${reader_email}_${book_title}`;
+            
+            if (!loanMap[loanKey]) {
+                console.warn(`Warning: Loan for reader "${reader_email}" and book "${book_title}" not found, skipping fine`);
+                return null;
+            }
+            
+            return {
+                ...fineData,
+                loanId: loanMap[loanKey],
+                fine_due_date: new Date(fine.fine_due_date)
+            };
+        }).filter(fine => fine !== null); // Remove null entries
+
+        const Fine = require("../models/fineModel");
+        await Fine.create(finesWithRefs);
+        console.log("✓ Fines seeded successfully");
+
         console.log("\n🎉 All data seeded successfully!");
         console.log("Database contents:");
         console.log(`- ${authorsData.length} Authors`);
@@ -122,6 +209,8 @@ exports.seedAllData = async () => {
         console.log(`- ${staffData.length} Staff members`);
         console.log(`- ${readersData.length} Readers`);
         console.log(`- ${booksData.length} Books`);
+        console.log(`- ${loansWithRefs.length} Loans`);
+        console.log(`- ${finesWithRefs.length} Fines`);
 
     } catch (error) {
         console.error("Error seeding all data:", error);

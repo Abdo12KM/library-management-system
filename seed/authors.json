@@ -48,5 +48,130 @@
         "author_name": "Ray Bradbury",
         "email": "ray.bradbury@authors.com",
         "biography": "Ray Douglas Bradbury was an American author and screenwriter. One of the most celebrated 20th-century American writers, he worked in a variety of modes, including fantasy, science fiction, horror, and mystery fiction."
+    },
+    {
+        "author_name": "Toni Morrison",
+        "email": "toni.morrison@authors.com",
+        "biography": "Toni Morrison was an American novelist, essayist, book editor, and college professor. Her first novel, The Bluest Eye, was published in 1970. She won the Nobel Prize in Literature in 1993."
+    },
+    {
+        "author_name": "Gabriel García Márquez",
+        "email": "gabriel.marquez@authors.com",
+        "biography": "Gabriel José de la Concordia García Márquez was a Colombian novelist, short-story writer, screenwriter, and journalist, known affectionately as Gabo or Gabito throughout Latin America."
+    },
+    {
+        "author_name": "Haruki Murakami",
+        "email": "haruki.murakami@authors.com",
+        "biography": "Haruki Murakami is a Japanese writer. His novels, essays, and short stories have been bestsellers in Japan as well as internationally, with his work translated into 50 languages and selling millions of copies outside Japan."
+    },
+    {
+        "author_name": "Virginia Woolf",
+        "email": "virginia.woolf@authors.com",
+        "biography": "Adeline Virginia Woolf was an English writer, considered one of the most important modernist 20th-century authors and a pioneer in the use of stream of consciousness as a narrative device."
+    },
+    {
+        "author_name": "Charles Dickens",
+        "email": "charles.dickens@authors.com",
+        "biography": "Charles John Huffam Dickens was an English writer and social critic. He created some of the world's best-known fictional characters and is regarded by many as the greatest novelist of the Victorian era."
+    },
+    {
+        "author_name": "Maya Angelou",
+        "email": "maya.angelou@authors.com",
+        "biography": "Maya Angelou was an American memoirist, popular poet, and civil rights activist. She published seven autobiographies, three books of essays, several books of poetry, and is credited with a list of plays, movies, and television shows spanning over 50 years."
+    },
+    {
+        "author_name": "Ernest Hemingway",
+        "email": "ernest.hemingway@authors.com",
+        "biography": "Ernest Miller Hemingway was an American novelist, short-story writer, and journalist. His economical and understated style—which he termed the iceberg theory—had a strong influence on 20th-century fiction."
+    },
+    {
+        "author_name": "Octavia Butler",
+        "email": "octavia.butler@authors.com",
+        "biography": "Octavia Estelle Butler was an American science fiction author and a multiple recipient of the Hugo and Nebula awards. In 1995, Butler became the first science-fiction writer to receive a MacArthur Fellowship."
+    },
+    {
+        "author_name": "Neil Gaiman",
+        "email": "neil.gaiman@authors.com",
+        "biography": "Neil Richard MacKinnon Gaiman is an English author of short fiction, novels, comic books, graphic novels, nonfiction, audio theatre, and films. His works include the comic book series The Sandman and novels Stardust, American Gods, Coraline, and The Graveyard Book."
+    },
+    {
+        "author_name": "Paulo Coelho",
+        "email": "paulo.coelho@authors.com",
+        "biography": "Paulo Coelho de Souza is a Brazilian lyricist and novelist, best known for his novel The Alchemist. In 2014, he uploaded his personal papers online to create a virtual Paulo Coelho Foundation."
+    },
+    {
+        "author_name": "Chinua Achebe",
+        "email": "chinua.achebe@authors.com",
+        "biography": "Chinua Achebe was a Nigerian novelist, poet, professor, and critic. His first novel Things Fall Apart is the most widely read book in modern African literature."
+    },
+    {
+        "author_name": "Sylvia Plath",
+        "email": "sylvia.plath@authors.com",
+        "biography": "Sylvia Plath was an American poet, novelist, and short-story writer. She is credited with advancing the genre of confessional poetry and is best known for her two published collections, The Colossus and Other Poems and Ariel."
+    },
+    {
+        "author_name": "Isaac Asimov",
+        "email": "isaac.asimov@authors.com",
+        "biography": "Isaac Asimov was an American writer and professor of biochemistry at Boston University. During his lifetime, Asimov was considered one of the Big Three science fiction writers, along with Robert A. Heinlein and Arthur C. Clarke."
+    },
+    {
+        "author_name": "Zadie Smith",
+        "email": "zadie.smith@authors.com",
+        "biography": "Zadie Smith FRSL is an English novelist, essayist, and short-story writer. Her debut novel, White Teeth, immediately became a best-seller and won a number of awards."
+    },
+    {
+        "author_name": "Khaled Hosseini",
+        "email": "khaled.hosseini@authors.com",
+        "biography": "Khaled Hosseini is an Afghan-American novelist and physician. After graduating from medical school, he worked as an internist in California for several years before writing his first novel, The Kite Runner."
+    },
+    {
+        "author_name": "Gillian Flynn",
+        "email": "gillian.flynn@authors.com",
+        "biography": "Gillian Schieber Flynn is an American author, screenwriter, and former journalist and television critic for Entertainment Weekly. She is known for writing the thriller and mystery novels Sharp Objects, Dark Places, and Gone Girl."
+    },
+    {
+        "author_name": "Colson Whitehead",
+        "email": "colson.whitehead@authors.com",
+        "biography": "Colson Whitehead is an American novelist. He is the author of eight novels, including his 1999 debut work The Intuitionist and The Underground Railroad, for which he won the Pulitzer Prize for Fiction in 2017."
+    },
+    {
+        "author_name": "Elena Ferrante",
+        "email": "elena.ferrante@authors.com",
+        "biography": "Elena Ferrante is a pseudonymous Italian novelist. Ferrante's books, originally published in Italian, have been translated into many languages. Her four-book series known as the Neapolitan Novels are her most celebrated works."
+    },
+    {
+        "author_name": "James Baldwin",
+        "email": "james.baldwin@authors.com",
+        "biography": "James Arthur Baldwin was an American novelist, essayist, playwright, poet, and social activist. His essays, collected in Notes of a Native Son, explore intricacies of racial, sexual, and class distinctions in Western society."
+    },
+    {
+        "author_name": "Chimamanda Ngozi Adichie",
+        "email": "chimamanda.adichie@authors.com",
+        "biography": "Chimamanda Ngozi Adichie is a Nigerian writer whose works include novels, short stories and nonfiction. She was described in The Times Literary Supplement as 'the most prominent' of a 'procession of critically acclaimed young anglophone authors' of African fiction."
+    },
+    {
+        "author_name": "Yuval Noah Harari",
+        "email": "yuval.harari@authors.com",
+        "biography": "Yuval Noah Harari is an Israeli public intellectual, historian and a professor in the Department of History at the Hebrew University of Jerusalem. He is the author of the popular science bestsellers Sapiens, Homo Deus, and 21 Lessons for the 21st Century."
+    },
+    {
+        "author_name": "Sally Rooney",
+        "email": "sally.rooney@authors.com",
+        "biography": "Sally Rooney is an Irish author and screenwriter. She has published two novels: Conversations with Friends and Normal People. Her work has been translated into 46 languages."
+    },
+    {
+        "author_name": "Tayari Jones",
+        "email": "tayari.jones@authors.com",
+        "biography": "Tayari Jones is an American author and academic known for An American Marriage, which was a 2018 Oprah's Book Club Selection, and won the 2019 Women's Prize for Fiction. She is a graduate of Spelman College, University of Iowa, and Arizona State University."
+    },
+    {
+        "author_name": "Liu Cixin",
+        "email": "liu.cixin@authors.com",
+        "biography": "Liu Cixin is a Chinese science fiction writer. He is a nine-time winner of the Galaxy Award and has also received the Hugo Award. He is the author of the acclaimed Three-Body trilogy."
+    },
+    {
+        "author_name": "Min Jin Lee",
+        "email": "min.jin.lee@authors.com",
+        "biography": "Min Jin Lee is a Korean-American author. Her novel Pachinko was a finalist for the National Book Award for Fiction, runner-up for the Dayton Literary Peace Prize, winner of the Medici Book Club Prize, and was named a New York Times Notable Book."
     }
 ]

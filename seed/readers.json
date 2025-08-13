@@ -2,9 +2,9 @@
     {
         "reader_fname": "Johnny",
         "reader_lname": "Doe",
-        "reader_email": "johnyn.doe@example.com",
+        "reader_email": "johnny.doe@example.com",
         "reader_phone_no": "+1234567880",
-        "reader_address": "123 Main St, City, Country",
+        "reader_address": "123 Main St, Springfield, IL 62701, USA",
         "password": "Reader@123"
     },
     {
@@ -12,7 +12,7 @@
         "reader_lname": "Smith",
         "reader_email": "jane.smith@example.com",
         "reader_phone_no": "+1987654321",
-        "reader_address": "456 Elm St, Town, Country",
+        "reader_address": "456 Elm St, Portland, OR 97201, USA",
         "password": "SecurePass!456"
     },
     {
@@ -20,7 +20,7 @@
         "reader_lname": "Parker",
         "reader_email": "jaden.parker@example.com",
         "reader_phone_no": "+1987653421",
-        "reader_address": "573 Ez St, Town, Country",
+        "reader_address": "573 Oak Ave, Austin, TX 73301, USA",
         "password": "Password!456"
     },
     {
@@ -28,7 +28,7 @@
         "reader_lname": "Johnson",
         "reader_email": "michael.johnson@example.com",
         "reader_phone_no": "+1555123456",
-        "reader_address": "789 Oak Ave, Springfield, USA",
+        "reader_address": "789 Pine Dr, Denver, CO 80201, USA",
         "password": "MikePass@789"
     },
     {
@@ -36,7 +36,7 @@
         "reader_lname": "Williams",
         "reader_email": "sarah.williams@example.com",
         "reader_phone_no": "+1555987654",
-        "reader_address": "321 Pine Dr, Riverside, USA",
+        "reader_address": "321 Maple Ln, Seattle, WA 98101, USA",
         "password": "SarahSecure@456"
     },
     {
@@ -44,7 +44,7 @@
         "reader_lname": "Brown",
         "reader_email": "david.brown@example.com",
         "reader_phone_no": "+1555456789",
-        "reader_address": "654 Maple Ln, Lakewood, USA",
+        "reader_address": "654 Cedar St, Miami, FL 33101, USA",
         "password": "DavidPass@321"
     },
     {
@@ -52,7 +52,7 @@
         "reader_lname": "Davis",
         "reader_email": "emily.davis@example.com",
         "reader_phone_no": "+1555789123",
-        "reader_address": "987 Cedar St, Hillside, USA",
+        "reader_address": "987 Birch Rd, Boston, MA 02101, USA",
         "password": "EmilyStrong@654"
     },
     {
@@ -60,7 +60,7 @@
         "reader_lname": "Miller",
         "reader_email": "james.miller@example.com",
         "reader_phone_no": "+1555654321",
-        "reader_address": "147 Birch Rd, Greenville, USA",
+        "reader_address": "147 Willow Way, Atlanta, GA 30301, USA",
         "password": "JamesSecure@987"
     },
     {
@@ -68,7 +68,7 @@
         "reader_lname": "Wilson",
         "reader_email": "lisa.wilson@example.com",
         "reader_phone_no": "+1555321987",
-        "reader_address": "258 Willow Way, Fairview, USA",
+        "reader_address": "258 Ash Blvd, Phoenix, AZ 85001, USA",
         "password": "LisaPass@258"
     },
     {
@@ -76,7 +76,247 @@
         "reader_lname": "Moore",
         "reader_email": "robert.moore@example.com",
         "reader_phone_no": "+1555147258",
-        "reader_address": "369 Ash Blvd, Sunset, USA",
+        "reader_address": "369 Sunset Dr, Las Vegas, NV 89101, USA",
         "password": "RobertStrong@369"
+    },
+    {
+        "reader_fname": "Alexandra",
+        "reader_lname": "Thompson",
+        "reader_email": "alexandra.thompson@gmail.com",
+        "reader_phone_no": "+1234567890",
+        "reader_address": "1245 University Ave, Berkeley, CA 94720, USA",
+        "password": "Alexandra@2024"
+    },
+    {
+        "reader_fname": "Christopher",
+        "reader_lname": "Anderson",
+        "reader_email": "christopher.anderson@outlook.com",
+        "reader_phone_no": "+1987654322",
+        "reader_address": "567 Broadway, New York, NY 10012, USA",
+        "password": "ChrisSecure!789"
+    },
+    {
+        "reader_fname": "Isabella",
+        "reader_lname": "Garcia",
+        "reader_email": "isabella.garcia@yahoo.com",
+        "reader_phone_no": "+1555234567",
+        "reader_address": "890 Highland St, San Francisco, CA 94102, USA",
+        "password": "Bella@Strong123"
+    },
+    {
+        "reader_fname": "Benjamin",
+        "reader_lname": "Martinez",
+        "reader_email": "benjamin.martinez@email.com",
+        "reader_phone_no": "+1555876543",
+        "reader_address": "432 Market St, Chicago, IL 60601, USA",
+        "password": "BenSecure@456"
+    },
+    {
+        "reader_fname": "Sophia",
+        "reader_lname": "Rodriguez",
+        "reader_email": "sophia.rodriguez@domain.com",
+        "reader_phone_no": "+1555345678",
+        "reader_address": "123 Fifth Ave, Houston, TX 77001, USA",
+        "password": "Sophia!Password789"
+    },
+    {
+        "reader_fname": "Matthew",
+        "reader_lname": "Taylor",
+        "reader_email": "matthew.taylor@provider.com",
+        "reader_phone_no": "+1555765432",
+        "reader_address": "789 Lombard St, San Diego, CA 92101, USA",
+        "password": "MattSecure@321"
+    },
+    {
+        "reader_fname": "Olivia",
+        "reader_lname": "White",
+        "reader_email": "olivia.white@webmail.com",
+        "reader_phone_no": "+1555456123",
+        "reader_address": "456 Queen St, Nashville, TN 37201, USA",
+        "password": "OliviaStrong!654"
+    },
+    {
+        "reader_fname": "Nicholas",
+        "reader_lname": "Harris",
+        "reader_email": "nicholas.harris@service.com",
+        "reader_phone_no": "+1555567890",
+        "reader_address": "234 King St, New Orleans, LA 70112, USA",
+        "password": "Nick@Password987"
+    },
+    {
+        "reader_fname": "Emma",
+        "reader_lname": "Clark",
+        "reader_email": "emma.clark@network.com",
+        "reader_phone_no": "+1555890123",
+        "reader_address": "567 Washington Ave, Philadelphia, PA 19102, USA",
+        "password": "EmmaSecure!234"
+    },
+    {
+        "reader_fname": "William",
+        "reader_lname": "Lewis",
+        "reader_email": "william.lewis@connect.com",
+        "reader_phone_no": "+1555123890",
+        "reader_address": "890 Franklin St, Detroit, MI 48201, USA",
+        "password": "Will@Strong567"
+    },
+    {
+        "reader_fname": "Ava",
+        "reader_lname": "Walker",
+        "reader_email": "ava.walker@mail.org",
+        "reader_phone_no": "+1555234901",
+        "reader_address": "123 Jefferson Ave, Cleveland, OH 44101, USA",
+        "password": "AvaSecure@890"
+    },
+    {
+        "reader_fname": "Ethan",
+        "reader_lname": "Hall",
+        "reader_email": "ethan.hall@digital.net",
+        "reader_phone_no": "+1555345012",
+        "reader_address": "456 Lincoln Blvd, Kansas City, MO 64101, USA",
+        "password": "Ethan!Password123"
+    },
+    {
+        "reader_fname": "Mia",
+        "reader_lname": "Allen",
+        "reader_email": "mia.allen@online.co",
+        "reader_phone_no": "+1555456234",
+        "reader_address": "789 Madison St, Minneapolis, MN 55401, USA",
+        "password": "MiaStrong@456"
+    },
+    {
+        "reader_fname": "Alexander",
+        "reader_lname": "Young",
+        "reader_email": "alexander.young@secure.net",
+        "reader_phone_no": "+1555567345",
+        "reader_address": "234 Adams Ave, Salt Lake City, UT 84101, USA",
+        "password": "Alex@Secure789"
+    },
+    {
+        "reader_fname": "Charlotte",
+        "reader_lname": "King",
+        "reader_email": "charlotte.king@web.org",
+        "reader_phone_no": "+1555678456",
+        "reader_address": "567 Monroe Dr, Richmond, VA 23219, USA",
+        "password": "Charlotte!123"
+    },
+    {
+        "reader_fname": "Daniel",
+        "reader_lname": "Wright",
+        "reader_email": "daniel.wright@system.com",
+        "reader_phone_no": "+1555789567",
+        "reader_address": "890 Jackson St, Sacramento, CA 95814, USA",
+        "password": "DanSecure@456"
+    },
+    {
+        "reader_fname": "Amelia",
+        "reader_lname": "Lopez",
+        "reader_email": "amelia.lopez@platform.net",
+        "reader_phone_no": "+1555890678",
+        "reader_address": "123 Wilson Ave, Oklahoma City, OK 73101, USA",
+        "password": "Amelia@Strong789"
+    },
+    {
+        "reader_fname": "Jacob",
+        "reader_lname": "Hill",
+        "reader_email": "jacob.hill@technology.org",
+        "reader_phone_no": "+1555901789",
+        "reader_address": "456 Roosevelt Blvd, Louisville, KY 40201, USA",
+        "password": "Jacob!Password234"
+    },
+    {
+        "reader_fname": "Harper",
+        "reader_lname": "Scott",
+        "reader_email": "harper.scott@innovation.com",
+        "reader_phone_no": "+1555012890",
+        "reader_address": "789 Kennedy St, Memphis, TN 38101, USA",
+        "password": "Harper@Secure567"
+    },
+    {
+        "reader_fname": "Lucas",
+        "reader_lname": "Green",
+        "reader_email": "lucas.green@future.net",
+        "reader_phone_no": "+1555123901",
+        "reader_address": "234 Truman Ave, Baltimore, MD 21201, USA",
+        "password": "LucasStrong!890"
+    },
+    {
+        "reader_fname": "Evelyn",
+        "reader_lname": "Adams",
+        "reader_email": "evelyn.adams@network.co",
+        "reader_phone_no": "+1555234012",
+        "reader_address": "567 Eisenhower Dr, Milwaukee, WI 53201, USA",
+        "password": "Evelyn@123Secure"
+    },
+    {
+        "reader_fname": "Mason",
+        "reader_lname": "Baker",
+        "reader_email": "mason.baker@solutions.org",
+        "reader_phone_no": "+1555345123",
+        "reader_address": "890 Nixon St, Tucson, AZ 85701, USA",
+        "password": "Mason!Strong456"
+    },
+    {
+        "reader_fname": "Luna",
+        "reader_lname": "Gonzalez",
+        "reader_email": "luna.gonzalez@global.com",
+        "reader_phone_no": "+1555456345",
+        "reader_address": "123 Carter Ave, Fresno, CA 93701, USA",
+        "password": "Luna@Secure789"
+    },
+    {
+        "reader_fname": "Logan",
+        "reader_lname": "Nelson",
+        "reader_email": "logan.nelson@enterprise.net",
+        "reader_phone_no": "+1555567456",
+        "reader_address": "456 Reagan Blvd, Long Beach, CA 90801, USA",
+        "password": "Logan!Password012"
+    },
+    {
+        "reader_fname": "Ella",
+        "reader_lname": "Carter",
+        "reader_email": "ella.carter@systems.org",
+        "reader_phone_no": "+1555678567",
+        "reader_address": "789 Bush St, Virginia Beach, VA 23451, USA",
+        "password": "EllaStrong@345"
+    },
+    {
+        "reader_fname": "Sebastian",
+        "reader_lname": "Mitchell",
+        "reader_email": "sebastian.mitchell@cloud.com",
+        "reader_phone_no": "+1555789678",
+        "reader_address": "234 Clinton Ave, Oakland, CA 94601, USA",
+        "password": "Sebastian@678"
+    },
+    {
+        "reader_fname": "Grace",
+        "reader_lname": "Perez",
+        "reader_email": "grace.perez@tech.net",
+        "reader_phone_no": "+1555890789",
+        "reader_address": "567 Ford Dr, Miami Gardens, FL 33056, USA",
+        "password": "Grace!Secure901"
+    },
+    {
+        "reader_fname": "Carter",
+        "reader_lname": "Roberts",
+        "reader_email": "carter.roberts@digital.org",
+        "reader_phone_no": "+1555901890",
+        "reader_address": "890 Johnson St, Mesa, AZ 85201, USA",
+        "password": "Carter@Strong234"
+    },
+    {
+        "reader_fname": "Scarlett",
+        "reader_lname": "Turner",
+        "reader_email": "scarlett.turner@modern.com",
+        "reader_phone_no": "+1555012901",
+        "reader_address": "123 Tyler Ave, Atlanta, GA 30303, USA",
+        "password": "Scarlett!567"
+    },
+    {
+        "reader_fname": "Owen",
+        "reader_lname": "Phillips",
+        "reader_email": "owen.phillips@advanced.net",
+        "reader_phone_no": "+1555123012",
+        "reader_address": "456 Pierce Blvd, Colorado Springs, CO 80901, USA",
+        "password": "Owen@Secure890"
     }
 ]

@@ -19,11 +19,15 @@
     "db:seedPublishers": "node seed/seed-caller.js --import publishers",
     "db:seedStaff": "node seed/seed-caller.js --import staff",
     "db:seedBooks": "node seed/seed-caller.js --import books",
+    "db:seedLoans": "node seed/seed-caller.js --import loans",
+    "db:seedFines": "node seed/seed-caller.js --import fines",
     "db:deleteReaders": "node seed/seed-caller.js --delete readers",
     "db:deleteAuthors": "node seed/seed-caller.js --delete authors",
     "db:deletePublishers": "node seed/seed-caller.js --delete publishers",
     "db:deleteStaff": "node seed/seed-caller.js --delete staff",
-    "db:deleteBooks": "node seed/seed-caller.js --delete books"
+    "db:deleteBooks": "node seed/seed-caller.js --delete books",
+    "db:deleteLoans": "node seed/seed-caller.js --delete loans",
+    "db:deleteFines": "node seed/seed-caller.js --delete fines"
   },
   "author": "",
   "license": "ISC",

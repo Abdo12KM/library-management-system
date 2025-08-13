@@ -5,6 +5,8 @@ const Author = require("../models/authorModel");
 const Publisher = require("../models/publisherModel");
 const Staff = require("../models/staffModel");
 const Book = require("../models/bookModel");
+const Loan = require("../models/loanModel");
+const Fine = require("../models/fineModel");
 
 const obj = {
     readers: {
@@ -26,6 +28,14 @@ const obj = {
     books: {
         model: Book,
         filePath: `${__dirname}/books.json`,
+    },
+    loans: {
+        model: Loan,
+        filePath: `${__dirname}/loans.json`,
+    },
+    fines: {
+        model: Fine,
+        filePath: `${__dirname}/fines.json`,
     }
 }
 
@@ -52,5 +62,5 @@ if (process.argv[2] == "--seed-all") {
     console.log("  --import <model>               Import data for specific model");
     console.log("  --delete <model>               Delete data for specific model");
     console.log("");
-    console.log("Available models: readers, authors, publishers, staff, books");
+    console.log("Available models: readers, authors, publishers, staff, books, loans, fines");
 }

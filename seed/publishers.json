@@ -1,62 +1,191 @@
 [
-    {
-        "publisher_name": "Penguin Random House",
-        "publisher_website": "https://www.penguinrandomhouse.com",
-        "year_of_publication": 1935,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "HarperCollins",
-        "publisher_website": "https://www.harpercollins.com",
-        "year_of_publication": 1989,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Simon & Schuster",
-        "publisher_website": "https://www.simonandschuster.com",
-        "year_of_publication": 1924,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Macmillan Publishers",
-        "publisher_website": "https://www.macmillan.com",
-        "year_of_publication": 1843,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Hachette Book Group",
-        "publisher_website": "https://www.hachettebookgroup.com",
-        "year_of_publication": 1826,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Scholastic Corporation",
-        "publisher_website": "https://www.scholastic.com",
-        "year_of_publication": 1920,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Oxford University Press",
-        "publisher_website": "https://global.oup.com",
-        "year_of_publication": 1586,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Cambridge University Press",
-        "publisher_website": "https://www.cambridge.org",
-        "year_of_publication": 1534,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Doubleday",
-        "publisher_website": "https://www.doubleday.com",
-        "year_of_publication": 1897,
-        "no_published_books": 0
-    },
-    {
-        "publisher_name": "Vintage Books",
-        "publisher_website": "https://www.vintagebooks.com",
-        "year_of_publication": 1954,
-        "no_published_books": 0
-    }
+  {
+    "publisher_name": "Penguin Random House",
+    "publisher_website": "https://www.penguinrandomhouse.com",
+    "year_of_publication": 1935,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "HarperCollins",
+    "publisher_website": "https://www.harpercollins.com",
+    "year_of_publication": 1989,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Simon & Schuster",
+    "publisher_website": "https://www.simonandschuster.com",
+    "year_of_publication": 1924,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Macmillan Publishers",
+    "publisher_website": "https://www.macmillan.com",
+    "year_of_publication": 1843,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Hachette Book Group",
+    "publisher_website": "https://www.hachettebookgroup.com",
+    "year_of_publication": 1826,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Scholastic Corporation",
+    "publisher_website": "https://www.scholastic.com",
+    "year_of_publication": 1920,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Oxford University Press",
+    "publisher_website": "https://global.oup.com",
+    "year_of_publication": 1586,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Cambridge University Press",
+    "publisher_website": "https://www.cambridge.org",
+    "year_of_publication": 1534,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Doubleday",
+    "publisher_website": "https://www.doubleday.com",
+    "year_of_publication": 1897,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Vintage Books",
+    "publisher_website": "https://www.vintagebooks.com",
+    "year_of_publication": 1954,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Bloomsbury Publishing",
+    "publisher_website": "https://www.bloomsbury.com",
+    "year_of_publication": 1986,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Farrar, Straus and Giroux",
+    "publisher_website": "https://us.macmillan.com/fsg",
+    "year_of_publication": 1946,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Knopf",
+    "publisher_website": "https://knopf.knopfdoubleday.com",
+    "year_of_publication": 1915,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Little, Brown and Company",
+    "publisher_website": "https://www.littlebrown.com",
+    "year_of_publication": 1837,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Norton & Company",
+    "publisher_website": "https://wwnorton.com",
+    "year_of_publication": 1923,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Crown Publishing Group",
+    "publisher_website": "https://crownpublishing.com",
+    "year_of_publication": 1933,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Scribner",
+    "publisher_website": "https://www.simonandschuster.com/scribner",
+    "year_of_publication": 1846,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Riverhead Books",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/riverhead-books",
+    "year_of_publication": 1994,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Grove Atlantic",
+    "publisher_website": "https://groveatlantic.com",
+    "year_of_publication": 1952,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Graywolf Press",
+    "publisher_website": "https://www.graywolfpress.org",
+    "year_of_publication": 1974,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Coffee House Press",
+    "publisher_website": "https://coffeehousepress.org",
+    "year_of_publication": 1984,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Tor Books",
+    "publisher_website": "https://www.torbooks.com",
+    "year_of_publication": 1980,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Bantam Books",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/bantam-books",
+    "year_of_publication": 1945,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Del Rey Books",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/del-rey",
+    "year_of_publication": 1977,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Anchor Books",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/anchor-books",
+    "year_of_publication": 1953,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Viking Penguin",
+    "publisher_website": "https://www.penguin.com/overview-vikingbooks/",
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Beacon Press",
+    "publisher_website": "https://www.beacon.org/",
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Grand Central Publishing",
+    "publisher_website": "https://www.hachettebookgroup.com/imprint/grand-central-publishing/",
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Hogarth Press",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/hogarth/",
+    "year_of_publication": 1917,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Algonquin Books",
+    "publisher_website": "https://www.algonquin.com/",
+    "year_of_publication": 1982,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Dell Publishing",
+    "publisher_website": "https://www.penguinrandomhouse.com/publishers/dell/",
+    "year_of_publication": 1921,
+    "no_published_books": 0
+  },
+  {
+    "publisher_name": "Europa Editions",
+    "publisher_website": "https://www.europaeditions.com/",
+    "year_of_publication": 2005,
+    "no_published_books": 0
+  }
 ]
