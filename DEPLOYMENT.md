@@ -22,6 +22,7 @@ Make sure your code is pushed to GitHub with all the recent changes.
 ### 3. Configure the Service
 
 **Basic Settings:**
+
 - **Name**: `library-management-system-backend`
 - **Runtime**: `Node`
 - **Build Command**: `npm install`
@@ -32,12 +33,14 @@ Make sure your code is pushed to GitHub with all the recent changes.
 Add the following environment variables in Render:
 
 **Required:**
+
 - `NODE_ENV`: `production`
 - `DATABASE_URI`: Your MongoDB Atlas connection string
 - `JWT_SECRET`: A secure random string (Render can auto-generate this)
 - `JWT_EXPIRES_IN`: `7d`
 
 **Optional:**
+
 - `PORT`: Render will set this automatically, but you can override if needed
 
 ### 5. MongoDB Atlas Configuration
